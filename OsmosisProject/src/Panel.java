@@ -1,17 +1,21 @@
 
+import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-import java.awt.Color;
-
 public class Panel extends JPanel {
 
-    Looper looper;
-    BirdManager manager;
+    private Looper looper;
+    private Field field;
+    private ColorInterpolator color;
+
+    private int BirdCount = 600;
+    private int ColorRadius = 5;
+    private int NumberOfColors = 5;
 
     public Panel() {
-        manager = new BirdManager();
-        BirdManager.CreateBirdManager();
+        color = new ColorInterpolator(ColorInterpolator.EARTHY_GREENS, NumberOfColors);
+        field = new Field(BirdCount);
         looper = new Looper(this, "update");
     }
 
@@ -21,41 +25,45 @@ public class Panel extends JPanel {
     }
 
     private void updateBirds() {
-
-        manager.Advance(true, false);
-
-        for (Bird bird : BirdManager.Birds) {
-            bird.Location = Vector2.add(bird.Location,
-                    bird.Velocity.mult(bird.Speed).mult((float) Looper.getDeltaTime()));
-        }
+        field.advance(true, false);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        for (Bird bird : BirdManager.Birds) {
+        for (Bird bird : field.Birds) {
 
-            Vector2 loc = bird.Location;
-            Vector2 dir = bird.Velocity.normalize();
-            double angle = Math.toRadians(Math.atan2(-dir.y, -dir.x)); // Angle in radians
+            Vector2 loc = new Vector2((float) bird.X, (float) bird.Y);
+            Vector2 dir = new Vector2((float) bird.Xvel, (float) bird.Yvel).normalize();
+            double angle = Math.toRadians(Math.atan2(dir.y, dir.x)); // Angle in radians
 
-            Vector2 front = bird.Location;
-            Vector2 back = rotatePoints(8, loc, angle);
-            Vector2 backLeft = rotatePoints(8, loc, angle + 1);
-            Vector2 backRight = rotatePoints(8, loc, angle - 1);
+            Vector2 front = loc;
+            Vector2 back = rotatePoints(15, loc, angle);
+            Vector2 backLeft = rotatePoints(15, loc, angle + 0.5f);
+            Vector2 backRight = rotatePoints(15, loc, angle - 0.5f);
 
             // System.out.println(loc + " " + backLeft + " Angle: " + angle);
 
             // g.setColor(Color.red);
             // g.drawOval((int) front.x - 3, (int) front.y - 3, 6, 6);
 
-            g.setColor(Color.black);
+            g.setColor(color.getColor(field.birdsInRadius(bird, ColorRadius), NumberOfColors));
+
+            if (bird.isPredator)
+                g.setColor(Color.red);
+
             g.drawLine((int) front.x, (int) front.y, (int) backLeft.x, (int) backLeft.y);
             g.drawLine((int) backLeft.x, (int) backLeft.y, (int) backRight.x, (int) backRight.y);
             g.drawLine((int) backRight.x, (int) backRight.y, (int) front.x, (int) front.y);
 
-            g.drawLine((int) front.x, (int) front.y, (int) back.x, (int) back.y);
+            int[] xPoints = { (int) front.x, (int) backLeft.x, (int) backRight.x };
+            int[] yPoints = { (int) front.y, (int) backLeft.y, (int) backRight.y };
+
+            g.fillPolygon(xPoints, yPoints, 3);
+
+            // g.setColor(Color.blue);
+            // g.drawLine((int) front.x, (int) front.y, (int) back.x, (int) back.y);
         }
     }
 
