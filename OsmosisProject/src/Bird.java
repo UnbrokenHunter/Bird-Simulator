@@ -15,9 +15,11 @@ public class Bird {
         this.Yvel = yVel;
     }
 
-    public Bird(Random rand) {
-        this.X = rand.nextDouble() * Main.Width;
-        this.Y = rand.nextDouble() * Main.Height;
+    public Bird() {
+        Random rand = new Random();
+
+        this.X = rand.nextDouble() * Settings.Width;
+        this.Y = rand.nextDouble() * Settings.Height;
         this.Xvel = rand.nextDouble() - 0.5;
         this.Yvel = rand.nextDouble() - 0.5;
     }

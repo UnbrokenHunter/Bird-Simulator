@@ -1,28 +1,21 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Field {
-    public final List<Bird> Birds = new ArrayList<>();
-    private final Random Rand = new Random();
-    public int PredatorCount = 3;
-
-    private double MinSpeed = 1;
-    private double MaxSpeed = 5;
+    public final static List<Bird> Birds = new ArrayList<>();
 
     public Field(int birdCount) {
         for (int i = 0; i < birdCount; i++) {
-            this.Birds.add(new Bird(Rand));
+            Birds.add(new Bird());
         }
     }
 
     public int birdsInRadius(Bird bird, int radius) {
-
         int count = 0;
 
         for (Bird otherBird : Birds) {
-            if (bird.getDistance(otherBird) > radius) {
+            if (bird.getDistance(otherBird) < radius) {
                 count++;
             }
         }
@@ -33,10 +26,10 @@ public class Field {
     public void advance(boolean bounceOffWalls, boolean wrapAroundEdges) {
         // Update bird speed and direction (velocity) based on rules
         Birds.forEach(bird -> {
-            double[] flock = flock(bird, 50, 0.0003);
-            double[] align = align(bird, 50, 0.01);
-            double[] avoid = avoid(bird, 20, 0.001);
-            double[] predator = predator(bird, 120, 0.00005);
+            double[] flock = flock(bird, 50, Settings.FlockPower);
+            double[] align = align(bird, 50, Settings.AlignPower);
+            double[] avoid = avoid(bird, 20, Settings.AvoidPower);
+            double[] predator = predator(bird, 150, Settings.PredatorPower);
 
             bird.Xvel += flock[0] + avoid[0] + align[0] + predator[0];
             bird.Yvel += flock[1] + avoid[1] + align[1] + predator[1];
@@ -44,12 +37,14 @@ public class Field {
 
         // Move all birds forward in time
         Birds.forEach(bird -> {
-            bird.moveForward(MinSpeed, MaxSpeed);
-            if (bounceOffWalls) {
-                bounceOffWalls(bird);
-            }
-            if (wrapAroundEdges) {
-                wrapAround(bird);
+            if (!(Settings.BecomePredator && Birds.getFirst().equals(bird))) {
+                bird.moveForward(Settings.MinSpeed, Settings.MaxSpeed);
+                if (bounceOffWalls) {
+                    bounceOffWalls(bird);
+                }
+                if (wrapAroundEdges) {
+                    wrapAround(bird);
+                }
             }
         });
     }
@@ -85,7 +80,7 @@ public class Field {
     private double[] predator(Bird bird, double distance, double power) {
         final double[] sumCloseness = { 0, 0 };
 
-        for (int i = 0; i < PredatorCount; i++) {
+        for (int i = 0; i < Settings.PredatorCount; i++) {
             Bird predator = Birds.get(i);
             predator.isPredator = true;
             double distanceAway = bird.getDistance(predator);
@@ -119,23 +114,23 @@ public class Field {
 
         if (bird.X < pad)
             bird.Xvel += turn;
-        if (bird.X > Main.Width - pad)
+        if (bird.X > Settings.Width - pad)
             bird.Xvel -= turn;
         if (bird.Y < pad)
             bird.Yvel += turn;
-        if (bird.Y > Main.Height - pad)
+        if (bird.Y > Settings.Height - pad)
             bird.Yvel -= turn;
     }
 
     private void wrapAround(Bird bird) {
         if (bird.X < 0)
-            bird.X += Main.Width;
-        if (bird.X > Main.Width)
-            bird.X -= Main.Width;
+            bird.X += Settings.Width;
+        if (bird.X > Settings.Width)
+            bird.X -= Settings.Width;
         if (bird.Y < 0)
-            bird.Y += Main.Height;
-        if (bird.Y > Main.Height)
-            bird.Y -= Main.Height;
+            bird.Y += Settings.Height;
+        if (bird.Y > Settings.Height)
+            bird.Y -= Settings.Height;
     }
 
 }

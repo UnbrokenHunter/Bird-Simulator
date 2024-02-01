@@ -7,16 +7,15 @@ public class Panel extends JPanel {
 
     private Looper looper;
     private Field field;
-    private ColorInterpolator color;
-
-    private int BirdCount = 600;
-    private int ColorRadius = 5;
-    private int NumberOfColors = 5;
+    private UI ui;
 
     public Panel() {
-        color = new ColorInterpolator(ColorInterpolator.EARTHY_GREENS, NumberOfColors);
-        field = new Field(BirdCount);
+        ui = new UI();
+        Settings.ColorInterp = new ColorInterpolator(Settings.ColorPalatte, Settings.NumberOfColors);
+        field = new Field(Settings.BirdCount);
         looper = new Looper(this, "update");
+
+        this.setBackground(new Color(0, 8, 27));
     }
 
     public void update() {
@@ -25,46 +24,55 @@ public class Panel extends JPanel {
     }
 
     private void updateBirds() {
-        field.advance(true, false);
+        field.advance(Settings.Bounce, !Settings.Bounce);
+    }
+
+    private void MoveBird(Bird bird, Graphics g) {
+        Vector2 location = new Vector2((float) bird.X, (float) bird.Y);
+        Vector2 direction = new Vector2((float) bird.Xvel, (float) bird.Yvel).normalize();
+        double angle = Math.toRadians(Math.atan2(direction.y, direction.x)); // Angle in radians
+
+        Vector2 front = location;
+        Vector2 backLeft = rotatePoints(15, location, angle + 0.5f);
+        Vector2 backRight = rotatePoints(15, location, angle - 0.5f);
+
+        // g.setColor(Color.red);
+        // g.drawOval((int) front.x - 3, (int) front.y - 3, 6, 6);
+
+        // Draw Colors
+        if (Settings.DoFancyColor) {
+            int inRadius = field.birdsInRadius(bird, Settings.ColorRadius);
+            g.setColor(Settings.ColorInterp.getColor(inRadius, Settings.NumberOfColors));
+        } else
+            g.setColor(Color.white);
+
+        // Color Predator
+        if (bird.isPredator)
+            g.setColor(Color.red);
+
+        // Draw Lines
+        g.drawLine((int) front.x, (int) front.y, (int) backLeft.x, (int) backLeft.y);
+        g.drawLine((int) backLeft.x, (int) backLeft.y, (int) backRight.x, (int) backRight.y);
+        g.drawLine((int) backRight.x, (int) backRight.y, (int) front.x, (int) front.y);
+
+        // Draw Polygons
+        int[] xPoints = { (int) front.x, (int) backLeft.x, (int) backRight.x };
+        int[] yPoints = { (int) front.y, (int) backLeft.y, (int) backRight.y };
+
+        g.fillPolygon(xPoints, yPoints, 3);
+
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        for (Bird bird : field.Birds) {
-
-            Vector2 loc = new Vector2((float) bird.X, (float) bird.Y);
-            Vector2 dir = new Vector2((float) bird.Xvel, (float) bird.Yvel).normalize();
-            double angle = Math.toRadians(Math.atan2(dir.y, dir.x)); // Angle in radians
-
-            Vector2 front = loc;
-            Vector2 back = rotatePoints(15, loc, angle);
-            Vector2 backLeft = rotatePoints(15, loc, angle + 0.5f);
-            Vector2 backRight = rotatePoints(15, loc, angle - 0.5f);
-
-            // System.out.println(loc + " " + backLeft + " Angle: " + angle);
-
-            // g.setColor(Color.red);
-            // g.drawOval((int) front.x - 3, (int) front.y - 3, 6, 6);
-
-            g.setColor(color.getColor(field.birdsInRadius(bird, ColorRadius), NumberOfColors));
-
-            if (bird.isPredator)
-                g.setColor(Color.red);
-
-            g.drawLine((int) front.x, (int) front.y, (int) backLeft.x, (int) backLeft.y);
-            g.drawLine((int) backLeft.x, (int) backLeft.y, (int) backRight.x, (int) backRight.y);
-            g.drawLine((int) backRight.x, (int) backRight.y, (int) front.x, (int) front.y);
-
-            int[] xPoints = { (int) front.x, (int) backLeft.x, (int) backRight.x };
-            int[] yPoints = { (int) front.y, (int) backLeft.y, (int) backRight.y };
-
-            g.fillPolygon(xPoints, yPoints, 3);
-
-            // g.setColor(Color.blue);
-            // g.drawLine((int) front.x, (int) front.y, (int) back.x, (int) back.y);
+        for (Bird bird : Field.Birds) {
+            MoveBird(bird, g);
         }
+
+        ui.DrawButtons(g);
+
     }
 
     private Vector2 rotatePoints(double distance, Vector2 location, double angle) {

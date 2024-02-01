@@ -2,8 +2,24 @@ import java.awt.Color;
 import java.util.Hashtable;
 
 public class ColorInterpolator {
-        private final Color[] colors;
-        private final int numColors;
+        private Color[] colors;
+        private int numColors;
+
+        public void SetColors(Color[] colors) {
+                this.colors = colors;
+        }
+
+        public Color[] GetColors() {
+                return colors;
+        }
+
+        public void SetNumColors(int numColors) {
+                this.numColors = numColors;
+        }
+
+        public int GetNumColors() {
+                return numColors;
+        }
 
         // Constructor for two colors
         public ColorInterpolator(Color startColor, Color endColor, int numColors) {
@@ -40,8 +56,9 @@ public class ColorInterpolator {
         }
 
         public Color getColor(int step, int maxStep) {
-
-                int adjustedStep = step / maxStep;
+                int adjustedStep = step;
+                if (step != 0)
+                        adjustedStep = maxStep / step;
 
                 if (adjustedStep >= numColors) {
                         return colors[colors.length - 1];
