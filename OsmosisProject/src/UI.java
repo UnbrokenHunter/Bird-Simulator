@@ -18,15 +18,53 @@ public class UI {
         DrawFlockPowerSwitch(g, 5, "Flock");
         DrawAlignPowerSwitch(g, 6, "Align");
         DrawAvoidPowerSwitch(g, 7, "Avoid");
-        DrawPredatorPowerSwitch(g, 8, "Predator");
-        DrawPredatorCountSwitch(g, 9, "Predator Count");
+        DrawPredatorPowerSwitch(g, 8, "Fear");
+        DrawBarrierPowerSwitch(g, 9, "Barrier");
 
-        DrawBecomePredatorButton(g, 10, "Become Predator");
+        DrawPredatorCountSwitch(g, 10, "Hawks");
+        DrawBecomePredatorButton(g, 11, "Control");
+
+        DrawDestroyLastBarrierButton(g, 12, "Destroy Last Barrier");
+        DrawPauseButton(g, 13, "Pause");
+        DrawRestartButton(g, 14, "Restart");
+    }
+
+    private void DrawRestartButton(Graphics g, int buttonPositionY, String text) {
+        g.setColor(Color.white);
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, "")) {
+            Field.Restart();
+            System.out.println("Restart");
+        }
+
+        g.setColor(Color.black);
+        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
+    }
+
+    private void DrawDestroyLastBarrierButton(Graphics g, int buttonPositionY, String text) {
+        g.setColor(Color.white);
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, "")) {
+            Settings.Barriers.removeLast();
+            System.out.println("Destroy Last Barrier");
+        }
+
+        g.setColor(Color.black);
+        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
+    }
+
+    private void DrawPauseButton(Graphics g, int buttonPositionY, String text) {
+        g.setColor(Color.white);
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.Pause)) {
+            Settings.Pause = !Settings.Pause;
+            System.out.println("Pause");
+        }
+
+        g.setColor(Color.black);
+        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
     }
 
     private void DrawBecomePredatorButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(buttonPositionY, Settings.bButtonSize, me, g, Settings.BecomePredator)) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.BecomePredator)) {
             System.out.println("Become Predator");
             Settings.BecomePredatorHelper();
         }
@@ -37,7 +75,7 @@ public class UI {
 
     private void DrawPredatorCountSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 1, Settings.PredatorCount);
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 1, Settings.PredatorCount);
         if (switchAmount != 0) {
             Settings.UpdatePredatorCount((int) switchAmount);
             System.out.println("Predator Count Toggled: " + (int) Settings.PredatorCount);
@@ -47,9 +85,25 @@ public class UI {
         DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
     }
 
+    private void DrawBarrierPowerSwitch(Graphics g, int buttonPositionY, String text) {
+        g.setColor(Color.white);
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.1,
+                Settings.BarrierPower);
+        if (switchAmount != 0) {
+            if (Settings.BarrierPower + switchAmount >= 0)
+                Settings.BarrierPower += switchAmount;
+            else
+                Settings.BarrierPower = 0;
+            System.out.println("Barrier Toggled: " + Settings.BarrierPower);
+        }
+
+        g.setColor(Color.black);
+        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
+    }
+
     private void DrawPredatorPowerSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 0.0001,
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.0001,
                 Settings.PredatorPower);
         if (switchAmount != 0) {
             if (Settings.PredatorPower + switchAmount >= 0)
@@ -65,7 +119,8 @@ public class UI {
 
     private void DrawFlockPowerSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 0.0001, Settings.FlockPower);
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.0001,
+                Settings.FlockPower);
         if (switchAmount != 0) {
             if (Settings.FlockPower + switchAmount >= 0)
                 Settings.FlockPower += switchAmount;
@@ -80,7 +135,7 @@ public class UI {
 
     private void DrawAlignPowerSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 0.01, Settings.AlignPower);
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.01, Settings.AlignPower);
         if (switchAmount != 0) {
             if (Settings.AlignPower + switchAmount >= 0)
                 Settings.AlignPower += switchAmount;
@@ -95,7 +150,7 @@ public class UI {
 
     private void DrawAvoidPowerSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 0.001, Settings.AvoidPower);
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.001, Settings.AvoidPower);
         if (switchAmount != 0) {
             if (Settings.AvoidPower + switchAmount >= 0)
                 Settings.AvoidPower += switchAmount;
@@ -110,7 +165,7 @@ public class UI {
 
     private void DrawBirdCountSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        int switchAmount = (int) SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 100, Settings.BirdCount);
+        int switchAmount = (int) SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 100, Settings.BirdCount);
         if (switchAmount != 0) {
             System.out.println("Bird Count Toggled: " + switchAmount);
             Settings.UpdateBirdCount(switchAmount);
@@ -122,7 +177,7 @@ public class UI {
 
     private void DrawFancyColorsButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(buttonPositionY, Settings.bButtonSize, me, g, Settings.DoFancyColor)) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.DoFancyColor)) {
             System.out.println("Fancy Colors Toggled");
             Settings.DoFancyColor = !Settings.DoFancyColor;
         }
@@ -133,7 +188,8 @@ public class UI {
 
     private void DrawNumberOfColorsButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        int switchAmount = (int) SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 1, Settings.NumberOfColors);
+        int switchAmount = (int) SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 1,
+                Settings.NumberOfColors);
         if (switchAmount != 0) {
             if (Settings.NumberOfColors + switchAmount >= 0)
                 Settings.NumberOfColors += switchAmount;
@@ -150,7 +206,7 @@ public class UI {
 
     private void DrawNextColorButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(buttonPositionY, Settings.bButtonSize, me, g, Settings.DoFancyColor)) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.DoFancyColor)) {
             Settings.SetNextColor();
             System.out.println("Next Color Toggle: " + Settings.ColorPalatte);
         }
@@ -161,7 +217,7 @@ public class UI {
 
     private void DrawBounceButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(buttonPositionY, Settings.bButtonSize, me, g, Settings.Bounce)) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.Bounce)) {
             System.out.println("Bounce Toggled");
             Settings.Bounce = !Settings.Bounce;
         }
@@ -181,7 +237,19 @@ public class UI {
         g.drawString(text, (int) drawPosition.x + (int) offset.x, (int) drawPosition.y + (int) offset.y);
     }
 
-    public static double SwitchHelper(int yPositionOffset, Vector2 size, MouseEvent mouse, Graphics g, double amount,
+    public static void DrawTextHelperRight(Graphics g, int buttonPositionY, String text, Vector2 offset) {
+        Vector2 position = new Vector2(Settings.Width - (int) (Settings.bButtonSize.x * 1.5),
+                Settings.bButtonPositionYStart + buttonPositionY * Settings.bButtonSize.y);
+
+        Font font = new Font("Arial", Font.PLAIN, TextUtilities.calcFontSize(text, position, Settings.bButtonSize, g));
+        g.setFont(font);
+
+        Vector2 drawPosition = TextUtilities.alignTextRight(text, position, Settings.bButtonSize, g);
+        g.drawString(text, (int) drawPosition.x + (int) offset.x, (int) drawPosition.y + (int) offset.y);
+    }
+
+    public static double SwitchHelper(int xPositionOffset, int yPositionOffset, Vector2 size, MouseEvent mouse,
+            Graphics g, double amount,
             double value) {
         Vector2 position = new Vector2(Settings.Width - (int) (Settings.bButtonSize.x * 1.5),
                 Settings.bButtonPositionYStart + yPositionOffset * size.y);
@@ -193,12 +261,32 @@ public class UI {
         g.fillRect((int) position.x, (int) position.y + (int) size.y / 2 + yPositionOffset, (int) size.x,
                 (int) size.y / 2 - 1);
 
-        double displayValue = value;
-        if (displayValue < 1)
-            displayValue = displayValue * 10000;
+        g.setColor(Color.black);
+        // Arrow One
+        g.drawLine((int) position.x + (int) size.x / 4,
+                (int) position.y + yPositionOffset + (int) size.y / 2 - 6,
+                (int) position.x + (int) size.x / 2,
+                (int) position.y + yPositionOffset + (int) size.y / 3 - 6);
 
+        g.drawLine((int) position.x + (int) size.x - (int) size.x / 4,
+                (int) position.y + yPositionOffset + (int) size.y / 2 - 6,
+                (int) position.x + (int) size.x - (int) size.x / 2,
+                (int) position.y + yPositionOffset + (int) size.y / 3 - 6);
+
+        // Arrow Two
+        g.drawLine((int) position.x + (int) size.x / 4,
+                (int) position.y + yPositionOffset + (int) size.y / 3 - 6 + (int) size.y / 2,
+                (int) position.x + (int) size.x / 2,
+                (int) position.y + yPositionOffset + (int) size.y / 2 - 6 + (int) size.y / 2);
+
+        g.drawLine((int) position.x + (int) size.x - (int) size.x / 4,
+                (int) position.y + yPositionOffset + (int) size.y / 3 - 6 + (int) size.y / 2,
+                (int) position.x + (int) size.x - (int) size.x / 2,
+                (int) position.y + yPositionOffset + (int) size.y / 2 - 6 + (int) size.y / 2);
+
+        var number = (round(((double) value), 4));
         g.setColor(Color.white);
-        DrawTextHelper(g, yPositionOffset, ((int) displayValue) + "", new Vector2(-60, 0));
+        DrawTextHelperRight(g, yPositionOffset, (number == 0 ? (int) number : number) + "", new Vector2(-60, 0));
 
         if (me == null)
             return 0;
@@ -230,7 +318,8 @@ public class UI {
         return 0;
     }
 
-    public static boolean ButtonHelper(int yPositionOffset, Vector2 size, MouseEvent mouse, Graphics g, Object value) {
+    public static boolean ButtonHelper(int xPositionOffset, int yPositionOffset, Vector2 size, MouseEvent mouse,
+            Graphics g, Object value) {
 
         Vector2 position = new Vector2(Settings.Width - (int) (Settings.bButtonSize.x * 1.5),
                 Settings.bButtonPositionYStart + yPositionOffset * size.y);
@@ -242,7 +331,7 @@ public class UI {
             value = value.toString();
 
         g.setColor(Color.white);
-        DrawTextHelper(g, yPositionOffset, value + "", new Vector2(-60, 0));
+        DrawTextHelperRight(g, yPositionOffset, value + "", new Vector2(-60, 0));
 
         if (me == null)
             return false;
@@ -262,6 +351,16 @@ public class UI {
             me = null;
 
         return buttonClick;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0)
+            throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 
 }

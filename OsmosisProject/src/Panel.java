@@ -8,9 +8,11 @@ public class Panel extends JPanel {
     private Looper looper;
     private Field field;
     private UI ui;
+    private BirdViewer birdViewer;
 
     public Panel() {
         ui = new UI();
+        birdViewer = new BirdViewer();
         Settings.ColorInterp = new ColorInterpolator(Settings.ColorPalatte, Settings.NumberOfColors);
         field = new Field(Settings.BirdCount);
         looper = new Looper(this, "update");
@@ -28,6 +30,9 @@ public class Panel extends JPanel {
     }
 
     private void MoveBird(Bird bird, Graphics g) {
+        if (bird == null)
+            return;
+
         Vector2 location = new Vector2((float) bird.X, (float) bird.Y);
         Vector2 direction = new Vector2((float) bird.Xvel, (float) bird.Yvel).normalize();
         double angle = Math.toRadians(Math.atan2(direction.y, direction.x)); // Angle in radians
@@ -41,8 +46,9 @@ public class Panel extends JPanel {
 
         // Draw Colors
         if (Settings.DoFancyColor) {
-            int inRadius = field.birdsInRadius(bird, Settings.ColorRadius);
-            g.setColor(Settings.ColorInterp.getColor(inRadius, Settings.NumberOfColors));
+            bird.inRadius = field.birdsInRadius(bird, Settings.ColorRadius);
+            bird.color = Settings.ColorInterp.getColor(bird.inRadius, Settings.NumberOfColors);
+            g.setColor(bird.color);
         } else
             g.setColor(Color.white);
 
@@ -61,17 +67,32 @@ public class Panel extends JPanel {
 
         g.fillPolygon(xPoints, yPoints, 3);
 
+        if (Settings.Pause) {
+
+            g.setColor(Color.red);
+            g.drawOval((int) front.x, (int) front.y, 5, 5);
+        }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        BarrierManager.PreviewBarrier(g);
+
+        for (Barrier barrier : Settings.Barriers) {
+            g.setColor(new Color(5, 31, 69));
+            g.fillRect((int) barrier.Start.x, (int) barrier.Start.y,
+                    (int) barrier.End.x - (int) barrier.Start.x,
+                    (int) barrier.End.y - (int) barrier.Start.y);
+        }
+
         for (Bird bird : Field.Birds) {
             MoveBird(bird, g);
         }
 
         ui.DrawButtons(g);
+        birdViewer.DrawBirdViewer(g);
 
     }
 

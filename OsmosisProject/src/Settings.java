@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class Settings {
 
@@ -7,8 +8,20 @@ public class Settings {
     public static int Height = 700;
     public static boolean Bounce = false;
 
-    public static int BirdCount = 900;
-    public static int PredatorCount = 4;
+    public static int BirdCount = 400;
+    public static int PredatorCount = 0;
+
+    public static Vector2 SpawnPosition() {
+        return new Vector2(Width / 2, Height / 2);
+    }
+
+    public static boolean RandomSpawn = false;
+
+    public static Vector2 SpawnDirection() {
+        return new Vector2(Width / 2, Height / 2);
+    }
+
+    public static boolean RandomDirection = true;
 
     public static ColorInterpolator ColorInterp;
     public static int ColorRadius = 50;
@@ -21,12 +34,22 @@ public class Settings {
 
     // Rules
     public static double FlockPower = 0.0003;
-    public static double AvoidPower = 0.001;
     public static double AlignPower = 0.01;
+    public static double AvoidPower = 0.001;
     public static double PredatorPower = 0.00005;
+    public static double BarrierPower = 0.5;
+
+    public static double FlockDistance = 50;
+    public static double AlignDistance = 50;
+    public static double AvoidDistance = 20;
+    public static double PredatorDistance = 150;
+    public static double BarrierDistance = 30;
 
     // Other
+    public static ArrayList<Barrier> Barriers = new ArrayList<Barrier>();
     public static boolean BecomePredator;
+    public static boolean Pause = false;
+    public static int BirdInViewIndex = 0;
 
     // UI
     public static Vector2 bButtonSize = new Vector2(45, 45);
@@ -35,12 +58,12 @@ public class Settings {
     // Helpers
     public static void BecomePredatorHelper() {
         if (!BecomePredator) {
-            Field.Birds.addFirst(new Bird());
-            Field.Birds.getFirst().isPredator = true;
             BecomePredator = true;
+            UpdatePredatorCount(1);
         } else {
             Field.Birds.removeFirst();
             BecomePredator = false;
+            UpdatePredatorCount(-1);
         }
     }
 
@@ -52,7 +75,9 @@ public class Settings {
 
         for (int i = 0; i < Math.abs(difference); i++) {
             if (difference > 0) {
-                Field.Birds.add(new Bird());
+                Bird bird = new Bird();
+                bird.Name = "bird" + i + Field.Birds.size();
+                Field.Birds.add(bird);
             } else {
                 Field.Birds.removeLast();
 

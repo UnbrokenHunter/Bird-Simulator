@@ -1,12 +1,18 @@
+import java.awt.Color;
 import java.util.Random;
 
 public class Bird {
+    public String Name;
+
     public double X;
     public double Y;
     public double Xvel;
     public double Yvel;
 
     public boolean isPredator = false;
+
+    public int inRadius = 0;
+    public Color color;
 
     public Bird(double x, double y, double xVel, double yVel) {
         this.X = x;
@@ -18,10 +24,20 @@ public class Bird {
     public Bird() {
         Random rand = new Random();
 
-        this.X = rand.nextDouble() * Settings.Width;
-        this.Y = rand.nextDouble() * Settings.Height;
-        this.Xvel = rand.nextDouble() - 0.5;
-        this.Yvel = rand.nextDouble() - 0.5;
+        if (Settings.RandomSpawn) {
+            this.X = rand.nextDouble() * Settings.Width;
+            this.Y = rand.nextDouble() * Settings.Height;
+        } else {
+            this.X = Settings.SpawnPosition().x;
+            this.Y = Settings.SpawnPosition().y;
+        }
+        if (Settings.RandomDirection) {
+            this.Xvel = rand.nextDouble() - 0.5;
+            this.Yvel = rand.nextDouble() - 0.5;
+        } else {
+            this.Xvel = Settings.SpawnDirection().x;
+            this.Yvel = Settings.SpawnDirection().y;
+        }
     }
 
     public void moveForward(double minSpeed, double maxSpeed) {

@@ -34,7 +34,6 @@ public class Main {
             public void componentResized(ComponentEvent e) {
                 Settings.Width = frame.getWidth();
                 Settings.Height = frame.getHeight();
-                // System.out.println("New size - Width: " + Width + ", Height: " + Height);
             }
         });
 
@@ -43,7 +42,7 @@ public class Main {
             @Override
             public void mouseClicked(MouseEvent e) {
                 UI.me = e;
-                System.out.println("Mouse Clicked at X: " + e.getX() + ", Y: " + e.getY());
+                BirdViewer.me = e;
             }
 
             @Override
@@ -52,6 +51,10 @@ public class Main {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                if (!Settings.BecomePredator) {
+                    System.out.println("Create Barrier");
+                    BarrierManager.CreateBarrier();
+                }
             }
 
             @Override
@@ -67,22 +70,35 @@ public class Main {
         frame.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                // System.out.println("Mouse Dragged to X: " + e.getX() + ", Y: " + e.getY());
+                int xOffset = -7;
+                int yOffset = -28;
+
+                // Get the mouse coordinates
+                float mouseX = e.getX() + xOffset;
+                float mouseY = e.getY() + yOffset;
+
+                BarrierManager.DragPosition = new Vector2(mouseX, mouseY);
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                if (Settings.BecomePredator) {
-                    int xOffset = -7;
-                    int yOffset = -28;
+                int xOffset = -7;
+                int yOffset = -28;
 
+                // Get the mouse coordinates
+                float mouseX = e.getX() + xOffset;
+                float mouseY = e.getY() + yOffset;
+
+                if (!Settings.BecomePredator)
+                    BarrierManager.ClickPosition = new Vector2(mouseX, mouseY);
+
+                if (Settings.BecomePredator && !Settings.Pause) {
                     var bird = Field.Birds.getFirst();
                     bird.Xvel = Lerp(bird.Xvel, e.getX() + xOffset - bird.X, 0.1);
                     bird.Yvel = Lerp(bird.Yvel, e.getY() + yOffset - bird.Y, 0.1);
                     bird.X = e.getX() + xOffset;
                     bird.Y = e.getY() + yOffset;
                 }
-                // System.out.println("Mouse Moved to X: " + e.getX() + ", Y: " + e.getY());
             }
         });
 
