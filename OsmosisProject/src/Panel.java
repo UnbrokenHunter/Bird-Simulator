@@ -38,8 +38,8 @@ public class Panel extends JPanel {
         double angle = Math.toRadians(Math.atan2(direction.y, direction.x)); // Angle in radians
 
         Vector2 front = location;
-        Vector2 backLeft = rotatePoints(15, location, angle + 0.5f);
-        Vector2 backRight = rotatePoints(15, location, angle - 0.5f);
+        Vector2 backLeft = Utilities.rotatePoints(15, location, angle + 0.5f);
+        Vector2 backRight = Utilities.rotatePoints(15, location, angle - 0.5f);
 
         // g.setColor(Color.red);
         // g.drawOval((int) front.x - 3, (int) front.y - 3, 6, 6);
@@ -94,22 +94,6 @@ public class Panel extends JPanel {
         ui.DrawButtons(g);
         birdViewer.DrawBirdViewer(g);
 
-    }
-
-    private Vector2 rotatePoints(double distance, Vector2 location, double angle) {
-        angle = Math.toDegrees(angle);
-        double cos = Math.cos(angle);
-        double sin = Math.sin(angle);
-
-        // Calculate new positions without immediately modifying the original rotate
-        // object
-        double newX = ((distance) * cos) + location.x;
-        double newY = ((distance) * sin) + location.y;
-
-        // Update the rotate object with the new values
-        Vector2 newLocation = new Vector2((float) newX, (float) newY);
-
-        return newLocation;
     }
 
 }

@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 public class UI {
 
-    public static MouseEvent me;
+    public static Vector2 mouse;
 
     public void DrawButtons(Graphics g) {
 
@@ -31,7 +31,7 @@ public class UI {
 
     private void DrawRestartButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, "")) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, "")) {
             Field.Restart();
             System.out.println("Restart");
         }
@@ -42,7 +42,7 @@ public class UI {
 
     private void DrawDestroyLastBarrierButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, "")) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, "")) {
             Settings.Barriers.removeLast();
             System.out.println("Destroy Last Barrier");
         }
@@ -53,7 +53,7 @@ public class UI {
 
     private void DrawPauseButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.Pause)) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.Pause)) {
             Settings.Pause = !Settings.Pause;
             System.out.println("Pause");
         }
@@ -64,7 +64,7 @@ public class UI {
 
     private void DrawBecomePredatorButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.BecomePredator)) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.BecomePredator)) {
             System.out.println("Become Predator");
             Settings.BecomePredatorHelper();
         }
@@ -75,7 +75,8 @@ public class UI {
 
     private void DrawPredatorCountSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 1, Settings.PredatorCount);
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 1,
+                Settings.PredatorCount);
         if (switchAmount != 0) {
             Settings.UpdatePredatorCount((int) switchAmount);
             System.out.println("Predator Count Toggled: " + (int) Settings.PredatorCount);
@@ -87,7 +88,7 @@ public class UI {
 
     private void DrawBarrierPowerSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.1,
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.1,
                 Settings.BarrierPower);
         if (switchAmount != 0) {
             if (Settings.BarrierPower + switchAmount >= 0)
@@ -103,7 +104,7 @@ public class UI {
 
     private void DrawPredatorPowerSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.0001,
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.0001,
                 Settings.PredatorPower);
         if (switchAmount != 0) {
             if (Settings.PredatorPower + switchAmount >= 0)
@@ -119,7 +120,7 @@ public class UI {
 
     private void DrawFlockPowerSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.0001,
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.0001,
                 Settings.FlockPower);
         if (switchAmount != 0) {
             if (Settings.FlockPower + switchAmount >= 0)
@@ -135,7 +136,8 @@ public class UI {
 
     private void DrawAlignPowerSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.01, Settings.AlignPower);
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.01,
+                Settings.AlignPower);
         if (switchAmount != 0) {
             if (Settings.AlignPower + switchAmount >= 0)
                 Settings.AlignPower += switchAmount;
@@ -150,7 +152,8 @@ public class UI {
 
     private void DrawAvoidPowerSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 0.001, Settings.AvoidPower);
+        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.001,
+                Settings.AvoidPower);
         if (switchAmount != 0) {
             if (Settings.AvoidPower + switchAmount >= 0)
                 Settings.AvoidPower += switchAmount;
@@ -165,7 +168,8 @@ public class UI {
 
     private void DrawBirdCountSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        int switchAmount = (int) SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 100, Settings.BirdCount);
+        int switchAmount = (int) SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 100,
+                Settings.BirdCount);
         if (switchAmount != 0) {
             System.out.println("Bird Count Toggled: " + switchAmount);
             Settings.UpdateBirdCount(switchAmount);
@@ -177,7 +181,7 @@ public class UI {
 
     private void DrawFancyColorsButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.DoFancyColor)) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.DoFancyColor)) {
             System.out.println("Fancy Colors Toggled");
             Settings.DoFancyColor = !Settings.DoFancyColor;
         }
@@ -188,7 +192,7 @@ public class UI {
 
     private void DrawNumberOfColorsButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        int switchAmount = (int) SwitchHelper(0, buttonPositionY, Settings.bButtonSize, me, g, 1,
+        int switchAmount = (int) SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 1,
                 Settings.NumberOfColors);
         if (switchAmount != 0) {
             if (Settings.NumberOfColors + switchAmount >= 0)
@@ -206,7 +210,7 @@ public class UI {
 
     private void DrawNextColorButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.DoFancyColor)) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.DoFancyColor)) {
             Settings.SetNextColor();
             System.out.println("Next Color Toggle: " + Settings.ColorPalatte);
         }
@@ -217,7 +221,7 @@ public class UI {
 
     private void DrawBounceButton(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, me, g, Settings.Bounce)) {
+        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.Bounce)) {
             System.out.println("Bounce Toggled");
             Settings.Bounce = !Settings.Bounce;
         }
@@ -248,7 +252,7 @@ public class UI {
         g.drawString(text, (int) drawPosition.x + (int) offset.x, (int) drawPosition.y + (int) offset.y);
     }
 
-    public static double SwitchHelper(int xPositionOffset, int yPositionOffset, Vector2 size, MouseEvent mouse,
+    public static double SwitchHelper(int xPositionOffset, int yPositionOffset, Vector2 size, Vector2 mouse,
             Graphics g, double amount,
             double value) {
         Vector2 position = new Vector2(Settings.Width - (int) (Settings.bButtonSize.x * 1.5),
@@ -284,30 +288,23 @@ public class UI {
                 (int) position.x + (int) size.x - (int) size.x / 2,
                 (int) position.y + yPositionOffset + (int) size.y / 2 - 6 + (int) size.y / 2);
 
-        var number = (round(((double) value), 4));
+        var number = (Utilities.round(((double) value), 4));
         g.setColor(Color.white);
         DrawTextHelperRight(g, yPositionOffset, (number == 0 ? (int) number : number) + "", new Vector2(-60, 0));
 
-        if (me == null)
+        if (mouse == null)
             return 0;
 
-        int xOffset = -7;
-        int yOffset = -28;
-
-        // Get the mouse coordinates
-        double mouseX = mouse.getX() + xOffset;
-        double mouseY = mouse.getY() + yOffset;
-
         // Check if the mouse coordinates are within the top button bounds
-        boolean topButtonClick = mouseX >= position.x && mouseX <= (position.x + size.x) &&
-                mouseY >= position.y && mouseY <= (position.y + size.y / 2);
+        boolean topButtonClick = mouse.x >= position.x && mouse.x <= (position.x + size.x) &&
+                mouse.y >= position.y && mouse.y <= (position.y + size.y / 2);
 
         // Check if the mouse coordinates are within the bottom button bounds
-        boolean bottomButtonClick = mouseX >= position.x && mouseX <= (position.x + size.x) &&
-                mouseY >= position.y + size.y / 2 && mouseY <= (position.y + size.y);
+        boolean bottomButtonClick = mouse.x >= position.x && mouse.x <= (position.x + size.x) &&
+                mouse.y >= position.y + size.y / 2 && mouse.y <= (position.y + size.y);
 
         if (topButtonClick || bottomButtonClick == true)
-            me = null;
+            mouse = null;
 
         if (topButtonClick)
             return amount;
@@ -318,7 +315,7 @@ public class UI {
         return 0;
     }
 
-    public static boolean ButtonHelper(int xPositionOffset, int yPositionOffset, Vector2 size, MouseEvent mouse,
+    public static boolean ButtonHelper(int xPositionOffset, int yPositionOffset, Vector2 size, Vector2 mouse,
             Graphics g, Object value) {
 
         Vector2 position = new Vector2(Settings.Width - (int) (Settings.bButtonSize.x * 1.5),
@@ -333,34 +330,17 @@ public class UI {
         g.setColor(Color.white);
         DrawTextHelperRight(g, yPositionOffset, value + "", new Vector2(-60, 0));
 
-        if (me == null)
+        if (mouse == null)
             return false;
 
-        int xOffset = -7;
-        int yOffset = -28;
-
-        // Get the mouse coordinates
-        double mouseX = mouse.getX() + xOffset;
-        double mouseY = mouse.getY() + yOffset;
-
         // Check if the mouse coordinates are within the button bounds
-        boolean buttonClick = mouseX >= position.x && mouseX <= (position.x + size.x) &&
-                mouseY >= position.y && mouseY <= (position.y + size.y);
+        boolean buttonClick = mouse.x >= position.x && mouse.x <= (position.x + size.x) &&
+                mouse.y >= position.y && mouse.y <= (position.y + size.y);
 
         if (buttonClick == true)
-            me = null;
+            mouse = null;
 
         return buttonClick;
-    }
-
-    public static double round(double value, int places) {
-        if (places < 0)
-            throw new IllegalArgumentException();
-
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
     }
 
 }

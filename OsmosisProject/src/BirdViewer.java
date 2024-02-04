@@ -1,11 +1,10 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 
 public class BirdViewer {
 
-    public static MouseEvent me;
+    public static Vector2 mouse;
     private static Bird birdInView;
     private int yOffset = 30;
     private static int xOffset = 150;
@@ -47,7 +46,8 @@ public class BirdViewer {
 
     private void DrawNextBirdSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 1, Settings.BirdInViewIndex);
+        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, mouse, g, 1,
+                Settings.BirdInViewIndex);
         if (switchAmount != 0) {
             Settings.BirdInViewIndex += switchAmount;
             if (Settings.BirdInViewIndex < 0)
@@ -61,7 +61,7 @@ public class BirdViewer {
 
     private void DrawXCoordSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 10, birdInView.X);
+        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, mouse, g, 10, birdInView.X);
         if (switchAmount != 0) {
             birdInView.X += switchAmount;
             System.out.println("Bird X: " + (int) birdInView.X);
@@ -73,7 +73,7 @@ public class BirdViewer {
 
     private void DrawYCoordSwitch(Graphics g, int buttonPositionY, String text) {
         g.setColor(Color.white);
-        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, me, g, 10, birdInView.Y);
+        double switchAmount = SwitchHelper(buttonPositionY, Settings.bButtonSize, mouse, g, 10, birdInView.Y);
         if (switchAmount != 0) {
             birdInView.Y += switchAmount;
             System.out.println("Bird Y: " + (int) birdInView.Y);
@@ -106,7 +106,7 @@ public class BirdViewer {
         g.drawString(text, (int) drawPosition.x + (int) offset.x, (int) drawPosition.y + (int) offset.y);
     }
 
-    public static double SwitchHelper(int yPositionOffset, Vector2 size, MouseEvent mouse, Graphics g, double amount,
+    public static double SwitchHelper(int yPositionOffset, Vector2 size, Vector2 mouse, Graphics g, double amount,
             double value) {
         Vector2 position = new Vector2(xOffset,
                 Settings.bButtonPositionYStart + yPositionOffset * size.y);
@@ -146,26 +146,19 @@ public class BirdViewer {
         g.setColor(Color.white);
         DrawTextHelper(g, yPositionOffset, ((int) displayValue) + "", new Vector2(-60, 0));
 
-        if (me == null)
+        if (mouse == null)
             return 0;
 
-        int XOffset = -7;
-        int YOffset = -28;
-
-        // Get the mouse coordinates
-        double mouseX = mouse.getX() + XOffset;
-        double mouseY = mouse.getY() + YOffset;
-
         // Check if the mouse coordinates are within the top button bounds
-        boolean topButtonClick = mouseX >= position.x && mouseX <= (position.x + size.x) &&
-                mouseY >= position.y && mouseY <= (position.y + size.y / 2);
+        boolean topButtonClick = mouse.x >= position.x && mouse.x <= (position.x + size.x) &&
+                mouse.y >= position.y && mouse.y <= (position.y + size.y / 2);
 
         // Check if the mouse coordinates are within the bottom button bounds
-        boolean bottomButtonClick = mouseX >= position.x && mouseX <= (position.x + size.x) &&
-                mouseY >= position.y + size.y / 2 && mouseY <= (position.y + size.y);
+        boolean bottomButtonClick = mouse.x >= position.x && mouse.x <= (position.x + size.x) &&
+                mouse.y >= position.y + size.y / 2 && mouse.x <= (position.y + size.y);
 
         if (topButtonClick || bottomButtonClick == true)
-            me = null;
+            mouse = null;
 
         if (topButtonClick)
             return amount;

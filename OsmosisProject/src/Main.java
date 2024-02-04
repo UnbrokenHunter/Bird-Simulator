@@ -23,6 +23,10 @@ public class Main {
 
     // Create the window
     public void createAndShowGUI() {
+
+        int xOffset = -7;
+        int yOffset = -28;
+
         JFrame frame = new JFrame("Bird Simulator");
         frame.setSize(Settings.Width, Settings.Height);
 
@@ -41,8 +45,11 @@ public class Main {
         frame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UI.me = e;
-                BirdViewer.me = e;
+                // Get the mouse coordinates
+                Vector2 mouse = new Vector2(e.getX() + xOffset, e.getY() + yOffset);
+
+                UI.mouse = mouse;
+                BirdViewer.mouse = mouse;
             }
 
             @Override
@@ -70,8 +77,6 @@ public class Main {
         frame.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                int xOffset = -7;
-                int yOffset = -28;
 
                 // Get the mouse coordinates
                 float mouseX = e.getX() + xOffset;
@@ -82,31 +87,24 @@ public class Main {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                int xOffset = -7;
-                int yOffset = -28;
-
                 // Get the mouse coordinates
-                float mouseX = e.getX() + xOffset;
-                float mouseY = e.getY() + yOffset;
+                double mouseX = e.getX() + xOffset;
+                double mouseY = e.getY() + yOffset;
 
                 if (!Settings.BecomePredator)
-                    BarrierManager.ClickPosition = new Vector2(mouseX, mouseY);
+                    BarrierManager.ClickPosition = new Vector2((float) mouseX, (float) mouseY);
 
                 if (Settings.BecomePredator && !Settings.Pause) {
                     var bird = Field.Birds.getFirst();
-                    bird.Xvel = Lerp(bird.Xvel, e.getX() + xOffset - bird.X, 0.1);
-                    bird.Yvel = Lerp(bird.Yvel, e.getY() + yOffset - bird.Y, 0.1);
-                    bird.X = e.getX() + xOffset;
-                    bird.Y = e.getY() + yOffset;
+                    bird.Xvel = Utilities.Lerp(bird.Xvel, mouseX - bird.X, 0.1d);
+                    bird.Yvel = Utilities.Lerp(bird.Yvel, mouseY - bird.Y, 0.1d);
+                    bird.X = mouseX;
+                    bird.Y = mouseY;
                 }
             }
         });
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-    }
-
-    private static double Lerp(double n0, double n1, double a) {
-        return (1.0 - a) * n0 + (a * n1);
     }
 }
