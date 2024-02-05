@@ -176,7 +176,7 @@ public class UIUtilities {
         DrawSwitch(g, buttonPosition, size, buttonColor);
 
         if (displayValue) {
-            g.setColor(new Color(82, 119, 156));
+            g.setColor(Color.black);
             var number = (Utilities.round(((double) value), 4));
             var text = (number == 0 ? (int) number : number) + "";
             DrawTextHelper(g, new Vector2(buttonPosition.x, buttonPosition.y + size.y / 3),
@@ -198,6 +198,7 @@ public class UIUtilities {
                 && Settings.MouseClick.y <= (buttonPosition.y + size.y);
 
         if (topButtonClick || bottomButtonClick) {
+            Main.sound.PlayClick();
             Settings.MouseClick = null;
             return topButtonClick ? amount : -amount;
         }
@@ -210,7 +211,7 @@ public class UIUtilities {
         DrawButton(g, buttonPosition, size, buttonColor);
 
         if (displayValue) {
-            g.setColor(new Color(82, 119, 156));
+            g.setColor(Color.black);
             DrawTextHelper(g, new Vector2(buttonPosition.x, buttonPosition.y + size.y / 3),
                     size, value + "", 9);
         }
@@ -223,8 +224,10 @@ public class UIUtilities {
                 && Settings.MouseClick.x <= (buttonPosition.x + size.x) &&
                 Settings.MouseClick.y >= buttonPosition.y && Settings.MouseClick.y <= (buttonPosition.y + size.y);
 
-        if (buttonClick == true)
+        if (buttonClick == true) {
+            Main.sound.PlayClick();
             Settings.MouseClick = null;
+        }
 
         return buttonClick;
     }

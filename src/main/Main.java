@@ -10,9 +10,14 @@ import javax.swing.SwingUtilities;
 
 public class Main {
 
+    public static Sound sound;
+
     public static void main(String[] args) {
 
         Main main = new Main();
+
+        sound = new Sound();
+        sound.PlayClick();
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
