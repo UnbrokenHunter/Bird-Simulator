@@ -1,346 +1,164 @@
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 
 public class UI {
 
-    public static Vector2 mouse;
+    private Vector2 position = Vector2.zero;
+
+    private boolean HideUI = false;
+    private boolean BirdsUI = false;
+    private boolean ColorUI = false;
+    private boolean PowerUI = false;
+    private boolean DistanceUI = false;
+    private boolean HawksUI = false;
+    private boolean BarrierUI = false;
 
     public void DrawButtons(Graphics g) {
 
-        DrawBounceButton(g, 0, "Bounce");
-        DrawNextColorButton(g, 1, "Next Color");
-        DrawNumberOfColorsButton(g, 2, "Num Colors");
-        DrawFancyColorsButton(g, 3, "Fancy Colors");
-        DrawBirdCountSwitch(g, 4, "Bird Count");
+        position = new Vector2(Settings.Width - Settings.bButtonSize.x * 1.3f - 5, 5f);
 
-        DrawFlockPowerSwitch(g, 5, "Flock");
-        DrawAlignPowerSwitch(g, 6, "Align");
-        DrawAvoidPowerSwitch(g, 7, "Avoid");
-        DrawPredatorPowerSwitch(g, 8, "Fear");
-        DrawBarrierPowerSwitch(g, 9, "Barrier");
+        if (HideUI)
+            HideUI(g);
+        else if (BirdsUI)
+            BirdsUI(g);
+        else if (ColorUI)
+            ColorUI(g);
+        else if (PowerUI)
+            PowerUI(g);
+        else if (DistanceUI)
+            DistanceUI(g);
+        else if (HawksUI)
+            HawksUI(g);
+        else if (BarrierUI)
+            BarrierUI(g);
+        else
+            GeneralUI(g);
 
-        DrawPredatorCountSwitch(g, 10, "Hawks");
-        DrawBecomePredatorButton(g, 11, "Control");
-
-        DrawDestroyLastBarrierButton(g, 12, "Destroy Last Barrier");
-        DrawPauseButton(g, 13, "Pause");
-        DrawRestartButton(g, 14, "Restart");
+        UIUtilities.EndGroup();
     }
 
-    private void DrawRestartButton(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, "")) {
+    private void GeneralUI(Graphics g) {
+
+        UIUtilities.StartGroup(g, position, new Vector2(0, 54), 9);
+
+        HideUI = UIUtilities.DrawButton(g, "Hide", BirdsUI, false);
+        Settings.Pause = UIUtilities.DrawButton(g, "Pause", Settings.Pause, false, Settings.cGreen);
+        if (UIUtilities.DrawButton(g, "Restart", false, false, Settings.cPink))
             Field.Restart();
-            System.out.println("Restart");
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
+        BirdsUI = UIUtilities.DrawButton(g, "Birds", BirdsUI, false, Settings.cMagenta);
+        ColorUI = UIUtilities.DrawButton(g, "Colors", ColorUI, false, Settings.cBlue);
+        PowerUI = UIUtilities.DrawButton(g, "Power", PowerUI, false, Settings.cPurple);
+        DistanceUI = UIUtilities.DrawButton(g, "Distance", DistanceUI, false, Settings.cOrange);
+        HawksUI = UIUtilities.DrawButton(g, "Hawks", HawksUI, false, Settings.cYellow);
+        BarrierUI = UIUtilities.DrawButton(g, "Barriers", BarrierUI, false, Settings.cRed);
     }
 
-    private void DrawDestroyLastBarrierButton(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, "")) {
+    private void HideUI(Graphics g) {
+        UIUtilities.StartGroup(g, position, new Vector2(0, 54), 1);
+
+        HideUI = UIUtilities.DrawButton(g, "Show", HideUI, false);
+    }
+
+    private void BirdsUI(Graphics g) {
+        UIUtilities.StartGroup(g, position, new Vector2(0, 54), 3);
+
+        ReturnToMainUI(UIUtilities.DrawButton(g, "Return",
+                false, false));
+
+        // Birds
+        Settings.Bounce = UIUtilities.DrawButton(g, "Bounce", Settings.Bounce, Settings.cGreen);
+        Settings.UpdateBirdCount(
+                (int) UIUtilities.DrawSwitch(g, "Bird Count", Settings.BirdCount, 100, Settings.cBlue));
+    }
+
+    private void ColorUI(Graphics g) {
+        UIUtilities.StartGroup(g, position, new Vector2(0, 54), 4);
+
+        ReturnToMainUI(UIUtilities.DrawButton(g, "Return",
+                false, false));
+
+        // Colors
+        Settings.SetNextColor((int) UIUtilities.DrawSwitch(g, "Next Color",
+                Settings.ColorIndex, 1, Settings.cRed));
+        Settings.NumberOfColors += (int) UIUtilities.DrawSwitch(g, "Num Colors",
+                Settings.NumberOfColors, 10, Settings.cPink);
+        Settings.DoFancyColor = UIUtilities.DrawButton(g, "Fancy Colors",
+                Settings.DoFancyColor, Settings.cMagenta);
+    }
+
+    private void PowerUI(Graphics g) {
+        UIUtilities.StartGroup(g, position, new Vector2(0, 54), 6);
+
+        ReturnToMainUI(UIUtilities.DrawButton(g, "Return",
+                false, false));
+
+        // Power
+        Settings.FlockPower += (int) UIUtilities.DrawSwitch(g, "Flock",
+                Settings.FlockPower, 0.0001, Settings.cPink);
+        Settings.AlignPower += (int) UIUtilities.DrawSwitch(g, "Align",
+                Settings.AlignPower, 0.01, Settings.cMagenta);
+        Settings.AvoidPower += (int) UIUtilities.DrawSwitch(g, "Avoid",
+                Settings.AvoidPower, 0.001, Settings.cOrange);
+        Settings.PredatorPower += (int) UIUtilities.DrawSwitch(g, "Fear",
+                Settings.PredatorPower, 0.1, Settings.cYellow);
+        Settings.BarrierPower += (int) UIUtilities.DrawSwitch(g, "Barrier",
+                Settings.BarrierPower, 0.0001, Settings.cPink);
+    }
+
+    private void DistanceUI(Graphics g) {
+        UIUtilities.StartGroup(g, position, new Vector2(0, 54), 6);
+
+        ReturnToMainUI(UIUtilities.DrawButton(g, "Return",
+                false, false));
+
+        // Distance
+        Settings.FlockDistance += (int) UIUtilities.DrawSwitch(g, "Flock",
+                Settings.FlockDistance, 10, Settings.cPink);
+        Settings.AlignDistance += (int) UIUtilities.DrawSwitch(g, "Align",
+                Settings.AlignDistance, 10, Settings.cMagenta);
+        Settings.AvoidDistance += (int) UIUtilities.DrawSwitch(g, "Avoid",
+                Settings.AvoidDistance, 10, Settings.cOrange);
+        Settings.PredatorDistance += (int) UIUtilities.DrawSwitch(g, "Fear",
+                Settings.PredatorDistance, 10, Settings.cYellow);
+        Settings.BarrierDistance += (int) UIUtilities.DrawSwitch(g, "Barrier",
+                Settings.BarrierDistance, 10, Settings.cPink);
+
+    }
+
+    private void HawksUI(Graphics g) {
+        UIUtilities.StartGroup(g, position, new Vector2(0, 54), 3);
+
+        ReturnToMainUI(UIUtilities.DrawButton(g, "Return",
+                false, false));
+
+        // Hawks
+        Settings.UpdatePredatorCount((int) UIUtilities.DrawSwitch(g, "Hawks",
+                Settings.PredatorCount, 1, Settings.cBlue));
+        Settings.BecomePredatorHelper(UIUtilities.DrawButton(g, "Control",
+                false, Settings.cRed));
+    }
+
+    private void BarrierUI(Graphics g) {
+        UIUtilities.StartGroup(g, position, new Vector2(0, 54), 2);
+
+        ReturnToMainUI(UIUtilities.DrawButton(g, "Return",
+                false, false));
+
+        // Barriers
+        if (UIUtilities.DrawButton(g, "Undo Barrier", false, Settings.cBlue))
             Settings.Barriers.removeLast();
-            System.out.println("Destroy Last Barrier");
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
     }
 
-    private void DrawPauseButton(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.Pause)) {
-            Settings.Pause = !Settings.Pause;
-            System.out.println("Pause");
-        }
+    private void ReturnToMainUI(boolean doReturn) {
+        if (!doReturn)
+            return;
 
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawBecomePredatorButton(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.BecomePredator)) {
-            System.out.println("Become Predator");
-            Settings.BecomePredatorHelper();
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawPredatorCountSwitch(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 1,
-                Settings.PredatorCount);
-        if (switchAmount != 0) {
-            Settings.UpdatePredatorCount((int) switchAmount);
-            System.out.println("Predator Count Toggled: " + (int) Settings.PredatorCount);
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawBarrierPowerSwitch(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.1,
-                Settings.BarrierPower);
-        if (switchAmount != 0) {
-            if (Settings.BarrierPower + switchAmount >= 0)
-                Settings.BarrierPower += switchAmount;
-            else
-                Settings.BarrierPower = 0;
-            System.out.println("Barrier Toggled: " + Settings.BarrierPower);
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawPredatorPowerSwitch(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.0001,
-                Settings.PredatorPower);
-        if (switchAmount != 0) {
-            if (Settings.PredatorPower + switchAmount >= 0)
-                Settings.PredatorPower += switchAmount;
-            else
-                Settings.PredatorPower = 0;
-            System.out.println("Flock Toggled: " + Settings.PredatorPower);
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawFlockPowerSwitch(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.0001,
-                Settings.FlockPower);
-        if (switchAmount != 0) {
-            if (Settings.FlockPower + switchAmount >= 0)
-                Settings.FlockPower += switchAmount;
-            else
-                Settings.FlockPower = 0;
-            System.out.println("Flock Toggled: " + Settings.FlockPower);
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawAlignPowerSwitch(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.01,
-                Settings.AlignPower);
-        if (switchAmount != 0) {
-            if (Settings.AlignPower + switchAmount >= 0)
-                Settings.AlignPower += switchAmount;
-            else
-                Settings.AlignPower = 0;
-            System.out.println("Align Toggled: " + Settings.AlignPower);
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawAvoidPowerSwitch(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        double switchAmount = SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 0.001,
-                Settings.AvoidPower);
-        if (switchAmount != 0) {
-            if (Settings.AvoidPower + switchAmount >= 0)
-                Settings.AvoidPower += switchAmount;
-            else
-                Settings.AvoidPower = 0;
-            System.out.println("Avoid Toggled: " + Settings.AvoidPower);
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawBirdCountSwitch(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        int switchAmount = (int) SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 100,
-                Settings.BirdCount);
-        if (switchAmount != 0) {
-            System.out.println("Bird Count Toggled: " + switchAmount);
-            Settings.UpdateBirdCount(switchAmount);
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawFancyColorsButton(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.DoFancyColor)) {
-            System.out.println("Fancy Colors Toggled");
-            Settings.DoFancyColor = !Settings.DoFancyColor;
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawNumberOfColorsButton(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        int switchAmount = (int) SwitchHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, 1,
-                Settings.NumberOfColors);
-        if (switchAmount != 0) {
-            if (Settings.NumberOfColors + switchAmount >= 0)
-                Settings.NumberOfColors += switchAmount;
-            else
-                Settings.NumberOfColors = 0;
-
-            Settings.ColorInterp.SetNumColors(Settings.NumberOfColors);
-            System.out.println("Num Colors Colors Toggled");
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawNextColorButton(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.DoFancyColor)) {
-            Settings.SetNextColor();
-            System.out.println("Next Color Toggle: " + Settings.ColorPalatte);
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    private void DrawBounceButton(Graphics g, int buttonPositionY, String text) {
-        g.setColor(Color.white);
-        if (ButtonHelper(0, buttonPositionY, Settings.bButtonSize, mouse, g, Settings.Bounce)) {
-            System.out.println("Bounce Toggled");
-            Settings.Bounce = !Settings.Bounce;
-        }
-
-        g.setColor(Color.black);
-        DrawTextHelper(g, buttonPositionY, text, Vector2.zero);
-    }
-
-    public static void DrawTextHelper(Graphics g, int buttonPositionY, String text, Vector2 offset) {
-        Vector2 position = new Vector2(Settings.Width - (int) (Settings.bButtonSize.x * 1.5),
-                Settings.bButtonPositionYStart + buttonPositionY * Settings.bButtonSize.y);
-
-        Font font = new Font("Arial", Font.PLAIN, TextUtilities.calcFontSize(text, position, Settings.bButtonSize, g));
-        g.setFont(font);
-
-        Vector2 drawPosition = TextUtilities.alignTextCenter(text, position, Settings.bButtonSize, g);
-        g.drawString(text, (int) drawPosition.x + (int) offset.x, (int) drawPosition.y + (int) offset.y);
-    }
-
-    public static void DrawTextHelperRight(Graphics g, int buttonPositionY, String text, Vector2 offset) {
-        Vector2 position = new Vector2(Settings.Width - (int) (Settings.bButtonSize.x * 1.5),
-                Settings.bButtonPositionYStart + buttonPositionY * Settings.bButtonSize.y);
-
-        Font font = new Font("Arial", Font.PLAIN, TextUtilities.calcFontSize(text, position, Settings.bButtonSize, g));
-        g.setFont(font);
-
-        Vector2 drawPosition = TextUtilities.alignTextRight(text, position, Settings.bButtonSize, g);
-        g.drawString(text, (int) drawPosition.x + (int) offset.x, (int) drawPosition.y + (int) offset.y);
-    }
-
-    public static double SwitchHelper(int xPositionOffset, int yPositionOffset, Vector2 size, Vector2 mouse,
-            Graphics g, double amount,
-            double value) {
-        Vector2 position = new Vector2(Settings.Width - (int) (Settings.bButtonSize.x * 1.5),
-                Settings.bButtonPositionYStart + yPositionOffset * size.y);
-
-        // Draw First Button
-        g.fillRect((int) position.x, (int) position.y + yPositionOffset, (int) size.x, (int) size.y / 2 - 1);
-
-        // Draw Second Button
-        g.fillRect((int) position.x, (int) position.y + (int) size.y / 2 + yPositionOffset, (int) size.x,
-                (int) size.y / 2 - 1);
-
-        g.setColor(Color.black);
-        // Arrow One
-        g.drawLine((int) position.x + (int) size.x / 4,
-                (int) position.y + yPositionOffset + (int) size.y / 2 - 6,
-                (int) position.x + (int) size.x / 2,
-                (int) position.y + yPositionOffset + (int) size.y / 3 - 6);
-
-        g.drawLine((int) position.x + (int) size.x - (int) size.x / 4,
-                (int) position.y + yPositionOffset + (int) size.y / 2 - 6,
-                (int) position.x + (int) size.x - (int) size.x / 2,
-                (int) position.y + yPositionOffset + (int) size.y / 3 - 6);
-
-        // Arrow Two
-        g.drawLine((int) position.x + (int) size.x / 4,
-                (int) position.y + yPositionOffset + (int) size.y / 3 - 6 + (int) size.y / 2,
-                (int) position.x + (int) size.x / 2,
-                (int) position.y + yPositionOffset + (int) size.y / 2 - 6 + (int) size.y / 2);
-
-        g.drawLine((int) position.x + (int) size.x - (int) size.x / 4,
-                (int) position.y + yPositionOffset + (int) size.y / 3 - 6 + (int) size.y / 2,
-                (int) position.x + (int) size.x - (int) size.x / 2,
-                (int) position.y + yPositionOffset + (int) size.y / 2 - 6 + (int) size.y / 2);
-
-        var number = (Utilities.round(((double) value), 4));
-        g.setColor(Color.white);
-        DrawTextHelperRight(g, yPositionOffset, (number == 0 ? (int) number : number) + "", new Vector2(-60, 0));
-
-        if (mouse == null)
-            return 0;
-
-        // Check if the mouse coordinates are within the top button bounds
-        boolean topButtonClick = mouse.x >= position.x && mouse.x <= (position.x + size.x) &&
-                mouse.y >= position.y && mouse.y <= (position.y + size.y / 2);
-
-        // Check if the mouse coordinates are within the bottom button bounds
-        boolean bottomButtonClick = mouse.x >= position.x && mouse.x <= (position.x + size.x) &&
-                mouse.y >= position.y + size.y / 2 && mouse.y <= (position.y + size.y);
-
-        if (topButtonClick || bottomButtonClick == true)
-            mouse = null;
-
-        if (topButtonClick)
-            return amount;
-
-        if (bottomButtonClick)
-            return -amount;
-
-        return 0;
-    }
-
-    public static boolean ButtonHelper(int xPositionOffset, int yPositionOffset, Vector2 size, Vector2 mouse,
-            Graphics g, Object value) {
-
-        Vector2 position = new Vector2(Settings.Width - (int) (Settings.bButtonSize.x * 1.5),
-                Settings.bButtonPositionYStart + yPositionOffset * size.y);
-
-        // Draw Button
-        g.fillRect((int) position.x, (int) position.y + yPositionOffset, (int) size.x, (int) size.y);
-
-        if (value != null)
-            value = value.toString();
-
-        g.setColor(Color.white);
-        DrawTextHelperRight(g, yPositionOffset, value + "", new Vector2(-60, 0));
-
-        if (mouse == null)
-            return false;
-
-        // Check if the mouse coordinates are within the button bounds
-        boolean buttonClick = mouse.x >= position.x && mouse.x <= (position.x + size.x) &&
-                mouse.y >= position.y && mouse.y <= (position.y + size.y);
-
-        if (buttonClick == true)
-            mouse = null;
-
-        return buttonClick;
+        BirdsUI = false;
+        ColorUI = false;
+        PowerUI = false;
+        DistanceUI = false;
+        HawksUI = false;
+        BarrierUI = false;
     }
 
 }

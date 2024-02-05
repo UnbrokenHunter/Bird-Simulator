@@ -25,7 +25,7 @@ public class Main {
     public void createAndShowGUI() {
 
         int xOffset = -7;
-        int yOffset = -28;
+        int yOffset = -30;
 
         JFrame frame = new JFrame("Bird Simulator");
         frame.setSize(Settings.Width, Settings.Height);
@@ -48,8 +48,7 @@ public class Main {
                 // Get the mouse coordinates
                 Vector2 mouse = new Vector2(e.getX() + xOffset, e.getY() + yOffset);
 
-                UI.mouse = mouse;
-                BirdViewer.mouse = mouse;
+                Settings.MouseClick = mouse;
             }
 
             @Override
@@ -58,7 +57,10 @@ public class Main {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (!Settings.BecomePredator) {
+                // Get the mouse coordinates
+                Vector2 mouse = new Vector2(e.getX() + xOffset, e.getY() + yOffset);
+
+                if (!Settings.BecomePredator && !UIUtilities.PositionIsUI(mouse)) {
                     System.out.println("Create Barrier");
                     BarrierManager.CreateBarrier();
                 }
@@ -79,10 +81,21 @@ public class Main {
             public void mouseDragged(MouseEvent e) {
 
                 // Get the mouse coordinates
-                float mouseX = e.getX() + xOffset;
-                float mouseY = e.getY() + yOffset;
+                double mouseX = e.getX() + xOffset;
+                double mouseY = e.getY() + yOffset;
+                Vector2 mouse = new Vector2((float) mouseX, (float) mouseY);
 
-                BarrierManager.DragPosition = new Vector2(mouseX, mouseY);
+                if (!Settings.BecomePredator && !UIUtilities.PositionIsUI(mouse))
+                    BarrierManager.DragPosition = new Vector2(mouse.x, mouse.y);
+
+                if (Settings.BecomePredator && !Settings.Pause) {
+                    var bird = Field.Birds.getFirst();
+                    bird.Xvel = Utilities.Lerp(bird.Xvel, mouseX - bird.X, 0.1d);
+                    bird.Yvel = Utilities.Lerp(bird.Yvel, mouseY - bird.Y, 0.1d);
+                    bird.X = mouseX;
+                    bird.Y = mouseY;
+                }
+
             }
 
             @Override
@@ -90,8 +103,9 @@ public class Main {
                 // Get the mouse coordinates
                 double mouseX = e.getX() + xOffset;
                 double mouseY = e.getY() + yOffset;
+                Vector2 mouse = new Vector2((float) mouseX, (float) mouseY);
 
-                if (!Settings.BecomePredator)
+                if (!Settings.BecomePredator && !UIUtilities.PositionIsUI(mouse))
                     BarrierManager.ClickPosition = new Vector2((float) mouseX, (float) mouseY);
 
                 if (Settings.BecomePredator && !Settings.Pause) {

@@ -82,9 +82,9 @@ public class Panel extends JPanel {
 
         for (Barrier barrier : Settings.Barriers) {
             g.setColor(new Color(5, 31, 69));
-            g.fillRect((int) barrier.Start.x, (int) barrier.Start.y,
+            g.fillRoundRect((int) barrier.Start.x, (int) barrier.Start.y,
                     (int) barrier.End.x - (int) barrier.Start.x,
-                    (int) barrier.End.y - (int) barrier.Start.y);
+                    (int) barrier.End.y - (int) barrier.Start.y, 10, 10);
         }
 
         for (Bird bird : Field.Birds) {

@@ -8,9 +8,11 @@ public class Settings {
     public static int Height = 700;
     public static boolean Bounce = false;
 
+    // Counts
     public static int BirdCount = 400;
     public static int PredatorCount = 0;
 
+    // Spawn
     public static Vector2 SpawnPosition() {
         return new Vector2(Width / 2, Height / 2);
     }
@@ -23,12 +25,15 @@ public class Settings {
 
     public static boolean RandomDirection = true;
 
+    // Color
     public static ColorInterpolator ColorInterp;
     public static int ColorRadius = 50;
     public static int NumberOfColors = 40;
     public static Color[] ColorPalatte = ColorInterpolator.RAINBOW;
+    public static int ColorIndex = 0;
     public static boolean DoFancyColor = true;
 
+    // Speed
     public static double MinSpeed = 2;
     public static double MaxSpeed = 5;
 
@@ -52,11 +57,31 @@ public class Settings {
     public static int BirdInViewIndex = 0;
 
     // UI
-    public static Vector2 bButtonSize = new Vector2(45, 45);
-    public static int bButtonPositionYStart = 0;
+    public static Vector2 MouseClick = Vector2.zero;
+    public static Vector2 bButtonSize = new Vector2(50, 50);
+    public static Vector2 UIStartBounds = Vector2.zero;
+    public static Vector2 UISizeBounds = Vector2.zero;
+    public static Vector2 UIEndBounds = Vector2.zero;
+
+    // UI Colors
+    public static Color cDefaultColor = new Color(48, 85, 122);
+    public static Color cDefaultBackground = new Color(23, 56, 90);
+    public static Color cGreen = new Color(114, 242, 192, 95);
+    public static Color cBlue = new Color(114, 167, 242, 95);
+    public static Color cRed = new Color(245, 128, 144, 96);
+    public static Color cYellow = new Color(245, 245, 140, 96);
+    public static Color cOrange = new Color(244, 209, 139, 96);
+    public static Color cPink = new Color(230, 153, 247, 97);
+    public static Color cPurple = new Color(175, 173, 247, 97);
+    public static Color cMagenta = new Color(231, 133, 244, 96);
 
     // Helpers
-    public static void BecomePredatorHelper() {
+    public static void BecomePredatorHelper(boolean change) {
+        if (!change)
+            return;
+
+        System.out.println("Become Predator: " + BecomePredator);
+
         if (!BecomePredator) {
             BecomePredator = true;
             UpdatePredatorCount(1);
@@ -93,20 +118,24 @@ public class Settings {
         Field.Birds.get(PredatorCount).isPredator = !Field.Birds.get(PredatorCount).isPredator;
     }
 
-    private static int colorIndex = 0;
+    public static void SetNextColor(int difference) {
+        if (difference == 0)
+            return;
 
-    public static void SetNextColor() {
         var pallates = ColorInterpolator.getPalettes();
-        colorIndex++;
+        ColorIndex += difference;
 
-        if (colorIndex > pallates.size())
-            colorIndex = 0;
+        if (ColorIndex > pallates.size())
+            ColorIndex = 0;
+
+        if (ColorIndex < 0)
+            ColorIndex = pallates.size();
 
         int count = 0;
         for (Color[] colors : pallates.values()) {
 
-            System.out.println("Index: " + count + ", Color Index: " + colorIndex);
-            if (count == colorIndex) {
+            System.out.println("Index: " + count + ", Color Index: " + ColorIndex);
+            if (count == ColorIndex) {
                 ColorInterp.SetColors(colors);
                 return;
             }

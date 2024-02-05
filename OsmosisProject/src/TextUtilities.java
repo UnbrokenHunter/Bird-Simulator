@@ -305,6 +305,18 @@ public class TextUtilities {
     }
 
     /**
+     * Calculates the total height required for rendering multiple lines of text.
+     *
+     * @param lines A list of text lines.
+     * @param g     The graphics context.
+     * @return The total height in pixels.
+     */
+    public static int getHeightOText(String text, Graphics g) {
+        FontMetrics fm = g.getFontMetrics();
+        return fm.getHeight();
+    }
+
+    /**
      * Determines the optimal font size for rendering multiple lines of text within
      * a specified area.
      *
@@ -418,6 +430,43 @@ public class TextUtilities {
         Graphics2D g2d = (Graphics2D) g;
         GradientPaint gradient = new GradientPaint(startPos.x, startPos.y, startColor, endPos.x, endPos.y, endColor);
         g2d.setPaint(gradient);
+    }
+
+    /**
+     * Calculates the center position for each line of a multiline text to be
+     * displayed
+     * inside a specified area.
+     *
+     * @param lines A list of text lines.
+     * @param pos   Starting position of the area.
+     * @param size  Desired size of the area.
+     * @param g     Graphics context for measuring text dimensions.
+     * @return List of center positions for each line.
+     */
+    public static List<Vector2> calcCenterOfEachLine(List<String> lines, Vector2 pos, Vector2 size, Graphics g) {
+        List<Vector2> centers = new ArrayList<>();
+        FontMetrics fm = g.getFontMetrics();
+
+        int lineHeight = fm.getHeight();
+        int totalHeight = lineHeight * lines.size();
+
+        // Vertical position of the first line
+        int startY = (int) (pos.y + (size.y - totalHeight) / 2) + fm.getAscent();
+
+        for (String line : lines) {
+            int textWidth = fm.stringWidth(line);
+
+            // Calculate center for each line
+            int x = (int) (pos.x + (size.x - textWidth) / 2);
+            int y = startY;
+
+            centers.add(new Vector2(x, y));
+
+            // Move to the next line
+            startY += lineHeight;
+        }
+
+        return centers;
     }
 
     // Private helper method to calculate vertical alignment for text.

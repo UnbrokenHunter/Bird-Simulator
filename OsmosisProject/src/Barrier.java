@@ -1,17 +1,11 @@
-import java.util.Random;
-
 public class Barrier {
 
     public Vector2 Start;
     public Vector2 End;
 
-    private Random rand;
-
     public Barrier(Vector2 start, Vector2 end) {
         this.Start = start;
         this.End = end;
-
-        rand = new Random();
     }
 
     public Vector2 CalculateTurnOnBarrier(Bird bird) {
