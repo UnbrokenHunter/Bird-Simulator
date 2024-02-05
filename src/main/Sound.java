@@ -10,6 +10,14 @@ public class Sound {
         PlaySound("click.wav");
     }
 
+    public void PlayChat() {
+        PlaySound("chat.wav");
+    }
+
+    public void PlayPush() {
+        PlaySound("push.wav");
+    }
+
     private void PlaySound(String filepath) {
         try {
             File soundPath = new File(filepath);
