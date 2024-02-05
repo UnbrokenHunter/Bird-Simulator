@@ -1,3 +1,5 @@
+package main;
+
 public class Utilities {
 
     public static Vector2 rotatePoints(double distance, Vector2 location, double angle) {

@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -49,6 +51,9 @@ public class Settings {
     public static double AvoidDistance = 20;
     public static double PredatorDistance = 150;
     public static double BarrierDistance = 30;
+
+    // Audio
+    public static double BarrierSoundChance = 100d;
 
     // Other
     public static ArrayList<Barrier> Barriers = new ArrayList<Barrier>();

@@ -1,10 +1,19 @@
+package main;
+
 import java.io.File;
+import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class Sound {
+
+    private Random random;
+
+    public Sound() {
+        random = new Random();
+    }
 
     public void PlayClick() {
         PlaySound("click.wav");
@@ -15,7 +24,32 @@ public class Sound {
     }
 
     public void PlayPush() {
-        PlaySound("push.wav");
+        int clip = random.nextInt(0, 4);
+
+        switch (clip) {
+            case 0:
+                PlaySound("pitchC.wav");
+                break;
+
+            case 1:
+                PlaySound("pitchD.wav");
+
+                break;
+            case 2:
+                PlaySound("pitchE.wav");
+
+                break;
+            case 3:
+                PlaySound("pitchG.wav");
+
+                break;
+            case 4:
+                PlaySound("pitchA.wav");
+                break;
+
+            default:
+                break;
+        }
     }
 
     private void PlaySound(String filepath) {

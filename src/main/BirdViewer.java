@@ -1,13 +1,12 @@
+package main;
+
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 
 public class BirdViewer {
 
     public static Vector2 mouse;
     private static Bird birdInView;
-    private int yOffset = 30;
-    private static int xOffset = 150;
     private static int epsilon = 15;
 
     public void DrawBirdViewer(Graphics g) {
@@ -28,8 +27,10 @@ public class BirdViewer {
 
         UIUtilities.StartGroup(g, new Vector2(5, 5), new Vector2(0, 60), size, 6);
 
-        UIUtilities.DrawText(g, Vector2.zero, size, "Name: " + (birdInView.Name), Settings.cBlue);
-        birdInView.Y -= UIUtilities.DrawSwitch(g, Vector2.zero, size, "X: " + ((int) birdInView.X),
+        Settings.BirdInViewIndex += UIUtilities.DrawSwitch(g, Vector2.zero, size, "Name: " + (birdInView.Name),
+                Settings.BirdInViewIndex,
+                1, true, Settings.cBlue);
+        birdInView.X -= UIUtilities.DrawSwitch(g, Vector2.zero, size, "X: " + ((int) birdInView.X),
                 birdInView.X, 10d, false, Settings.cBlue);
         birdInView.Y -= UIUtilities.DrawSwitch(g, Vector2.zero, size, "Y: " + ((int) birdInView.Y),
                 birdInView.Y, 10d, false, Settings.cGreen);
