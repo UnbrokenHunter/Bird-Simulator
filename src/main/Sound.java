@@ -11,6 +11,18 @@ public class Sound {
 
     private Random random;
 
+    private String[] pushFiles = {
+            // Pentatonic
+            "pitchC.wav",
+            "pitchD.wav",
+            "pitchE.wav",
+            "pitchG.wav",
+            "pitchA.wav",
+            // Major
+            "pitchF.wav",
+            "pitchB.wav",
+    };
+
     public Sound() {
         random = new Random();
     }
@@ -24,32 +36,16 @@ public class Sound {
     }
 
     public void PlayPush() {
-        int clip = random.nextInt(0, 4);
+        int clip = 0;
+        if (Settings.PentatonicScale)
+            clip = random.nextInt(0, 4);
 
-        switch (clip) {
-            case 0:
-                PlaySound("pitchC.wav");
-                break;
+        else if (Settings.MajorScale)
+            clip = random.nextInt(0, 7);
 
-            case 1:
-                PlaySound("pitchD.wav");
+        var file = pushFiles[clip];
+        PlaySound(file);
 
-                break;
-            case 2:
-                PlaySound("pitchE.wav");
-
-                break;
-            case 3:
-                PlaySound("pitchG.wav");
-
-                break;
-            case 4:
-                PlaySound("pitchA.wav");
-                break;
-
-            default:
-                break;
-        }
     }
 
     private void PlaySound(String filepath) {

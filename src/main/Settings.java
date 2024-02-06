@@ -52,6 +52,10 @@ public class Settings {
     public static double PredatorDistance = 150;
     public static double BarrierDistance = 30;
 
+    // Music
+    public static boolean PentatonicScale = true;
+    public static boolean MajorScale = false;
+
     // Audio
     public static double BarrierSoundChance = 100d;
 
@@ -81,6 +85,20 @@ public class Settings {
     public static Color cMagenta = new Color(231, 133, 244, 96);
 
     // Helpers
+    public static void SetScale(int scale) {
+        if (scale == 0)
+            return;
+
+        if (scale == 1) {
+            PentatonicScale = true;
+            MajorScale = false;
+        } else if (scale == 2) {
+            PentatonicScale = false;
+            MajorScale = true;
+        }
+
+    }
+
     public static void BecomePredatorHelper(boolean change) {
         if (!change)
             return;

@@ -13,6 +13,7 @@ public class UI {
         private boolean DistanceUI = false;
         private boolean HawksUI = false;
         private boolean BarrierUI = false;
+        private boolean MusicUI = false;
 
         public void DrawButtons(Graphics g) {
 
@@ -32,6 +33,8 @@ public class UI {
                         HawksUI(g);
                 else if (BarrierUI)
                         BarrierUI(g);
+                else if (MusicUI)
+                        MusicUI(g);
                 else
                         GeneralUI(g);
 
@@ -40,7 +43,7 @@ public class UI {
 
         private void GeneralUI(Graphics g) {
 
-                UIUtilities.StartGroup(g, position, new Vector2(0, 54), 9);
+                UIUtilities.StartGroup(g, position, new Vector2(0, 54), 10);
 
                 HideUI = UIUtilities.DrawButton(g, "Hide", BirdsUI, false);
                 Settings.Pause = UIUtilities.DrawButton(g, "Pause", Settings.Pause, false, Settings.cGreen);
@@ -52,12 +55,26 @@ public class UI {
                 DistanceUI = UIUtilities.DrawButton(g, "Distance", DistanceUI, false, Settings.cOrange);
                 HawksUI = UIUtilities.DrawButton(g, "Hawks", HawksUI, false, Settings.cYellow);
                 BarrierUI = UIUtilities.DrawButton(g, "Barriers", BarrierUI, false, Settings.cRed);
+                MusicUI = UIUtilities.DrawButton(g, "Music", MusicUI, false, Settings.cMagenta);
         }
 
         private void HideUI(Graphics g) {
                 UIUtilities.StartGroup(g, position, new Vector2(0, 54), 1);
 
                 HideUI = UIUtilities.DrawButton(g, "Show", HideUI, false);
+        }
+
+        private void MusicUI(Graphics g) {
+                UIUtilities.StartGroup(g, position, new Vector2(0, 54), 3);
+
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Return",
+                                false, false));
+
+                Settings.SetScale(UIUtilities.DrawButton(g, "Pentatonic Scale",
+                                Settings.PentatonicScale, Settings.cMagenta) ? 1 : 0);
+                Settings.SetScale(UIUtilities.DrawButton(g, "Major Scale",
+                                Settings.MajorScale, Settings.cMagenta) ? 2 : 0);
+
         }
 
         private void BirdsUI(Graphics g) {
