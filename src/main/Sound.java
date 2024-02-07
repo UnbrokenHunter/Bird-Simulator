@@ -36,6 +36,9 @@ public class Sound {
     }
 
     public void PlayPush() {
+        if (!Settings.MusicEnabled)
+            return;
+
         int clip = 0;
         if (Settings.PentatonicScale)
             clip = random.nextInt(0, 4);

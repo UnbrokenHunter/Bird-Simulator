@@ -53,6 +53,7 @@ public class Settings {
     public static double BarrierDistance = 30;
 
     // Music
+    public static boolean MusicEnabled = false;
     public static boolean PentatonicScale = true;
     public static boolean MajorScale = false;
 
