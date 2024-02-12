@@ -12,7 +12,7 @@ public class Settings {
 
     // Counts
     public static int BirdCount = 400;
-    public static int PredatorCount = 0;
+    public static int PredatorCount = 1;
 
     // Spawn
     public static Vector2 SpawnPosition() {
@@ -137,6 +137,10 @@ public class Settings {
     public static void UpdatePredatorCount(int difference) {
         if (PredatorCount + difference < 0)
             return;
+        if (difference == 0)
+            return;
+
+        System.out.println("Predator Count: " + difference);
 
         PredatorCount += difference;
         Field.Birds.get(PredatorCount).isPredator = !Field.Birds.get(PredatorCount).isPredator;

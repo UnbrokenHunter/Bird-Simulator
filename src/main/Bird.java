@@ -16,6 +16,33 @@ public class Bird {
     public int inRadius = 0;
     public Color color;
 
+    public Vector2[] LastPosition = {
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+            Vector2.zero,
+    };
+
+    public int MaxTick = 0;
+    public int Tick = 0;
+
     public Bird(double x, double y, double xVel, double yVel) {
         this.X = x;
         this.Y = y;
