@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 public class Field {
     public final static List<Bird> Birds = new ArrayList<>();
+    private ArrayList<Integer> toRemove = new ArrayList<Integer>();
 
     public Field(int birdCount) {
         for (int i = 0; i < birdCount; i++) {
@@ -48,9 +49,12 @@ public class Field {
             double[] align = align(bird, Settings.AlignDistance, Settings.AlignPower);
             double[] avoid = avoid(bird, Settings.AvoidDistance, Settings.AvoidPower);
             double[] predator = predator(bird, Settings.PredatorDistance, Settings.PredatorPower);
+            kill(bird, Settings.KillDistance);
 
-            bird.Xvel += flock[0] + avoid[0] + align[0] + predator[0];
-            bird.Yvel += flock[1] + avoid[1] + align[1] + predator[1];
+            if (bird != null) {
+                bird.Xvel += flock[0] + avoid[0] + align[0] + predator[0];
+                bird.Yvel += flock[1] + avoid[1] + align[1] + predator[1];
+            }
         });
 
         // Move all birds forward in time
@@ -68,6 +72,15 @@ public class Field {
                 }
             }
         });
+
+        for (int index : toRemove) {
+            if (!Birds.get(index).isPredator) {
+                System.out.println("Removed: " + Birds.get(index));
+                Settings.BirdCount--;
+                Birds.remove(index);
+            }
+        }
+        toRemove.clear();
     }
 
     private double[] flock(Bird bird, double distance, double power) {
@@ -104,6 +117,7 @@ public class Field {
         for (int i = 0; i < Settings.PredatorCount; i++) {
             Bird predator = Birds.get(i);
             predator.isPredator = true;
+
             double distanceAway = bird.getDistance(predator);
             if (distanceAway < distance) {
                 double closeness = distance - distanceAway;
@@ -113,6 +127,21 @@ public class Field {
         }
 
         return new double[] { sumCloseness[0] * power, sumCloseness[1] * power };
+    }
+
+    private void kill(Bird bird, double distance) {
+        if (!Settings.PredatorCanKill)
+            return;
+
+        for (int i = 0; i < Settings.PredatorCount; i++) {
+            Bird predator = Birds.get(i);
+
+            double distanceAway = bird.getDistance(predator);
+            if (distanceAway < distance) {
+                int index = Birds.indexOf(bird);
+                toRemove.add(index);
+            }
+        }
     }
 
     private double[] align(Bird bird, double distance, double power) {

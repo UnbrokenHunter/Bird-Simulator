@@ -12,7 +12,7 @@ public class Settings {
 
     // Counts
     public static int BirdCount = 400;
-    public static int PredatorCount = 1;
+    public static int PredatorCount = 0;
 
     // Spawn
     public static Vector2 SpawnPosition() {
@@ -35,6 +35,9 @@ public class Settings {
     public static int ColorIndex = 0;
     public static boolean DoFancyColor = true;
 
+    // Predators
+    public static boolean PredatorCanKill = true;
+
     // Speed
     public static double MinSpeed = 2;
     public static double MaxSpeed = 5;
@@ -51,6 +54,7 @@ public class Settings {
     public static double AvoidDistance = 20;
     public static double PredatorDistance = 150;
     public static double BarrierDistance = 30;
+    public static double KillDistance = 1;
 
     // Music
     public static boolean MusicEnabled = false;

@@ -171,7 +171,7 @@ public class UI {
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 5);
+                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 6);
 
                 // Distance
                 Settings.FlockDistance += (int) UIUtilities.DrawSwitch(g, "Flock",
@@ -184,6 +184,8 @@ public class UI {
                                 Settings.PredatorDistance, 10, Settings.cYellow);
                 Settings.BarrierDistance += (int) UIUtilities.DrawSwitch(g, "Barrier",
                                 Settings.BarrierDistance, 10, Settings.cPink);
+                Settings.KillDistance += (int) UIUtilities.DrawSwitch(g, "Kill",
+                                Settings.KillDistance, 1, Settings.cGreen);
 
         }
 
@@ -194,13 +196,15 @@ public class UI {
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 2);
+                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 3);
 
                 // Hawks
                 Settings.UpdatePredatorCount((int) UIUtilities.DrawSwitch(g, "Hawks",
                                 Settings.PredatorCount, 1, Settings.cBlue));
                 Settings.BecomePredatorHelper(UIUtilities.DrawButton(g, "Control",
                                 false, Settings.cRed));
+                Settings.PredatorCanKill = UIUtilities.DrawButton(g, "Can Kill",
+                                Settings.PredatorCanKill, Settings.cMagenta);
         }
 
         private void BarrierUI(Graphics g) {
