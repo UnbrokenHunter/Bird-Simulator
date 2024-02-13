@@ -100,10 +100,10 @@ public class UI {
                 Settings.MusicEnabled = UIUtilities.DrawButton(g, "Enabled",
                                 Settings.MusicEnabled, true, Settings.cYellow);
 
-                Settings.SetScale(UIUtilities.DrawButton(g, "Pentatonic Scale",
-                                Settings.PentatonicScale, true, Settings.cMagenta) ? 1 : 0);
-                Settings.SetScale(UIUtilities.DrawButton(g, "Major Scale",
-                                Settings.MajorScale, true, Settings.cMagenta) ? 2 : 0);
+                Settings.MusicIndex = (UIUtilities.DrawButton(g, "Pentatonic Scale",
+                                Settings.MusicIndex == 0, true, Settings.cMagenta) ? 0 : Settings.MusicIndex);
+                Settings.MusicIndex = (UIUtilities.DrawButton(g, "Major Scale",
+                                Settings.MusicIndex == 1, true, Settings.cMagenta) ? 1 : Settings.MusicIndex);
 
         }
 
@@ -214,10 +214,13 @@ public class UI {
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 2);
+                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 3);
 
-                // Birds
+                // Bounce
                 Settings.Bounce = UIUtilities.DrawButton(g, "Bounce", Settings.Bounce, Settings.cGreen);
+
+                Settings.SetNextBarrierMode((int) UIUtilities.DrawSwitch(g, "Mode",
+                                Settings.ModeIndex, 1, Settings.cBlue));
 
                 // Barriers
                 if (UIUtilities.DrawButton(g, "Undo Barrier", false, Settings.cBlue))

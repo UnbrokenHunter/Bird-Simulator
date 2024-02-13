@@ -3,25 +3,15 @@ package main;
 import java.io.File;
 import java.util.Random;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 
 public class Sound {
 
     private Random random;
-
-    private String[] pushFiles = {
-            // Pentatonic
-            "pitchC.wav",
-            "pitchD.wav",
-            "pitchE.wav",
-            "pitchG.wav",
-            "pitchA.wav",
-            // Major
-            "pitchF.wav",
-            "pitchB.wav",
-    };
 
     public Sound() {
         random = new Random();
@@ -39,16 +29,13 @@ public class Sound {
         if (!Settings.MusicEnabled)
             return;
 
-        int clip = 0;
-        if (Settings.PentatonicScale)
-            clip = random.nextInt(0, 4);
+        var scale = Settings.MusicScale[Settings.MusicIndex];
 
-        else if (Settings.MajorScale)
-            clip = random.nextInt(0, 7);
+        int clip = random.nextInt(0, scale.length);
 
-        var file = pushFiles[clip];
-        PlaySound(file);
+        var index = scale[clip];
 
+        PlaySoundPitchShift("pitchC.wav", index);
     }
 
     private void PlaySound(String filepath) {
@@ -65,6 +52,47 @@ public class Sound {
             }
         } catch (javax.sound.sampled.LineUnavailableException e) {
             System.out.println("Audio format not supported: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void PlaySoundPitchShift(String filepath, int cents) {
+        try {
+            File soundFile = new File(filepath);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+            AudioFormat originalFormat = audioInputStream.getFormat();
+
+            // Calculate the new sample rate based on the speed factor in cents
+            double factor = Math.pow(2, cents / 1200.0);
+            float newSampleRate = (float) (originalFormat.getSampleRate() * factor);
+
+            // Ensure the new sample rate is within a reasonable range
+            newSampleRate = Math.min(Math.max(newSampleRate, 8000f), 48000f);
+
+            AudioFormat newFormat = new AudioFormat(
+                    originalFormat.getEncoding(),
+                    newSampleRate,
+                    originalFormat.getSampleSizeInBits(),
+                    originalFormat.getChannels(),
+                    originalFormat.getFrameSize(),
+                    newSampleRate,
+                    originalFormat.isBigEndian());
+
+            if (!AudioSystem.isLineSupported(new DataLine.Info(Clip.class, newFormat))) {
+                System.out.println("The new format is not supported.");
+                return; // Early exit if the format is not supported
+            }
+
+            AudioInputStream newAudioInputStream = new AudioInputStream(audioInputStream, newFormat,
+                    audioInputStream.getFrameLength());
+            Clip clip = AudioSystem.getClip();
+            clip.open(newAudioInputStream);
+            clip.start(); // Start the clip to play the sound
+
+            // Wait for the clip to finish playing
+            clip.drain(); // Ensure the audio playback is completed before returning
+
         } catch (Exception e) {
             e.printStackTrace();
         }

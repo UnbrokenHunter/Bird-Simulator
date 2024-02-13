@@ -69,6 +69,9 @@ public class Panel extends JPanel {
         } else
             g.setColor(Color.white);
 
+        if (bird.isPredator)
+            g.setColor(Color.red);
+
         // Draw Lines
         g.drawLine((int) front.x, (int) front.y, (int) backLeft.x, (int) backLeft.y);
         g.drawLine((int) backLeft.x, (int) backLeft.y, (int) backRight.x, (int) backRight.y);
@@ -163,7 +166,11 @@ public class Panel extends JPanel {
         BarrierManager.PreviewBarrier(g);
 
         for (Barrier barrier : Settings.Barriers) {
-            g.setColor(new Color(5, 31, 69));
+            if (barrier.modeIndex == 0)
+                g.setColor(new Color(5, 31, 69));
+            if (barrier.modeIndex == 1)
+                g.setColor(new Color(20, 60, 100));
+
             g.fillRoundRect((int) barrier.Start.x, (int) barrier.Start.y,
                     (int) barrier.End.x - (int) barrier.Start.x,
                     (int) barrier.End.y - (int) barrier.Start.y, 10, 10);

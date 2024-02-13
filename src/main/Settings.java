@@ -36,7 +36,10 @@ public class Settings {
     public static boolean DoFancyColor = true;
 
     // Predators
-    public static boolean PredatorCanKill = true;
+    public static boolean PredatorCanKill = false;
+
+    // Barriers
+    public static int ModeIndex = 0;
 
     // Speed
     public static double MinSpeed = 2;
@@ -58,8 +61,11 @@ public class Settings {
 
     // Music
     public static boolean MusicEnabled = false;
-    public static boolean PentatonicScale = true;
-    public static boolean MajorScale = false;
+    public static int MusicIndex = 0;
+    public static int[][] MusicScale = {
+            { 0, 200, 400, 700, 900, 1200 },
+            { 0, 200, 400, 500, 700, 900, 1100, 1200 },
+    };
 
     // Audio
     public static double BarrierSoundChance = 100d;
@@ -90,20 +96,6 @@ public class Settings {
     public static Color cMagenta = new Color(231, 133, 244, 96);
 
     // Helpers
-    public static void SetScale(int scale) {
-        if (scale == 0)
-            return;
-
-        if (scale == 1) {
-            PentatonicScale = true;
-            MajorScale = false;
-        } else if (scale == 2) {
-            PentatonicScale = false;
-            MajorScale = true;
-        }
-
-    }
-
     public static void BecomePredatorHelper(boolean change) {
         if (!change)
             return;
@@ -133,7 +125,6 @@ public class Settings {
                 Field.Birds.add(bird);
             } else {
                 Field.Birds.removeLast();
-
             }
         }
     }
@@ -144,10 +135,9 @@ public class Settings {
         if (difference == 0)
             return;
 
-        System.out.println("Predator Count: " + difference);
-
         PredatorCount += difference;
-        Field.Birds.get(PredatorCount).isPredator = !Field.Birds.get(PredatorCount).isPredator;
+        System.out.println("Predator Count: " + PredatorCount);
+        Field.Birds.get(PredatorCount).isPredator = false;
     }
 
     public static void SetNextColor(int difference) {
@@ -179,5 +169,14 @@ public class Settings {
         ColorInterp.SetColors(ColorInterpolator.STANDARD);
 
         ColorPalatte = ColorInterp.GetColors();
+    }
+
+    public static void SetNextBarrierMode(int difference) {
+        ModeIndex += difference;
+
+        if (ModeIndex > 1)
+            ModeIndex = 0;
+        if (ModeIndex < 0)
+            ModeIndex = 1;
     }
 }

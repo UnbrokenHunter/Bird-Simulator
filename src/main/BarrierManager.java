@@ -36,7 +36,7 @@ public class BarrierManager {
                                         + startPos
                                         + "\nEnd: " + endPos + "\nWidth: " + (Settings.Width - Settings.bButtonSize.x));
 
-                        Settings.Barriers.add(new Barrier(startPos, endPos));
+                        Settings.Barriers.add(new Barrier(startPos, endPos, Settings.ModeIndex));
                 }
 
                 ClickPosition = null;

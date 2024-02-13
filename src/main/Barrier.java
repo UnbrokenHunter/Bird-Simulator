@@ -7,18 +7,31 @@ public class Barrier {
 
     public Vector2 Start;
     public Vector2 End;
+    public int modeIndex;
     private Random random;
     private ArrayList<Bird> birdsInBarrier = new ArrayList<Bird>();
 
-    public Barrier(Vector2 start, Vector2 end) {
+    public Barrier(Vector2 start, Vector2 end, int modeIndex) {
         this.Start = start;
         this.End = end;
+        this.modeIndex = modeIndex;
 
         random = new Random();
     }
 
     public Vector2 CalculateTurnOnBarrier(Bird bird) {
         Vector2 calculateTurn = new Vector2(0, 0);
+
+        // Barrier
+        if (modeIndex == 0) {
+
+        }
+
+        // Safty
+        if (modeIndex == 1) {
+            if (!bird.isPredator)
+                return Vector2.zero;
+        }
 
         if (bird.X > Start.x - Settings.BarrierDistance && bird.X < End.x + Settings.BarrierDistance) {
             if (bird.Y > Start.y - Settings.BarrierDistance && bird.Y < End.y + Settings.BarrierDistance) {
@@ -45,5 +58,4 @@ public class Barrier {
 
         return calculateTurn;
     }
-
 }
