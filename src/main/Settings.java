@@ -84,6 +84,10 @@ public class Settings {
     public static double SaftySoundChance = 75d;
     public static double KillSoundChance = 75d;
 
+    public static double BarrierVolume = 0.8d;
+    public static double SaftyVolume = 0.8d;
+    public static double KillVolume = 0.8d;
+
     // Other
     public static ArrayList<Barrier> Barriers = new ArrayList<Barrier>();
     public static boolean BecomePredator;

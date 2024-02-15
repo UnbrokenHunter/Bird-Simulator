@@ -6,8 +6,9 @@ public class UI {
 
         private Vector2 generalPosition = Vector2.zero;
         private Vector2 menuPosition = Vector2.zero;
-        private Vector2 otherPosition = Vector2.zero;
-        private Vector2 belowOtherPosition = Vector2.zero;
+        private Vector2 namePosition = Vector2.zero;
+        private Vector2 firstPosition = Vector2.zero;
+        private Vector2 secondPosition = Vector2.zero;
 
         private boolean HideUI = false;
         private boolean BirdsUI = false;
@@ -23,9 +24,11 @@ public class UI {
                 generalPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 1.3f - 5, 5f);
                 menuPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 1.3f - 5,
                                 5f + Settings.bButtonSize.y * 3.5f);
-                otherPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 2.5f - 5,
+                namePosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 2.5f - 5,
                                 5f + Settings.bButtonSize.y * 3.5f);
-                belowOtherPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 2.5f - 5,
+                firstPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 2.5f - 5,
+                                5f + Settings.bButtonSize.y * 4.8f);
+                secondPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 3.8f - 5,
                                 5f + Settings.bButtonSize.y * 4.8f);
 
                 if (HideUI)
@@ -87,13 +90,13 @@ public class UI {
         }
 
         private void MusicUI(Graphics g) {
-                UIUtilities.StartGroup(g, otherPosition, new Vector2(0, 54), 1);
+                UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Music", false, false, Settings.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 8);
+                UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 8);
 
                 Settings.MusicEnabled = UIUtilities.DrawButton(g, "Enabled",
                                 Settings.MusicEnabled, true, Settings.cYellow);
@@ -113,16 +116,27 @@ public class UI {
                 Settings.MusicIndex = (UIUtilities.DrawButton(g, "17/10 Scale",
                                 Settings.MusicIndex == 5, true, Settings.cPurple) ? 5 : Settings.MusicIndex);
 
+                UIUtilities.EndGroup();
+
+                UIUtilities.StartGroup(g, secondPosition, new Vector2(0, 54), 3);
+
+                Settings.BarrierVolume += UIUtilities.DrawSwitch(g, "Melody Volume",
+                                Settings.BarrierVolume, .1, Settings.cBlue);
+                Settings.SaftyVolume += UIUtilities.DrawSwitch(g, "Bass Volume",
+                                Settings.SaftyVolume, .1, Settings.cPink);
+                Settings.KillVolume += UIUtilities.DrawSwitch(g, "Drum Volume",
+                                Settings.KillVolume, .1, Settings.cGreen);
+
         }
 
         private void BirdsUI(Graphics g) {
-                UIUtilities.StartGroup(g, otherPosition, new Vector2(0, 54), 1);
+                UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Birds", false, false, Settings.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 4);
+                UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 4);
 
                 Settings.UpdateBirdCount(
                                 (int) UIUtilities.DrawSwitch(g, "Bird Count", Settings.BirdCount, 100, Settings.cBlue));
@@ -136,13 +150,13 @@ public class UI {
         }
 
         private void ColorUI(Graphics g) {
-                UIUtilities.StartGroup(g, otherPosition, new Vector2(0, 54), 1);
+                UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Color", false, false, Settings.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 3);
+                UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 3);
 
                 // Colors
                 Settings.SetNextColor((int) UIUtilities.DrawSwitch(g, "Next Color",
@@ -154,13 +168,13 @@ public class UI {
         }
 
         private void PowerUI(Graphics g) {
-                UIUtilities.StartGroup(g, otherPosition, new Vector2(0, 54), 1);
+                UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Power", false, false, Settings.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 5);
+                UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 5);
 
                 // Power
                 Settings.FlockPower += UIUtilities.DrawSwitch(g, "Flock",
@@ -176,13 +190,13 @@ public class UI {
         }
 
         private void DistanceUI(Graphics g) {
-                UIUtilities.StartGroup(g, otherPosition, new Vector2(0, 54), 1);
+                UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Distance", false, false, Settings.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 7);
+                UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 7);
 
                 // Distance
                 Settings.FlockDistance += (int) UIUtilities.DrawSwitch(g, "Flock",
@@ -203,13 +217,13 @@ public class UI {
         }
 
         private void HawksUI(Graphics g) {
-                UIUtilities.StartGroup(g, otherPosition, new Vector2(0, 54), 1);
+                UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Hawks", false, false, Settings.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 3);
+                UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 3);
 
                 // Hawks
                 Settings.UpdatePredatorCount((int) UIUtilities.DrawSwitch(g, "Hawks",
@@ -221,13 +235,13 @@ public class UI {
         }
 
         private void BarrierUI(Graphics g) {
-                UIUtilities.StartGroup(g, otherPosition, new Vector2(0, 54), 1);
+                UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Barrier", false, false, Settings.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
-                UIUtilities.StartGroup(g, belowOtherPosition, new Vector2(0, 54), 5);
+                UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 5);
 
                 // Bounce
                 Settings.Bounce = UIUtilities.DrawButton(g, "Bounce", Settings.Bounce, Settings.cGreen);

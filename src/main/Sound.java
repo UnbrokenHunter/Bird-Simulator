@@ -8,6 +8,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 
 public class Sound {
 
@@ -18,11 +19,11 @@ public class Sound {
     }
 
     public void PlayClick() {
-        PlaySound("click.wav");
+        PlaySound("click.wav", 1);
     }
 
     public void PlayChat() {
-        PlaySound("chat.wav");
+        PlaySound("chat.wav", 1);
     }
 
     public void PlayPush() {
@@ -35,7 +36,7 @@ public class Sound {
 
         var index = scale[clip];
 
-        PlaySoundPitchShift("pitchC.wav", index);
+        PlaySoundPitchShift("pitchC.wav", index, Settings.BarrierVolume);
     }
 
     public void PlayBass() {
@@ -48,7 +49,7 @@ public class Sound {
 
         var index = scale[clip];
 
-        PlaySoundPitchShift("bassC.wav", index);
+        PlaySoundPitchShift("bassC.wav", index, Settings.SaftyVolume);
     }
 
     public void PlayDrums() {
@@ -59,20 +60,27 @@ public class Sound {
 
         switch (clip) {
             case 0:
-                PlaySound("kick.wav");
+                PlaySound("kick.wav", Settings.KillVolume);
                 break;
             case 1:
-                PlaySound("snare.wav");
+                PlaySound("snare.wav", Settings.KillVolume);
                 break;
             case 3:
-                PlaySound("hat.wav");
+                PlaySound("hat.wav", Settings.KillVolume);
                 break;
             default:
                 break;
         }
     }
 
-    private void PlaySound(String filepath) {
+    public void setVolume(Clip clip, double volume) {
+        if (volume < 0f || volume > 1f)
+            volume = Math.clamp(volume, 0, 1);
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(20f * (float) Math.log10(volume));
+    }
+
+    private void PlaySound(String filepath, double volume) {
         try {
             File soundPath = new File(filepath);
 
@@ -80,6 +88,7 @@ public class Sound {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(soundPath);
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioInput);
+                setVolume(clip, volume);
                 clip.start();
             } else {
                 System.out.println("File Does Not Exist");
@@ -91,7 +100,7 @@ public class Sound {
         }
     }
 
-    public void PlaySoundPitchShift(String filepath, int cents) {
+    public void PlaySoundPitchShift(String filepath, int cents, double volume) {
         try {
             File soundFile = new File(filepath);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
@@ -123,6 +132,7 @@ public class Sound {
                     audioInputStream.getFrameLength());
             Clip clip = AudioSystem.getClip();
             clip.open(newAudioInputStream);
+            setVolume(clip, volume);
             clip.start(); // Start the clip to play the sound
 
             // Wait for the clip to finish playing
