@@ -26,7 +26,7 @@ public class BirdViewer {
 
                 Vector2 size = new Vector2(80, 50);
 
-                UIUtilities.StartGroup(g, new Vector2(5, 5), new Vector2(0, 60), size, 7);
+                UIUtilities.StartGroup(g, new Vector2(5, 5), new Vector2(0, 60), size, 8);
 
                 Settings.BirdInViewIndex += UIUtilities.DrawSwitch(g, Vector2.zero, size, "Name: " + (birdInView.Name),
                                 Settings.BirdInViewIndex,
@@ -48,7 +48,11 @@ public class BirdViewer {
                                 Settings.cBlue);
 
                 UIUtilities.DrawText(g, Vector2.zero, size,
-                                "Last Positions: " + Arrays.deepToString(birdInView.LastPosition),
+                                "On Cooldown: " + birdInView.onCooldown,
+                                Settings.cBlue);
+
+                UIUtilities.DrawText(g, Vector2.zero, size,
+                                "Tick: " + birdInView.Tick + " / " + birdInView.MaxTick,
                                 Settings.cBlue);
 
                 UIUtilities.EndGroup();
