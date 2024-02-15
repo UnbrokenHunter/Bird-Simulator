@@ -2,11 +2,14 @@ package main;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Field {
     public final static List<Bird> Birds = new ArrayList<>();
     private ArrayList<Integer> toRemove = new ArrayList<Integer>();
+    private ArrayList<Integer> toAdd = new ArrayList<Integer>();
+    private Random random;
 
     public Field(int birdCount) {
         for (int i = 0; i < birdCount; i++) {
@@ -14,6 +17,8 @@ public class Field {
             bird.Name = "bird" + i;
             Birds.add(bird);
         }
+
+        random = new Random();
     }
 
     public static void Restart() {
@@ -50,6 +55,7 @@ public class Field {
             double[] avoid = avoid(bird, Settings.AvoidDistance, Settings.AvoidPower);
             double[] predator = predator(bird, Settings.PredatorDistance, Settings.PredatorPower);
             kill(bird, Settings.KillDistance);
+            reproduce(bird, Settings.ReproductionDistance);
 
             if (bird != null) {
                 bird.Xvel += flock[0] + avoid[0] + align[0] + predator[0];
@@ -78,9 +84,22 @@ public class Field {
                 System.out.println("Removed: " + Birds.get(index));
                 Settings.BirdCount--;
                 Birds.remove(index);
+
+                if (random.nextDouble(0, 1) < Settings.BarrierSoundChance / 100d)
+                    Main.sound.PlayDrums();
             }
         }
         toRemove.clear();
+
+        for (int index : toAdd) {
+            Bird bird = Birds.get(index);
+
+            System.out.println("Added: " + Birds.get(index));
+            Settings.BirdCount++;
+
+            Birds.add(new Bird(bird.X, bird.Y, bird.Xvel, bird.Yvel));
+        }
+        toAdd.clear();
     }
 
     private double[] flock(Bird bird, double distance, double power) {
@@ -140,6 +159,26 @@ public class Field {
             if (distanceAway < distance) {
                 int index = Birds.indexOf(bird);
                 toRemove.add(index);
+            }
+        }
+    }
+
+    private void reproduce(Bird bird, double distance) {
+        if (!Settings.CanReproduce)
+            return;
+
+        for (Bird otherBird : Birds) {
+            double distanceAway = bird.getDistance(otherBird);
+
+            if (distanceAway < distance && !bird.equals(otherBird)) {
+
+                if (!bird.onCooldown && !otherBird.onCooldown) {
+                    bird.onCooldown = true;
+                    otherBird.onCooldown = true;
+
+                    int index = Birds.indexOf(bird);
+                    toAdd.add(index);
+                }
             }
         }
     }

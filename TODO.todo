@@ -1,12 +1,13 @@
-Bird Population Balance
-Grid Place
-Force Feild Barrier Type (Attracts)
-Bass When Hawk Hits Saftey
-Drums when Bird Dies
-Alternative Placement(Citcle, Triangle)
-Kill Hawk?
+ + Drums when Bird Dies
+ + Bass When Hawk Hits Saftey
+ + Bird Population Balance
+ + Force Field Barrier Type (Attracts)
+ + Edit Barriers
+ + Mixer
 
+ * Alternative Placement(Circle, Triangle)
 
+ - Grid Place
  - Control Hawk Trail
  - Kill Birds
  - Bird Safespaces

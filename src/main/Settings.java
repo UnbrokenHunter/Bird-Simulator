@@ -35,10 +35,15 @@ public class Settings {
     public static int ColorIndex = 0;
     public static boolean DoFancyColor = true;
 
-    // Predators
+    // Balance
+    public static boolean CanReproduce = false;
+    public static double ReproductionChance = 5d;
     public static boolean PredatorCanKill = false;
 
     // Barriers
+    public static boolean DoGrid = false;
+    public static int GridSize = 30;
+    public static int ShapeIndex = 0;
     public static int ModeIndex = 0;
 
     // Speed
@@ -58,17 +63,26 @@ public class Settings {
     public static double PredatorDistance = 150;
     public static double BarrierDistance = 30;
     public static double KillDistance = 1;
+    public static double ReproductionDistance = 1;
 
     // Music
     public static boolean MusicEnabled = false;
     public static int MusicIndex = 0;
     public static int[][] MusicScale = {
-            { 0, 200, 400, 700, 900, 1200 },
-            { 0, 200, 400, 500, 700, 900, 1100, 1200 },
+            { 0, 200, 400, 700, 900, 1200 }, // Pentatonic
+            { 0, 200, 400, 500, 700, 900, 1100, 1200 }, // Major
+            { 0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200 }, // Chromatic
+            { 0, 240, 480, 720, 960, 1200 }, // 5 Tone
+            { 0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000,
+                    1050, 1100, 1150, 1200 }, // Quartertone
+            { 0, 75, 281, 356, 563, 637, 712, 919, 993, 1200 }, // Rank 2 17/10
+            { 0, 300, 500, 600, 700, 1000, 1200 }, // Rank 2 17/10
     };
 
     // Audio
     public static double BarrierSoundChance = 100d;
+    public static double SaftySoundChance = 75d;
+    public static double KillSoundChance = 75d;
 
     // Other
     public static ArrayList<Barrier> Barriers = new ArrayList<Barrier>();
@@ -179,4 +193,14 @@ public class Settings {
         if (ModeIndex < 0)
             ModeIndex = 1;
     }
+
+    public static void SetNextShape(int difference) {
+        ShapeIndex += difference;
+
+        if (ShapeIndex > 1)
+            ShapeIndex = 0;
+        if (ShapeIndex < 0)
+            ShapeIndex = 1;
+    }
+
 }

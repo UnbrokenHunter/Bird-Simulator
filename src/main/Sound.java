@@ -38,6 +38,40 @@ public class Sound {
         PlaySoundPitchShift("pitchC.wav", index);
     }
 
+    public void PlayBass() {
+        if (!Settings.MusicEnabled)
+            return;
+
+        var scale = Settings.MusicScale[Settings.MusicIndex];
+
+        int clip = random.nextInt(0, scale.length);
+
+        var index = scale[clip];
+
+        PlaySoundPitchShift("bassC.wav", index);
+    }
+
+    public void PlayDrums() {
+        if (!Settings.MusicEnabled)
+            return;
+
+        int clip = random.nextInt(0, 3);
+
+        switch (clip) {
+            case 0:
+                PlaySound("kick.wav");
+                break;
+            case 1:
+                PlaySound("snare.wav");
+                break;
+            case 3:
+                PlaySound("hat.wav");
+                break;
+            default:
+                break;
+        }
+    }
+
     private void PlaySound(String filepath) {
         try {
             File soundPath = new File(filepath);
@@ -67,8 +101,9 @@ public class Sound {
             double factor = Math.pow(2, cents / 1200.0);
             float newSampleRate = (float) (originalFormat.getSampleRate() * factor);
 
-            // Ensure the new sample rate is within a reasonable range
-            newSampleRate = Math.min(Math.max(newSampleRate, 8000f), 48000f);
+            // System.out.println("Original Sample Rate: " +
+            // originalFormat.getSampleRate());
+            // System.out.println("New Sample Rate: " + newSampleRate);
 
             AudioFormat newFormat = new AudioFormat(
                     originalFormat.getEncoding(),

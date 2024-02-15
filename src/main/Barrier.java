@@ -7,13 +7,15 @@ public class Barrier {
 
     public Vector2 Start;
     public Vector2 End;
+    public int shapeIndex;
     public int modeIndex;
     private Random random;
     private ArrayList<Bird> birdsInBarrier = new ArrayList<Bird>();
 
-    public Barrier(Vector2 start, Vector2 end, int modeIndex) {
+    public Barrier(Vector2 start, Vector2 end, int shapeIndex, int modeIndex) {
         this.Start = start;
         this.End = end;
+        this.shapeIndex = shapeIndex;
         this.modeIndex = modeIndex;
 
         random = new Random();
@@ -28,7 +30,7 @@ public class Barrier {
         }
 
         // Safty
-        if (modeIndex == 1) {
+        else if (modeIndex == 1) {
             if (!bird.isPredator)
                 return Vector2.zero;
         }
@@ -47,7 +49,13 @@ public class Barrier {
 
                 if (random.nextDouble(0, 1) < Settings.BarrierSoundChance / Settings.BirdCount
                         && birdsInBarrier.contains(bird) == false) {
-                    Main.sound.PlayPush();
+                    if (modeIndex == 0)
+                        Main.sound.PlayPush();
+                }
+                if (random.nextDouble(0, 1) < Settings.BarrierSoundChance / 100d
+                        && birdsInBarrier.contains(bird) == false) {
+                    if (modeIndex == 1)
+                        Main.sound.PlayBass();
                 }
 
                 birdsInBarrier.add(bird);

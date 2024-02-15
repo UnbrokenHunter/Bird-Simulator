@@ -42,6 +42,9 @@ public class Bird {
 
     public int MaxTick = 0;
     public int Tick = 0;
+    public boolean onCooldown = true;
+    private int cooldownTick = 0;
+    private int maxCooldownTock = 1000;
 
     public Bird(double x, double y, double xVel, double yVel) {
         this.X = x;
@@ -86,6 +89,15 @@ public class Bird {
             this.Xvel = 0;
         if (Double.isNaN(this.Yvel))
             this.Yvel = 0;
+
+        if (onCooldown) {
+            cooldownTick += 1;
+
+            if (cooldownTick > maxCooldownTock) {
+                onCooldown = false;
+                cooldownTick = 0;
+            }
+        }
     }
 
     public double[] getPosition(double time) {
@@ -116,4 +128,11 @@ public class Bird {
         double dY = otherBoid.Y - this.Y;
         return Math.sqrt(dX * dX + dY * dY);
     }
+
+    public double getDistance(Vector2 otherPosition) {
+        double dX = otherPosition.x - this.X;
+        double dY = otherPosition.y - this.Y;
+        return Math.sqrt(dX * dX + dY * dY);
+    }
+
 }

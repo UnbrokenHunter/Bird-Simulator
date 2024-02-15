@@ -163,6 +163,17 @@ public class Panel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        if (Settings.DoGrid) {
+            g.setColor(Settings.cDefaultBackground);
+            for (int i = 0; i < Settings.Width; i += Settings.GridSize) {
+                g.drawLine(i, 0, i, Settings.Height);
+            }
+            for (int j = 0; j < Settings.Height; j += Settings.GridSize) {
+                g.drawLine(0, j, Settings.Width, j);
+            }
+
+        }
+
         BarrierManager.PreviewBarrier(g);
 
         for (Barrier barrier : Settings.Barriers) {
@@ -171,9 +182,15 @@ public class Panel extends JPanel {
             if (barrier.modeIndex == 1)
                 g.setColor(new Color(20, 60, 100));
 
-            g.fillRoundRect((int) barrier.Start.x, (int) barrier.Start.y,
-                    (int) barrier.End.x - (int) barrier.Start.x,
-                    (int) barrier.End.y - (int) barrier.Start.y, 10, 10);
+            if (barrier.shapeIndex == 0)
+                g.fillRoundRect((int) barrier.Start.x, (int) barrier.Start.y,
+                        (int) barrier.End.x - (int) barrier.Start.x,
+                        (int) barrier.End.y - (int) barrier.Start.y, 10, 10);
+            if (barrier.shapeIndex == 1)
+                g.fillOval((int) barrier.Start.x, (int) barrier.Start.y,
+                        (int) barrier.End.x - (int) barrier.Start.x,
+                        (int) barrier.End.y - (int) barrier.Start.y);
+
         }
 
         for (Bird bird : Field.Birds) {
