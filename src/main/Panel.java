@@ -20,7 +20,6 @@ import Utilities.Vector2;
 
 public class Panel extends JPanel {
 
-    private Looper looper;
     private Field field;
     private UI ui;
     private BirdViewer birdViewer;
@@ -30,7 +29,7 @@ public class Panel extends JPanel {
         birdViewer = new BirdViewer();
         Settings.ColorInterp = new ColorInterpolator(Settings.ColorPalatte, Settings.NumberOfColors);
         field = new Field(Settings.BirdCount);
-        looper = new Looper(this, "update");
+        new Looper(this, "update");
 
         this.setBackground(new Color(0, 8, 27));
     }
