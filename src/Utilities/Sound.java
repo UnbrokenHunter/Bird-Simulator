@@ -24,10 +24,6 @@ public class Sound {
         PlaySound("click.wav", 1);
     }
 
-    public void PlayChat() {
-        PlaySound("chat.wav", 1);
-    }
-
     public void PlayPush() {
         if (!Settings.MusicEnabled)
             return;
