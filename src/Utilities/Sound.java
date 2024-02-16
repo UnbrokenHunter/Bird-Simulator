@@ -21,7 +21,7 @@ public class Sound {
     }
 
     public void PlayClick() {
-        PlaySound("click.wav", 1);
+        PlaySound("res/click.wav", 1);
     }
 
     public void PlayPush() {
@@ -34,7 +34,7 @@ public class Sound {
 
         var index = scale[clip];
 
-        PlaySoundPitchShift("pitchC.wav", index, Settings.BarrierVolume);
+        PlaySoundPitchShift("res/pitchC.wav", index, Settings.BarrierVolume);
     }
 
     public void PlayBass() {
@@ -47,7 +47,7 @@ public class Sound {
 
         var index = scale[clip];
 
-        PlaySoundPitchShift("bassC.wav", index, Settings.SaftyVolume);
+        PlaySoundPitchShift("res/bassC.wav", index, Settings.SaftyVolume);
     }
 
     public void PlayDrums() {
@@ -58,13 +58,13 @@ public class Sound {
 
         switch (clip) {
             case 0:
-                PlaySound("kick.wav", Settings.KillVolume);
+                PlaySound("res/kick.wav", Settings.KillVolume);
                 break;
             case 1:
-                PlaySound("snare.wav", Settings.KillVolume);
+                PlaySound("res/snare.wav", Settings.KillVolume);
                 break;
             case 3:
-                PlaySound("hat.wav", Settings.KillVolume);
+                PlaySound("res/hat.wav", Settings.KillVolume);
                 break;
             default:
                 break;
