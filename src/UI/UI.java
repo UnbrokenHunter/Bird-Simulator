@@ -72,9 +72,9 @@ public class UI {
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Colors", ColorUI, false, Settings.cPurple) ? 2 : 0);
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Birds", BirdsUI, false, Settings.cPink) ? 1 : 0);
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Hawks", HawksUI, false, Settings.cBlue) ? 5 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Barriers", BarrierUI, false, Settings.cRed) ? 6 : 0);
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Power", PowerUI, false, Settings.cYellow) ? 3 : 0);
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Distance", DistanceUI, false, Settings.cOrange) ? 4 : 0);
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Barriers", BarrierUI, false, Settings.cRed) ? 6 : 0);
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Music", MusicUI, false, Settings.cMagenta) ? 7 : 0);
         }
 
