@@ -1,4 +1,4 @@
-package main;
+package Main;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -6,6 +6,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
+
+import Barriers.Barrier;
+import Barriers.BarrierManager;
+import Boids.Bird;
+import Boids.Field;
+import UI.BirdViewer;
+import UI.UI;
+import Utilities.ColorInterpolator;
+import Utilities.Looper;
+import Utilities.Utilities;
+import Utilities.Vector2;
 
 public class Panel extends JPanel {
 

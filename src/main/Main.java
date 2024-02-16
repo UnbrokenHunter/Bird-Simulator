@@ -1,4 +1,4 @@
-package main;
+package Main;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -8,6 +8,13 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
+import Barriers.BarrierManager;
+import Boids.Field;
+import Utilities.Sound;
+import Utilities.UIUtilities;
+import Utilities.Utilities;
+import Utilities.Vector2;
 
 public class Main {
 

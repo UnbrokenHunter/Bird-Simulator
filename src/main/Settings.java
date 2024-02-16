@@ -1,7 +1,13 @@
-package main;
+package Main;
 
 import java.awt.Color;
 import java.util.ArrayList;
+
+import Barriers.Barrier;
+import Boids.Bird;
+import Boids.Field;
+import Utilities.ColorInterpolator;
+import Utilities.Vector2;
 
 public class Settings {
 
