@@ -105,7 +105,11 @@ public class Panel extends JPanel {
             Vector2 first = bird.LastPosition[i];
             Vector2 second = bird.LastPosition[i + 1];
 
-            g2.setStroke(new BasicStroke((bird.LastPosition.length - i) / 2));
+            if (Vector2.distance(bird.LastPosition[0], first) < 15)
+                continue;
+
+            var size = (bird.LastPosition.length - i) / 3;
+            g2.setStroke(new BasicStroke(size));
 
             // Left Wall
             if (Math.abs(second.x - first.x) > Math.abs(Settings.Width - second.x)
@@ -161,11 +165,14 @@ public class Panel extends JPanel {
                         (int) Settings.Height);
             }
 
-            else
+            else {
                 g2.drawLine((int) first.x,
                         (int) first.y,
                         (int) second.x,
                         (int) second.y);
+                // g2.fillOval((int) first.x - size / 2, (int) first.y - size / 2, (int) size,
+                // (int) size);
+            }
         }
     }
 
