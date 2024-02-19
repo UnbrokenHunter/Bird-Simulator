@@ -23,6 +23,7 @@ public class UI {
         private boolean HawksUI = false;
         private boolean BarrierUI = false;
         private boolean MusicUI = false;
+        private boolean PresetsUI = false;
 
         public void DrawButtons(Graphics g) {
 
@@ -62,12 +63,14 @@ public class UI {
                                 BarrierUI(g);
                         else if (MusicUI)
                                 MusicUI(g);
+                        else if (PresetsUI) // ADDING PRESETS
+                                PresetsUI(g);
                 }
                 UIUtilities.EndGroup();
         }
 
         private void MenuUI(Graphics g) {
-                UIUtilities.StartGroup(g, menuPosition, new Vector2(0, 54), 7);
+                UIUtilities.StartGroup(g, menuPosition, new Vector2(0, 54), 8);
 
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Colors", ColorUI, false, Settings.cPurple) ? 2 : 0);
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Birds", BirdsUI, false, Settings.cPink) ? 1 : 0);
@@ -76,6 +79,7 @@ public class UI {
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Power", PowerUI, false, Settings.cYellow) ? 3 : 0);
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Distance", DistanceUI, false, Settings.cOrange) ? 4 : 0);
                 ReturnToMainUI(UIUtilities.DrawButton(g, "Music", MusicUI, false, Settings.cMagenta) ? 7 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Presets", PresetsUI, false, Settings.cPurple) ? 8 : 0);
         }
 
         private void GeneralUI(Graphics g) {
@@ -92,6 +96,26 @@ public class UI {
                 UIUtilities.StartGroup(g, generalPosition, new Vector2(0, 54), 1);
 
                 HideUI = UIUtilities.DrawButton(g, "Show", HideUI, false);
+        }
+
+        private void PresetsUI(Graphics g) {
+                UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
+
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Presets", false, false, Settings.cOrange) ? -1 : 0);
+
+                UIUtilities.EndGroup();
+
+                UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 4);
+
+                Presets.Default(UIUtilities.DrawButton(g, "Default",
+                                false, Settings.cRed));
+                Presets.Organized(UIUtilities.DrawButton(g, "Organized",
+                                false, Settings.cGreen));
+                Presets.Music(UIUtilities.DrawButton(g, "Music",
+                                false, Settings.cMagenta));
+                Presets.Maze(UIUtilities.DrawButton(g, "Maze",
+                                false, Settings.cBlue));
+
         }
 
         private void MusicUI(Graphics g) {
@@ -275,6 +299,7 @@ public class UI {
                 HawksUI = false;
                 BarrierUI = false;
                 MusicUI = false;
+                PresetsUI = false;
 
                 if (UI == -1)
                         return;
@@ -300,6 +325,9 @@ public class UI {
                                 break;
                         case 7:
                                 MusicUI = true;
+                                break;
+                        case 8:
+                                PresetsUI = true;
                                 break;
 
                 }

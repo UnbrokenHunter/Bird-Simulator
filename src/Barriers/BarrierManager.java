@@ -39,6 +39,12 @@ public class BarrierManager {
                 }
         }
 
+        public static void CreateBarrier(Vector2 start, Vector2 end) {
+                ClickPosition = start;
+                DragPosition = end;
+                CreateBarrier();
+        }
+
         public static void CreateBarrier() {
                 if (Settings.DoGrid && ClickPosition != null && DragPosition == null)
                         DragPosition = new Vector2(ClickPosition.x + Settings.GridSize,
@@ -63,6 +69,15 @@ public class BarrierManager {
 
                 ClickPosition = null;
                 DragPosition = null;
+
+                System.out.println("// Barriers");
+                for (Barrier b : Settings.Barriers) {
+                        System.out.println("Settings.ModeIndex = " + b.modeIndex + ";");
+                        System.out.println("Settings.ShapeIndex = " + b.shapeIndex + ";");
+                        System.out.println("BarrierManager.CreateBarrier(new Vector2(" + b.Start.x + "f, " + b.Start.y
+                                        + "f), new Vector2(" + b.End.x + "f, " + b.End.y + "f));\n");
+                }
+
         }
 
 }

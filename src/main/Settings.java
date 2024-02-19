@@ -1,6 +1,7 @@
 package Main;
 
 import java.awt.Color;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
 import Barriers.Barrier;
