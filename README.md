@@ -30,5 +30,5 @@ This project is a Java implementation of the Boids simulation, an artificial lif
 1. Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/unbroken-hunter/Bird-Simulator.git
+git clone https://github.com/UnbrokenHunter/Bird-Simulator.git
 ```
