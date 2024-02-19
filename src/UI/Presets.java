@@ -55,18 +55,14 @@ public class Presets {
 
         Settings.Instance.ModeIndex = 0;
         Settings.Instance.ShapeIndex = 0;
-        BarrierManager.CreateBarrier(new Vector2(480.0f, 90.0f), new Vector2(480.0f, 90.0f));
-
-        Settings.Instance.ModeIndex = 0;
-        Settings.Instance.ShapeIndex = 0;
         BarrierManager.CreateBarrier(new Vector2(450.0f, 90.0f), new Vector2(540.0f, 180.0f));
 
         Settings.Instance.ModeIndex = 0;
         Settings.Instance.ShapeIndex = 0;
         BarrierManager.CreateBarrier(new Vector2(90.0f, 270.0f), new Vector2(180.0f, 360.0f));
 
-        Settings.Instance.ModeIndex = 0;
-        Settings.Instance.ShapeIndex = 0;
+        Settings.Instance.ModeIndex = 1;
+        Settings.Instance.ShapeIndex = 1;
         BarrierManager.CreateBarrier(new Vector2(270.0f, 270.0f), new Vector2(360.0f, 360.0f));
 
         Settings.Instance.ModeIndex = 0;
