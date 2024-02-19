@@ -25,46 +25,46 @@ public class Sound {
     }
 
     public void PlayPush() {
-        if (!Settings.MusicEnabled)
+        if (!Settings.Instance.MusicEnabled)
             return;
 
-        var scale = Settings.MusicScale[Settings.MusicIndex];
+        var scale = Settings.Instance.MusicScale[Settings.Instance.MusicIndex];
 
         int clip = random.nextInt(0, scale.length);
 
         var index = scale[clip];
 
-        PlaySoundPitchShift("res/pitchC.wav", index, Settings.BarrierVolume);
+        PlaySoundPitchShift("res/pitchC.wav", index, Settings.Instance.BarrierVolume);
     }
 
     public void PlayBass() {
-        if (!Settings.MusicEnabled)
+        if (!Settings.Instance.MusicEnabled)
             return;
 
-        var scale = Settings.MusicScale[Settings.MusicIndex];
+        var scale = Settings.Instance.MusicScale[Settings.Instance.MusicIndex];
 
         int clip = random.nextInt(0, scale.length);
 
         var index = scale[clip];
 
-        PlaySoundPitchShift("res/bassC.wav", index, Settings.SaftyVolume);
+        PlaySoundPitchShift("res/bassC.wav", index, Settings.Instance.SaftyVolume);
     }
 
     public void PlayDrums() {
-        if (!Settings.MusicEnabled)
+        if (!Settings.Instance.MusicEnabled)
             return;
 
         int clip = random.nextInt(0, 3);
 
         switch (clip) {
             case 0:
-                PlaySound("res/kick.wav", Settings.KillVolume);
+                PlaySound("res/kick.wav", Settings.Instance.KillVolume);
                 break;
             case 1:
-                PlaySound("res/snare.wav", Settings.KillVolume);
+                PlaySound("res/snare.wav", Settings.Instance.KillVolume);
                 break;
             case 3:
-                PlaySound("res/hat.wav", Settings.KillVolume);
+                PlaySound("res/hat.wav", Settings.Instance.KillVolume);
                 break;
             default:
                 break;

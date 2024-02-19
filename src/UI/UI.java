@@ -27,15 +27,15 @@ public class UI {
 
         public void DrawButtons(Graphics g) {
 
-                generalPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 1.3f - 5, 5f);
-                menuPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 1.3f - 5,
-                                5f + Settings.bButtonSize.y * 3.5f);
-                namePosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 2.5f - 5,
-                                5f + Settings.bButtonSize.y * 3.5f);
-                firstPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 2.5f - 5,
-                                5f + Settings.bButtonSize.y * 4.8f);
-                secondPosition = new Vector2(Settings.Width - Settings.bButtonSize.x * 3.8f - 5,
-                                5f + Settings.bButtonSize.y * 4.8f);
+                generalPosition = new Vector2(Settings.Instance.Width - Settings.Instance.bButtonSize.x * 1.3f - 5, 5f);
+                menuPosition = new Vector2(Settings.Instance.Width - Settings.Instance.bButtonSize.x * 1.3f - 5,
+                                5f + Settings.Instance.bButtonSize.y * 3.5f);
+                namePosition = new Vector2(Settings.Instance.Width - Settings.Instance.bButtonSize.x * 2.5f - 5,
+                                5f + Settings.Instance.bButtonSize.y * 3.5f);
+                firstPosition = new Vector2(Settings.Instance.Width - Settings.Instance.bButtonSize.x * 2.5f - 5,
+                                5f + Settings.Instance.bButtonSize.y * 4.8f);
+                secondPosition = new Vector2(Settings.Instance.Width - Settings.Instance.bButtonSize.x * 3.8f - 5,
+                                5f + Settings.Instance.bButtonSize.y * 4.8f);
 
                 if (HideUI)
                         HideUI(g);
@@ -72,14 +72,16 @@ public class UI {
         private void MenuUI(Graphics g) {
                 UIUtilities.StartGroup(g, menuPosition, new Vector2(0, 54), 8);
 
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Colors", ColorUI, false, Settings.cPurple) ? 2 : 0);
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Birds", BirdsUI, false, Settings.cPink) ? 1 : 0);
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Hawks", HawksUI, false, Settings.cBlue) ? 5 : 0);
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Barriers", BarrierUI, false, Settings.cRed) ? 6 : 0);
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Power", PowerUI, false, Settings.cYellow) ? 3 : 0);
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Distance", DistanceUI, false, Settings.cOrange) ? 4 : 0);
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Music", MusicUI, false, Settings.cMagenta) ? 7 : 0);
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Presets", PresetsUI, false, Settings.cPurple) ? 8 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Colors", ColorUI, false, Settings.Instance.cPurple) ? 2 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Birds", BirdsUI, false, Settings.Instance.cPink) ? 1 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Hawks", HawksUI, false, Settings.Instance.cBlue) ? 5 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Barriers", BarrierUI, false, Settings.Instance.cRed) ? 6 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Power", PowerUI, false, Settings.Instance.cYellow) ? 3 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Distance", DistanceUI, false, Settings.Instance.cOrange) ? 4
+                                : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Music", MusicUI, false, Settings.Instance.cMagenta) ? 7 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Presets", PresetsUI, false, Settings.Instance.cPurple) ? 8
+                                : 0);
         }
 
         private void GeneralUI(Graphics g) {
@@ -87,8 +89,9 @@ public class UI {
                 UIUtilities.StartGroup(g, generalPosition, new Vector2(0, 54), 3);
 
                 HideUI = UIUtilities.DrawButton(g, "Hide", HideUI, false);
-                Settings.Pause = UIUtilities.DrawButton(g, "Pause", Settings.Pause, false, Settings.cGreen);
-                if (UIUtilities.DrawButton(g, "Restart", false, false, Settings.cPink))
+                Settings.Instance.Pause = UIUtilities.DrawButton(g, "Pause", Settings.Instance.Pause, false,
+                                Settings.Instance.cGreen);
+                if (UIUtilities.DrawButton(g, "Restart", false, false, Settings.Instance.cPink))
                         Field.Restart();
         }
 
@@ -101,191 +104,201 @@ public class UI {
         private void PresetsUI(Graphics g) {
                 UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Presets", false, false, Settings.cOrange) ? -1 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Presets", false, false, Settings.Instance.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
                 UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 4);
 
                 Presets.Default(UIUtilities.DrawButton(g, "Default",
-                                false, Settings.cRed));
+                                false, Settings.Instance.cRed));
                 Presets.Organized(UIUtilities.DrawButton(g, "Organized",
-                                false, Settings.cGreen));
+                                false, Settings.Instance.cGreen));
                 Presets.Music(UIUtilities.DrawButton(g, "Music",
-                                false, Settings.cMagenta));
+                                false, Settings.Instance.cMagenta));
                 Presets.Maze(UIUtilities.DrawButton(g, "Maze",
-                                false, Settings.cBlue));
+                                false, Settings.Instance.cBlue));
 
         }
 
         private void MusicUI(Graphics g) {
                 UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Music", false, false, Settings.cOrange) ? -1 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Music", false, false, Settings.Instance.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
                 UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 8);
 
-                Settings.MusicEnabled = UIUtilities.DrawButton(g, "Enabled",
-                                Settings.MusicEnabled, true, Settings.cYellow);
+                Settings.Instance.MusicEnabled = UIUtilities.DrawButton(g, "Enabled",
+                                Settings.Instance.MusicEnabled, true, Settings.Instance.cYellow);
 
-                Settings.MusicIndex = (UIUtilities.DrawButton(g, "Pentatonic Scale",
-                                Settings.MusicIndex == 0, true, Settings.cMagenta) ? 0 : Settings.MusicIndex);
-                Settings.MusicIndex = (UIUtilities.DrawButton(g, "Major Scale",
-                                Settings.MusicIndex == 1, true, Settings.cGreen) ? 1 : Settings.MusicIndex);
-                Settings.MusicIndex = (UIUtilities.DrawButton(g, "Chromatic Scale",
-                                Settings.MusicIndex == 2, true, Settings.cBlue) ? 2 : Settings.MusicIndex);
-                Settings.MusicIndex = (UIUtilities.DrawButton(g, "5 Tone Scale",
-                                Settings.MusicIndex == 3, true, Settings.cRed) ? 3 : Settings.MusicIndex);
-                Settings.MusicIndex = (UIUtilities.DrawButton(g, "Minor Blues Scale",
-                                Settings.MusicIndex == 6, true, Settings.cRed) ? 6 : Settings.MusicIndex);
-                Settings.MusicIndex = (UIUtilities.DrawButton(g, "Quartertone Scale",
-                                Settings.MusicIndex == 4, true, Settings.cYellow) ? 4 : Settings.MusicIndex);
-                Settings.MusicIndex = (UIUtilities.DrawButton(g, "17/10 Scale",
-                                Settings.MusicIndex == 5, true, Settings.cPurple) ? 5 : Settings.MusicIndex);
+                Settings.Instance.MusicIndex = (UIUtilities.DrawButton(g, "Pentatonic Scale",
+                                Settings.Instance.MusicIndex == 0, true, Settings.Instance.cMagenta) ? 0
+                                                : Settings.Instance.MusicIndex);
+                Settings.Instance.MusicIndex = (UIUtilities.DrawButton(g, "Major Scale",
+                                Settings.Instance.MusicIndex == 1, true, Settings.Instance.cGreen) ? 1
+                                                : Settings.Instance.MusicIndex);
+                Settings.Instance.MusicIndex = (UIUtilities.DrawButton(g, "Chromatic Scale",
+                                Settings.Instance.MusicIndex == 2, true, Settings.Instance.cBlue) ? 2
+                                                : Settings.Instance.MusicIndex);
+                Settings.Instance.MusicIndex = (UIUtilities.DrawButton(g, "5 Tone Scale",
+                                Settings.Instance.MusicIndex == 3, true, Settings.Instance.cRed) ? 3
+                                                : Settings.Instance.MusicIndex);
+                Settings.Instance.MusicIndex = (UIUtilities.DrawButton(g, "Minor Blues Scale",
+                                Settings.Instance.MusicIndex == 6, true, Settings.Instance.cRed) ? 6
+                                                : Settings.Instance.MusicIndex);
+                Settings.Instance.MusicIndex = (UIUtilities.DrawButton(g, "Quartertone Scale",
+                                Settings.Instance.MusicIndex == 4, true, Settings.Instance.cYellow) ? 4
+                                                : Settings.Instance.MusicIndex);
+                Settings.Instance.MusicIndex = (UIUtilities.DrawButton(g, "17/10 Scale",
+                                Settings.Instance.MusicIndex == 5, true, Settings.Instance.cPurple) ? 5
+                                                : Settings.Instance.MusicIndex);
 
                 UIUtilities.EndGroup();
 
                 UIUtilities.StartGroup(g, secondPosition, new Vector2(0, 54), 3);
 
-                Settings.BarrierVolume += UIUtilities.DrawSwitch(g, "Melody Volume",
-                                Settings.BarrierVolume, .1, Settings.cBlue);
-                Settings.SaftyVolume += UIUtilities.DrawSwitch(g, "Bass Volume",
-                                Settings.SaftyVolume, .1, Settings.cPink);
-                Settings.KillVolume += UIUtilities.DrawSwitch(g, "Drum Volume",
-                                Settings.KillVolume, .1, Settings.cGreen);
+                Settings.Instance.BarrierVolume += UIUtilities.DrawSwitch(g, "Melody Volume",
+                                Settings.Instance.BarrierVolume, .1, Settings.Instance.cBlue);
+                Settings.Instance.SaftyVolume += UIUtilities.DrawSwitch(g, "Bass Volume",
+                                Settings.Instance.SaftyVolume, .1, Settings.Instance.cPink);
+                Settings.Instance.KillVolume += UIUtilities.DrawSwitch(g, "Drum Volume",
+                                Settings.Instance.KillVolume, .1, Settings.Instance.cGreen);
 
         }
 
         private void BirdsUI(Graphics g) {
                 UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Birds", false, false, Settings.cOrange) ? -1 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Birds", false, false, Settings.Instance.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
                 UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 4);
 
-                Settings.UpdateBirdCount(
-                                (int) UIUtilities.DrawSwitch(g, "Bird Count", Settings.BirdCount, 100, Settings.cBlue));
+                Settings.Instance.UpdateBirdCount(
+                                (int) UIUtilities.DrawSwitch(g, "Bird Count", Settings.Instance.BirdCount, 100,
+                                                Settings.Instance.cBlue));
 
-                Settings.CanReproduce = UIUtilities.DrawButton(g, "Can Balance",
-                                Settings.CanReproduce, true, Settings.cMagenta);
-                Settings.MinSpeed += (int) UIUtilities.DrawSwitch(g, "Min Speed",
-                                Settings.MinSpeed, 1, Settings.cGreen);
-                Settings.MaxSpeed += (int) UIUtilities.DrawSwitch(g, "Max Speed",
-                                Settings.MaxSpeed, 1, Settings.cOrange);
+                Settings.Instance.CanReproduce = UIUtilities.DrawButton(g, "Can Balance",
+                                Settings.Instance.CanReproduce, true, Settings.Instance.cMagenta);
+                Settings.Instance.MinSpeed += (int) UIUtilities.DrawSwitch(g, "Min Speed",
+                                Settings.Instance.MinSpeed, 1, Settings.Instance.cGreen);
+                Settings.Instance.MaxSpeed += (int) UIUtilities.DrawSwitch(g, "Max Speed",
+                                Settings.Instance.MaxSpeed, 1, Settings.Instance.cOrange);
         }
 
         private void ColorUI(Graphics g) {
                 UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Color", false, false, Settings.cOrange) ? -1 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Color", false, false, Settings.Instance.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
                 UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 3);
 
                 // Colors
-                Settings.SetNextColor((int) UIUtilities.DrawSwitch(g, "Next Color",
-                                Settings.ColorIndex, 1, Settings.cRed));
-                Settings.NumberOfColors += (int) UIUtilities.DrawSwitch(g, "Num Colors",
-                                Settings.NumberOfColors, 10, Settings.cPink);
-                Settings.DoFancyColor = UIUtilities.DrawButton(g, "Fancy Colors",
-                                Settings.DoFancyColor, Settings.cMagenta);
+                Settings.Instance.SetNextColor((int) UIUtilities.DrawSwitch(g, "Next Color",
+                                Settings.Instance.ColorIndex, 1, Settings.Instance.cRed));
+                Settings.Instance.NumberOfColors += (int) UIUtilities.DrawSwitch(g, "Num Colors",
+                                Settings.Instance.NumberOfColors, 10, Settings.Instance.cPink);
+                Settings.Instance.DoFancyColor = UIUtilities.DrawButton(g, "Fancy Colors",
+                                Settings.Instance.DoFancyColor, Settings.Instance.cMagenta);
         }
 
         private void PowerUI(Graphics g) {
                 UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Power", false, false, Settings.cOrange) ? -1 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Power", false, false, Settings.Instance.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
                 UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 5);
 
                 // Power
-                Settings.FlockPower += UIUtilities.DrawSwitch(g, "Flock",
-                                Settings.FlockPower, 0.0001d, Settings.cPink);
-                Settings.AlignPower += UIUtilities.DrawSwitch(g, "Align",
-                                Settings.AlignPower, 0.01d, Settings.cMagenta);
-                Settings.AvoidPower += UIUtilities.DrawSwitch(g, "Avoid",
-                                Settings.AvoidPower, 0.001d, Settings.cOrange);
-                Settings.PredatorPower += UIUtilities.DrawSwitch(g, "Fear",
-                                Settings.PredatorPower, 0.00015d, Settings.cYellow);
-                Settings.BarrierPower += UIUtilities.DrawSwitch(g, "Barrier",
-                                Settings.BarrierPower, 0.1, Settings.cPink);
+                Settings.Instance.FlockPower += UIUtilities.DrawSwitch(g, "Flock",
+                                Settings.Instance.FlockPower, 0.0001d, Settings.Instance.cPink);
+                Settings.Instance.AlignPower += UIUtilities.DrawSwitch(g, "Align",
+                                Settings.Instance.AlignPower, 0.01d, Settings.Instance.cMagenta);
+                Settings.Instance.AvoidPower += UIUtilities.DrawSwitch(g, "Avoid",
+                                Settings.Instance.AvoidPower, 0.001d, Settings.Instance.cOrange);
+                Settings.Instance.PredatorPower += UIUtilities.DrawSwitch(g, "Fear",
+                                Settings.Instance.PredatorPower, 0.00015d, Settings.Instance.cYellow);
+                Settings.Instance.BarrierPower += UIUtilities.DrawSwitch(g, "Barrier",
+                                Settings.Instance.BarrierPower, 0.1, Settings.Instance.cPink);
         }
 
         private void DistanceUI(Graphics g) {
                 UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Distance", false, false, Settings.cOrange) ? -1 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Distance", false, false, Settings.Instance.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
                 UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 7);
 
                 // Distance
-                Settings.FlockDistance += (int) UIUtilities.DrawSwitch(g, "Flock",
-                                Settings.FlockDistance, 10, Settings.cPink);
-                Settings.AlignDistance += (int) UIUtilities.DrawSwitch(g, "Align",
-                                Settings.AlignDistance, 10, Settings.cMagenta);
-                Settings.AvoidDistance += (int) UIUtilities.DrawSwitch(g, "Avoid",
-                                Settings.AvoidDistance, 10, Settings.cOrange);
-                Settings.PredatorDistance += (int) UIUtilities.DrawSwitch(g, "Fear",
-                                Settings.PredatorDistance, 10, Settings.cYellow);
-                Settings.BarrierDistance += (int) UIUtilities.DrawSwitch(g, "Barrier",
-                                Settings.BarrierDistance, 10, Settings.cPink);
-                Settings.KillDistance += (int) UIUtilities.DrawSwitch(g, "Kill",
-                                Settings.KillDistance, 1, Settings.cGreen);
-                Settings.ReproductionDistance += (int) UIUtilities.DrawSwitch(g, "Reproduction",
-                                Settings.ReproductionDistance, 1, Settings.cBlue);
+                Settings.Instance.FlockDistance += (int) UIUtilities.DrawSwitch(g, "Flock",
+                                Settings.Instance.FlockDistance, 10, Settings.Instance.cPink);
+                Settings.Instance.AlignDistance += (int) UIUtilities.DrawSwitch(g, "Align",
+                                Settings.Instance.AlignDistance, 10, Settings.Instance.cMagenta);
+                Settings.Instance.AvoidDistance += (int) UIUtilities.DrawSwitch(g, "Avoid",
+                                Settings.Instance.AvoidDistance, 10, Settings.Instance.cOrange);
+                Settings.Instance.PredatorDistance += (int) UIUtilities.DrawSwitch(g, "Fear",
+                                Settings.Instance.PredatorDistance, 10, Settings.Instance.cYellow);
+                Settings.Instance.BarrierDistance += (int) UIUtilities.DrawSwitch(g, "Barrier",
+                                Settings.Instance.BarrierDistance, 10, Settings.Instance.cPink);
+                Settings.Instance.KillDistance += (int) UIUtilities.DrawSwitch(g, "Kill",
+                                Settings.Instance.KillDistance, 1, Settings.Instance.cGreen);
+                Settings.Instance.ReproductionDistance += (int) UIUtilities.DrawSwitch(g, "Reproduction",
+                                Settings.Instance.ReproductionDistance, 1, Settings.Instance.cBlue);
 
         }
 
         private void HawksUI(Graphics g) {
                 UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Hawks", false, false, Settings.cOrange) ? -1 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Hawks", false, false, Settings.Instance.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
                 UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 3);
 
                 // Hawks
-                Settings.UpdatePredatorCount((int) UIUtilities.DrawSwitch(g, "Hawks",
-                                Settings.PredatorCount, 1, Settings.cBlue));
-                Settings.BecomePredatorHelper(UIUtilities.DrawButton(g, "Control",
-                                false, Settings.cRed));
-                Settings.PredatorCanKill = UIUtilities.DrawButton(g, "Can Kill",
-                                Settings.PredatorCanKill, true, Settings.cMagenta);
+                Settings.Instance.UpdatePredatorCount((int) UIUtilities.DrawSwitch(g, "Hawks",
+                                Settings.Instance.PredatorCount, 1, Settings.Instance.cBlue));
+                Settings.Instance.BecomePredatorHelper(UIUtilities.DrawButton(g, "Control",
+                                false, Settings.Instance.cRed));
+                Settings.Instance.PredatorCanKill = UIUtilities.DrawButton(g, "Can Kill",
+                                Settings.Instance.PredatorCanKill, true, Settings.Instance.cMagenta);
         }
 
         private void BarrierUI(Graphics g) {
                 UIUtilities.StartGroup(g, namePosition, new Vector2(0, 54), 1);
 
-                ReturnToMainUI(UIUtilities.DrawButton(g, "Barrier", false, false, Settings.cOrange) ? -1 : 0);
+                ReturnToMainUI(UIUtilities.DrawButton(g, "Barrier", false, false, Settings.Instance.cOrange) ? -1 : 0);
 
                 UIUtilities.EndGroup();
 
                 UIUtilities.StartGroup(g, firstPosition, new Vector2(0, 54), 5);
 
                 // Bounce
-                Settings.Bounce = UIUtilities.DrawButton(g, "Bounce", Settings.Bounce, Settings.cGreen);
+                Settings.Instance.Bounce = UIUtilities.DrawButton(g, "Bounce", Settings.Instance.Bounce,
+                                Settings.Instance.cGreen);
 
-                Settings.DoGrid = UIUtilities.DrawButton(g, "Grid", Settings.DoGrid, true, Settings.cMagenta);
+                Settings.Instance.DoGrid = UIUtilities.DrawButton(g, "Grid", Settings.Instance.DoGrid, true,
+                                Settings.Instance.cMagenta);
 
-                Settings.SetNextShape((int) UIUtilities.DrawSwitch(g, "Shape",
-                                Settings.ShapeIndex, 1, Settings.cOrange));
+                Settings.Instance.SetNextShape((int) UIUtilities.DrawSwitch(g, "Shape",
+                                Settings.Instance.ShapeIndex, 1, Settings.Instance.cOrange));
 
-                Settings.SetNextBarrierMode((int) UIUtilities.DrawSwitch(g, "Mode",
-                                Settings.ModeIndex, 1, Settings.cBlue));
+                Settings.Instance.SetNextBarrierMode((int) UIUtilities.DrawSwitch(g, "Mode",
+                                Settings.Instance.ModeIndex, 1, Settings.Instance.cBlue));
 
                 // Barriers
-                if (UIUtilities.DrawButton(g, "Undo Barrier", false, Settings.cPurple))
-                        Settings.Barriers.removeLast();
+                if (UIUtilities.DrawButton(g, "Undo Barrier", false, Settings.Instance.cPurple))
+                        Settings.Instance.Barriers.removeLast();
         }
 
         private void ReturnToMainUI(int UI) {

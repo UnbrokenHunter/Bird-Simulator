@@ -11,70 +11,81 @@ import Utilities.Vector2;
 
 public class Settings {
 
+    public static Settings Instance;
+
+    public Settings() {
+        Instance = this;
+        System.out.println("New Settings Created");
+    }
+
+    public static void ResetSettings() {
+        new Settings();
+    }
+
     // Settings
-    public static int Width = 700;
-    public static int Height = 700;
-    public static boolean Bounce = false;
+    public int Width = 700;
+    public int Height = 700;
+    public boolean Bounce = false;
 
     // Counts
-    public static int BirdCount = 400;
-    public static int PredatorCount = 0;
+    public int BirdCount = 400;
+    public int PredatorCount = 0;
 
     // Spawn
-    public static Vector2 SpawnPosition() {
+    public Vector2 SpawnPosition() {
         return new Vector2(Width / 2, Height / 2);
     }
 
-    public static boolean RandomSpawn = false;
+    public boolean RandomSpawn = false;
 
-    public static Vector2 SpawnDirection() {
+    public Vector2 SpawnDirection() {
         return new Vector2(Width / 2, Height / 2);
     }
 
-    public static boolean RandomDirection = true;
+    public boolean RandomDirection = true;
 
     // Color
-    public static ColorInterpolator ColorInterp;
-    public static int ColorRadius = 50;
-    public static int NumberOfColors = 40;
-    public static Color[] ColorPalatte = ColorInterpolator.RAINBOW;
-    public static int ColorIndex = 0;
-    public static boolean DoFancyColor = true;
+    public int ColorRadius = 50;
+    public int NumberOfColors = 40;
+    public Color[] ColorPalatte = ColorInterpolator.RAINBOW;
+    public int ColorIndex = 0;
+    public boolean DoFancyColor = true;
+    public ColorInterpolator ColorInterp = new ColorInterpolator(ColorPalatte, NumberOfColors);
 
     // Balance
-    public static boolean CanReproduce = false;
-    public static double ReproductionChance = 5d;
-    public static boolean PredatorCanKill = false;
+    public boolean CanReproduce = false;
+    public double ReproductionChance = 5d;
+    public boolean PredatorCanKill = false;
 
     // Barriers
-    public static boolean DoGrid = false;
-    public static int GridSize = 30;
-    public static int ShapeIndex = 0;
-    public static int ModeIndex = 0;
+    public boolean DoGrid = false;
+    public int GridSize = 30;
+    public int ShapeIndex = 0;
+    public int ModeIndex = 0;
 
     // Speed
-    public static double MinSpeed = 2;
-    public static double MaxSpeed = 5;
+    public double MinSpeed = 2;
+    public double MaxSpeed = 5;
 
     // Rules
-    public static double FlockPower = 0.0003;
-    public static double AlignPower = 0.01;
-    public static double AvoidPower = 0.001;
-    public static double PredatorPower = 0.00005;
-    public static double BarrierPower = 0.5;
+    public double FlockPower = 0.0003;
+    public double AlignPower = 0.01;
+    public double AvoidPower = 0.001;
+    public double PredatorPower = 0.00005;
+    public double BarrierPower = 0.5;
 
-    public static double FlockDistance = 50;
-    public static double AlignDistance = 50;
-    public static double AvoidDistance = 20;
-    public static double PredatorDistance = 150;
-    public static double BarrierDistance = 30;
-    public static double KillDistance = 1;
-    public static double ReproductionDistance = 1;
+    public double FlockDistance = 50;
+    public double AlignDistance = 50;
+    public double AvoidDistance = 20;
+    public double PredatorDistance = 150;
+    public double BarrierDistance = 30;
+    public double KillDistance = 1;
+    public double ReproductionDistance = 1;
 
     // Music
-    public static boolean MusicEnabled = false;
-    public static int MusicIndex = 0;
-    public static int[][] MusicScale = {
+    public boolean MusicEnabled = false;
+    public int MusicIndex = 0;
+    public int[][] MusicScale = {
             { 0, 200, 400, 700, 900, 1200 }, // Pentatonic
             { 0, 200, 400, 500, 700, 900, 1100, 1200 }, // Major
             { 0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200 }, // Chromatic
@@ -86,41 +97,41 @@ public class Settings {
     };
 
     // Audio
-    public static double BarrierSoundChance = 100d;
-    public static double SaftySoundChance = 75d;
-    public static double KillSoundChance = 75d;
+    public double BarrierSoundChance = 100d;
+    public double SaftySoundChance = 75d;
+    public double KillSoundChance = 75d;
 
-    public static double BarrierVolume = 0.8d;
-    public static double SaftyVolume = 0.8d;
-    public static double KillVolume = 0.8d;
+    public double BarrierVolume = 0.8d;
+    public double SaftyVolume = 0.8d;
+    public double KillVolume = 0.8d;
 
     // Other
-    public static ArrayList<Barrier> Barriers = new ArrayList<Barrier>();
-    public static boolean BecomePredator;
-    public static boolean Pause = false;
-    public static int BirdInViewIndex = 0;
+    public ArrayList<Barrier> Barriers = new ArrayList<Barrier>();
+    public boolean BecomePredator;
+    public boolean Pause = false;
+    public int BirdInViewIndex = 0;
 
     // UI
-    public static Vector2 MouseClick = Vector2.zero;
-    public static Vector2 bButtonSize = new Vector2(50, 50);
-    public static Vector2 UIStartBounds = Vector2.zero;
-    public static Vector2 UISizeBounds = Vector2.zero;
-    public static Vector2 UIEndBounds = Vector2.zero;
+    public Vector2 MouseClick = Vector2.zero;
+    public Vector2 bButtonSize = new Vector2(50, 50);
+    public Vector2 UIStartBounds = Vector2.zero;
+    public Vector2 UISizeBounds = Vector2.zero;
+    public Vector2 UIEndBounds = Vector2.zero;
 
     // UI Colors
-    public static Color cDefaultColor = new Color(48, 85, 122);
-    public static Color cDefaultBackground = new Color(23, 56, 90);
-    public static Color cGreen = new Color(114, 242, 192, 95);
-    public static Color cBlue = new Color(114, 167, 242, 95);
-    public static Color cRed = new Color(245, 128, 144, 96);
-    public static Color cYellow = new Color(245, 245, 140, 96);
-    public static Color cOrange = new Color(244, 209, 139, 96);
-    public static Color cPink = new Color(230, 153, 247, 97);
-    public static Color cPurple = new Color(175, 173, 247, 97);
-    public static Color cMagenta = new Color(231, 133, 244, 96);
+    public Color cDefaultColor = new Color(48, 85, 122);
+    public Color cDefaultBackground = new Color(23, 56, 90);
+    public Color cGreen = new Color(114, 242, 192, 95);
+    public Color cBlue = new Color(114, 167, 242, 95);
+    public Color cRed = new Color(245, 128, 144, 96);
+    public Color cYellow = new Color(245, 245, 140, 96);
+    public Color cOrange = new Color(244, 209, 139, 96);
+    public Color cPink = new Color(230, 153, 247, 97);
+    public Color cPurple = new Color(175, 173, 247, 97);
+    public Color cMagenta = new Color(231, 133, 244, 96);
 
     // Helpers
-    public static void BecomePredatorHelper(boolean change) {
+    public void BecomePredatorHelper(boolean change) {
         if (!change)
             return;
 
@@ -136,7 +147,7 @@ public class Settings {
         }
     }
 
-    public static void UpdateBirdCount(int difference) {
+    public void UpdateBirdCount(int difference) {
         if (BirdCount + difference < 0)
             return;
 
@@ -153,7 +164,7 @@ public class Settings {
         }
     }
 
-    public static void UpdatePredatorCount(int difference) {
+    public void UpdatePredatorCount(int difference) {
         if (PredatorCount + difference < 0)
             return;
         if (difference == 0)
@@ -164,7 +175,7 @@ public class Settings {
         Field.Birds.get(PredatorCount).isPredator = false;
     }
 
-    public static void SetNextColor(int difference) {
+    public void SetNextColor(int difference) {
         if (difference == 0)
             return;
 
@@ -195,7 +206,7 @@ public class Settings {
         ColorPalatte = ColorInterp.GetColors();
     }
 
-    public static void SetNextBarrierMode(int difference) {
+    public void SetNextBarrierMode(int difference) {
         ModeIndex += difference;
 
         if (ModeIndex > 1)
@@ -204,7 +215,7 @@ public class Settings {
             ModeIndex = 1;
     }
 
-    public static void SetNextShape(int difference) {
+    public void SetNextShape(int difference) {
         ShapeIndex += difference;
 
         if (ShapeIndex > 1)

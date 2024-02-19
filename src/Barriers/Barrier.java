@@ -40,24 +40,26 @@ public class Barrier {
                 return Vector2.zero;
         }
 
-        if (bird.X > Start.x - Settings.BarrierDistance && bird.X < End.x + Settings.BarrierDistance) {
-            if (bird.Y > Start.y - Settings.BarrierDistance && bird.Y < End.y + Settings.BarrierDistance) {
+        if (bird.X > Start.x - Settings.Instance.BarrierDistance
+                && bird.X < End.x + Settings.Instance.BarrierDistance) {
+            if (bird.Y > Start.y - Settings.Instance.BarrierDistance
+                    && bird.Y < End.y + Settings.Instance.BarrierDistance) {
 
                 if (bird.X < End.x)
-                    calculateTurn.x -= Settings.BarrierPower;
+                    calculateTurn.x -= Settings.Instance.BarrierPower;
                 if (bird.X > Start.x)
-                    calculateTurn.x += Settings.BarrierPower;
+                    calculateTurn.x += Settings.Instance.BarrierPower;
                 if (bird.Y < End.y)
-                    calculateTurn.y -= Settings.BarrierPower;
+                    calculateTurn.y -= Settings.Instance.BarrierPower;
                 if (bird.Y > Start.y)
-                    calculateTurn.y += Settings.BarrierPower;
+                    calculateTurn.y += Settings.Instance.BarrierPower;
 
-                if (random.nextDouble(0, 1) < Settings.BarrierSoundChance / Settings.BirdCount
+                if (random.nextDouble(0, 1) < Settings.Instance.BarrierSoundChance / Settings.Instance.BirdCount
                         && birdsInBarrier.contains(bird) == false) {
                     if (modeIndex == 0)
                         Main.sound.PlayPush();
                 }
-                if (random.nextDouble(0, 1) < Settings.BarrierSoundChance / 100d
+                if (random.nextDouble(0, 1) < Settings.Instance.BarrierSoundChance / 100d
                         && birdsInBarrier.contains(bird) == false) {
                     if (modeIndex == 1)
                         Main.sound.PlayBass();

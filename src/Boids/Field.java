@@ -28,7 +28,7 @@ public class Field {
     public static void Restart() {
         Birds.clear();
 
-        for (int i = 0; i < Settings.BirdCount; i++) {
+        for (int i = 0; i < Settings.Instance.BirdCount; i++) {
             Bird bird = new Bird();
             bird.Name = "bird" + i;
             Birds.add(bird);
@@ -49,17 +49,17 @@ public class Field {
     }
 
     public void advance(boolean bounceOffWalls, boolean wrapAroundEdges) {
-        if (Settings.Pause)
+        if (Settings.Instance.Pause)
             return;
 
         // Update bird speed and direction (velocity) based on rules
         Birds.forEach(bird -> {
-            double[] flock = flock(bird, Settings.FlockDistance, Settings.FlockPower);
-            double[] align = align(bird, Settings.AlignDistance, Settings.AlignPower);
-            double[] avoid = avoid(bird, Settings.AvoidDistance, Settings.AvoidPower);
-            double[] predator = predator(bird, Settings.PredatorDistance, Settings.PredatorPower);
-            kill(bird, Settings.KillDistance);
-            reproduce(bird, Settings.ReproductionDistance);
+            double[] flock = flock(bird, Settings.Instance.FlockDistance, Settings.Instance.FlockPower);
+            double[] align = align(bird, Settings.Instance.AlignDistance, Settings.Instance.AlignPower);
+            double[] avoid = avoid(bird, Settings.Instance.AvoidDistance, Settings.Instance.AvoidPower);
+            double[] predator = predator(bird, Settings.Instance.PredatorDistance, Settings.Instance.PredatorPower);
+            kill(bird, Settings.Instance.KillDistance);
+            reproduce(bird, Settings.Instance.ReproductionDistance);
 
             if (bird != null) {
                 bird.Xvel += flock[0] + avoid[0] + align[0] + predator[0];
@@ -69,8 +69,8 @@ public class Field {
 
         // Move all birds forward in time
         Birds.forEach(bird -> {
-            if (!(Settings.BecomePredator && Birds.getFirst().equals(bird))) {
-                bird.moveForward(Settings.MinSpeed, Settings.MaxSpeed);
+            if (!(Settings.Instance.BecomePredator && Birds.getFirst().equals(bird))) {
+                bird.moveForward(Settings.Instance.MinSpeed, Settings.Instance.MaxSpeed);
 
                 bounceOffBarriers(bird);
 
@@ -86,10 +86,10 @@ public class Field {
         for (int index : toRemove) {
             if (!Birds.get(index).isPredator) {
                 System.out.println("Removed: " + Birds.get(index));
-                Settings.BirdCount--;
+                Settings.Instance.BirdCount--;
                 Birds.remove(index);
 
-                if (random.nextDouble(0, 1) < Settings.BarrierSoundChance / 100d)
+                if (random.nextDouble(0, 1) < Settings.Instance.BarrierSoundChance / 100d)
                     Main.sound.PlayDrums();
             }
         }
@@ -99,7 +99,7 @@ public class Field {
             Bird bird = Birds.get(index);
 
             System.out.println("Added: " + Birds.get(index));
-            Settings.BirdCount++;
+            Settings.Instance.BirdCount++;
 
             Birds.add(new Bird(bird.X, bird.Y, bird.Xvel, bird.Yvel));
         }
@@ -137,7 +137,7 @@ public class Field {
     private double[] predator(Bird bird, double distance, double power) {
         final double[] sumCloseness = { 0, 0 };
 
-        for (int i = 0; i < Settings.PredatorCount; i++) {
+        for (int i = 0; i < Settings.Instance.PredatorCount; i++) {
             Bird predator = Birds.get(i);
             predator.isPredator = true;
 
@@ -153,10 +153,10 @@ public class Field {
     }
 
     private void kill(Bird bird, double distance) {
-        if (!Settings.PredatorCanKill)
+        if (!Settings.Instance.PredatorCanKill)
             return;
 
-        for (int i = 0; i < Settings.PredatorCount; i++) {
+        for (int i = 0; i < Settings.Instance.PredatorCount; i++) {
             Bird predator = Birds.get(i);
 
             double distanceAway = bird.getDistance(predator);
@@ -168,7 +168,7 @@ public class Field {
     }
 
     private void reproduce(Bird bird, double distance) {
-        if (!Settings.CanReproduce)
+        if (!Settings.Instance.CanReproduce)
             return;
 
         for (Bird otherBird : Birds) {
@@ -205,17 +205,17 @@ public class Field {
         double pad = 50;
 
         if (bird.X < pad)
-            bird.Xvel += Settings.BarrierPower;
-        if (bird.X > Settings.Width - pad)
-            bird.Xvel -= Settings.BarrierPower;
+            bird.Xvel += Settings.Instance.BarrierPower;
+        if (bird.X > Settings.Instance.Width - pad)
+            bird.Xvel -= Settings.Instance.BarrierPower;
         if (bird.Y < pad)
-            bird.Yvel += Settings.BarrierPower;
-        if (bird.Y > Settings.Height - pad)
-            bird.Yvel -= Settings.BarrierPower;
+            bird.Yvel += Settings.Instance.BarrierPower;
+        if (bird.Y > Settings.Instance.Height - pad)
+            bird.Yvel -= Settings.Instance.BarrierPower;
     }
 
     private void bounceOffBarriers(Bird bird) {
-        for (Barrier barrier : Settings.Barriers) {
+        for (Barrier barrier : Settings.Instance.Barriers) {
             var turn = barrier.CalculateTurnOnBarrier(bird);
             bird.Xvel += turn.x;
             bird.Yvel += turn.y;
@@ -224,13 +224,13 @@ public class Field {
 
     private void wrapAround(Bird bird) {
         if (bird.X < 0)
-            bird.X += Settings.Width;
-        if (bird.X > Settings.Width)
-            bird.X -= Settings.Width;
+            bird.X += Settings.Instance.Width;
+        if (bird.X > Settings.Instance.Width)
+            bird.X -= Settings.Instance.Width;
         if (bird.Y < 0)
-            bird.Y += Settings.Height;
-        if (bird.Y > Settings.Height)
-            bird.Y -= Settings.Height;
+            bird.Y += Settings.Instance.Height;
+        if (bird.Y > Settings.Instance.Height)
+            bird.Y -= Settings.Instance.Height;
     }
 
 }

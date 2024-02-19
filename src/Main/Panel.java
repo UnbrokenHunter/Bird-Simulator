@@ -13,7 +13,6 @@ import Boids.Bird;
 import Boids.Field;
 import UI.BirdViewer;
 import UI.UI;
-import Utilities.ColorInterpolator;
 import Utilities.Looper;
 import Utilities.Utilities;
 import Utilities.Vector2;
@@ -27,8 +26,7 @@ public class Panel extends JPanel {
     public Panel() {
         ui = new UI();
         birdViewer = new BirdViewer();
-        Settings.ColorInterp = new ColorInterpolator(Settings.ColorPalatte, Settings.NumberOfColors);
-        field = new Field(Settings.BirdCount);
+        field = new Field(Settings.Instance.BirdCount);
         new Looper(this, "update");
 
         this.setBackground(new Color(0, 8, 27));
@@ -40,7 +38,7 @@ public class Panel extends JPanel {
     }
 
     private void updateBirds() {
-        field.advance(Settings.Bounce, !Settings.Bounce);
+        field.advance(Settings.Instance.Bounce, !Settings.Instance.Bounce);
     }
 
     private void MoveBird(Bird bird, Graphics g) {
@@ -58,7 +56,7 @@ public class Panel extends JPanel {
         // Trail Calculation
         if (bird.isPredator) {
             bird.Tick++;
-            if (bird.Tick > bird.MaxTick && !Settings.Pause) {
+            if (bird.Tick > bird.MaxTick && !Settings.Instance.Pause) {
                 bird.Tick = 0;
                 for (int i = bird.LastPosition.length - 1; i > 0; i--) {
                     bird.LastPosition[i] = bird.LastPosition[i - 1];
@@ -72,9 +70,9 @@ public class Panel extends JPanel {
             DrawTrail(g, bird);
 
         // Draw Colors
-        if (Settings.DoFancyColor) {
-            bird.inRadius = field.birdsInRadius(bird, Settings.ColorRadius);
-            bird.color = Settings.ColorInterp.getColor(bird.inRadius, Settings.NumberOfColors);
+        if (Settings.Instance.DoFancyColor) {
+            bird.inRadius = field.birdsInRadius(bird, Settings.Instance.ColorRadius);
+            bird.color = Settings.Instance.ColorInterp.getColor(bird.inRadius, Settings.Instance.NumberOfColors);
             g.setColor(bird.color);
         } else
             g.setColor(Color.white);
@@ -99,7 +97,7 @@ public class Panel extends JPanel {
 
         float threshold = 500;
 
-        g2.setColor(Settings.cDefaultColor);
+        g2.setColor(Settings.Instance.cDefaultColor);
         for (int i = 2; i < bird.LastPosition.length - 1; i++) {
 
             Vector2 first = bird.LastPosition[i];
@@ -112,9 +110,9 @@ public class Panel extends JPanel {
             g2.setStroke(new BasicStroke(size));
 
             // Left Wall
-            if (Math.abs(second.x - first.x) > Math.abs(Settings.Width - second.x)
+            if (Math.abs(second.x - first.x) > Math.abs(Settings.Instance.Width - second.x)
                     && Math.abs(second.x - first.x) > threshold) {
-                g2.drawLine((int) Settings.Width,
+                g2.drawLine((int) Settings.Instance.Width,
                         (int) first.y,
                         (int) second.x,
                         (int) second.y);
@@ -135,14 +133,14 @@ public class Panel extends JPanel {
 
                 g2.drawLine((int) first.x,
                         (int) first.y,
-                        (int) Settings.Width,
+                        (int) Settings.Instance.Width,
                         (int) second.y);
             }
             // Down Wall
-            else if (Math.abs(second.y - first.y) > Math.abs(Settings.Height - second.y)
+            else if (Math.abs(second.y - first.y) > Math.abs(Settings.Instance.Height - second.y)
                     && Math.abs(second.y - first.y) > threshold) {
                 g2.drawLine((int) first.x,
-                        (int) Settings.Height,
+                        (int) Settings.Instance.Height,
                         (int) second.x,
                         (int) second.y);
 
@@ -162,7 +160,7 @@ public class Panel extends JPanel {
                 g2.drawLine((int) first.x,
                         (int) first.y,
                         (int) second.x,
-                        (int) Settings.Height);
+                        (int) Settings.Instance.Height);
             }
 
             else {
@@ -180,20 +178,20 @@ public class Panel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (Settings.DoGrid) {
-            g.setColor(Settings.cDefaultBackground);
-            for (int i = 0; i < Settings.Width; i += Settings.GridSize) {
-                g.drawLine(i, 0, i, Settings.Height);
+        if (Settings.Instance.DoGrid) {
+            g.setColor(Settings.Instance.cDefaultBackground);
+            for (int i = 0; i < Settings.Instance.Width; i += Settings.Instance.GridSize) {
+                g.drawLine(i, 0, i, Settings.Instance.Height);
             }
-            for (int j = 0; j < Settings.Height; j += Settings.GridSize) {
-                g.drawLine(0, j, Settings.Width, j);
+            for (int j = 0; j < Settings.Instance.Height; j += Settings.Instance.GridSize) {
+                g.drawLine(0, j, Settings.Instance.Width, j);
             }
 
         }
 
         BarrierManager.PreviewBarrier(g);
 
-        for (Barrier barrier : Settings.Barriers) {
+        for (Barrier barrier : Settings.Instance.Barriers) {
             if (barrier.modeIndex == 0)
                 g.setColor(new Color(5, 31, 69));
             if (barrier.modeIndex == 1)

@@ -14,7 +14,7 @@ public class UIUtilities {
     private static int groupIndex = 0;
 
     public static void StartGroup(Graphics g, Vector2 parentPosition, Vector2 objectOffset, int numberOfObjects) {
-        StartGroup(g, parentPosition, objectOffset, Settings.bButtonSize, numberOfObjects);
+        StartGroup(g, parentPosition, objectOffset, Settings.Instance.bButtonSize, numberOfObjects);
     }
 
     public static void StartGroup(Graphics g, Vector2 parentPosition, Vector2 objectOffset, Vector2 size,
@@ -33,24 +33,24 @@ public class UIUtilities {
     }
 
     public static boolean PositionIsUI(Vector2 position) {
-        return !(((position.x < Settings.UIStartBounds.x || position.x > Settings.UIEndBounds.x)
-                || (position.y < Settings.UIStartBounds.y || position.y > Settings.UIEndBounds.y)));
+        return !(((position.x < Settings.Instance.UIStartBounds.x || position.x > Settings.Instance.UIEndBounds.x)
+                || (position.y < Settings.Instance.UIStartBounds.y || position.y > Settings.Instance.UIEndBounds.y)));
     }
 
     private static void HandleBackground(Graphics g, int numberOfObjects, Vector2 size) {
         Vector2 pad = new Vector2(4, 4);
 
-        Settings.UIStartBounds = new Vector2(groupParentPosition.x - pad.x, groupParentPosition.y - pad.y);
-        Settings.UISizeBounds = new Vector2(size.x + groupOffset.x * (numberOfObjects - 1) + pad.x * 2,
+        Settings.Instance.UIStartBounds = new Vector2(groupParentPosition.x - pad.x, groupParentPosition.y - pad.y);
+        Settings.Instance.UISizeBounds = new Vector2(size.x + groupOffset.x * (numberOfObjects - 1) + pad.x * 2,
                 size.y + groupOffset.y * (numberOfObjects - 1) + pad.y * 2);
-        Settings.UIEndBounds = Vector2.add(Settings.UIStartBounds, Settings.UISizeBounds);
+        Settings.Instance.UIEndBounds = Vector2.add(Settings.Instance.UIStartBounds, Settings.Instance.UISizeBounds);
 
-        g.setColor(Settings.cDefaultBackground);
+        g.setColor(Settings.Instance.cDefaultBackground);
         g.fillRoundRect(
-                (int) Settings.UIStartBounds.x,
-                (int) Settings.UIStartBounds.y,
-                (int) Settings.UISizeBounds.x,
-                (int) Settings.UISizeBounds.y,
+                (int) Settings.Instance.UIStartBounds.x,
+                (int) Settings.Instance.UIStartBounds.y,
+                (int) Settings.Instance.UISizeBounds.x,
+                (int) Settings.Instance.UISizeBounds.y,
                 10,
                 10);
     }
@@ -81,17 +81,18 @@ public class UIUtilities {
     public static double DrawSwitch(Graphics g, String displayNameText, double switchValue, double switchAmount,
             boolean displayValue) {
         return DrawSwitch(g, Vector2.zero, displayNameText, switchValue, switchAmount, displayValue,
-                Settings.cDefaultColor);
+                Settings.Instance.cDefaultColor);
     }
 
     public static double DrawSwitch(Graphics g, Vector2 buttonPosition, String displayNameText, double switchValue,
             double switchAmount) {
-        return DrawSwitch(g, buttonPosition, displayNameText, switchValue, switchAmount, true, Settings.cDefaultColor);
+        return DrawSwitch(g, buttonPosition, displayNameText, switchValue, switchAmount, true,
+                Settings.Instance.cDefaultColor);
     }
 
     public static double DrawSwitch(Graphics g, Vector2 buttonPosition, String displayNameText,
             double switchValue, double switchAmount, boolean displayValue, Color buttonColor) {
-        return DrawSwitch(g, buttonPosition, Settings.bButtonSize, displayNameText, switchValue, switchAmount,
+        return DrawSwitch(g, buttonPosition, Settings.Instance.bButtonSize, displayNameText, switchValue, switchAmount,
                 displayValue, buttonColor);
     }
 
@@ -124,21 +125,23 @@ public class UIUtilities {
     }
 
     public static boolean DrawButton(Graphics g, String displayNameText, boolean booleanValue, boolean displayValue) {
-        return DrawButton(g, Vector2.zero, displayNameText, booleanValue, displayValue, Settings.cDefaultColor);
+        return DrawButton(g, Vector2.zero, displayNameText, booleanValue, displayValue,
+                Settings.Instance.cDefaultColor);
     }
 
     public static boolean DrawButton(Graphics g, Vector2 buttonPosition, String displayNameText, boolean displayValue,
             boolean booleanValue) {
-        return DrawButton(g, buttonPosition, displayNameText, booleanValue, displayValue, Settings.cDefaultColor);
+        return DrawButton(g, buttonPosition, displayNameText, booleanValue, displayValue,
+                Settings.Instance.cDefaultColor);
     }
 
     public static boolean DrawButton(Graphics g, Vector2 buttonPosition, String displayNameText, boolean booleanValue) {
-        return DrawButton(g, buttonPosition, displayNameText, booleanValue, true, Settings.cDefaultColor);
+        return DrawButton(g, buttonPosition, displayNameText, booleanValue, true, Settings.Instance.cDefaultColor);
     }
 
     public static boolean DrawButton(Graphics g, Vector2 buttonPosition, String displayNameText, boolean booleanValue,
             boolean displayValue, Color buttonColor) {
-        return DrawButton(g, buttonPosition, Settings.bButtonSize, displayNameText, booleanValue, displayValue,
+        return DrawButton(g, buttonPosition, Settings.Instance.bButtonSize, displayNameText, booleanValue, displayValue,
                 buttonColor);
     }
 
@@ -188,23 +191,24 @@ public class UIUtilities {
                     size, text, 9);
         }
 
-        if (Settings.MouseClick == null)
+        if (Settings.Instance.MouseClick == null)
             return 0;
 
         // Check if the mouse coordinates are within the top button bounds
-        boolean topButtonClick = Settings.MouseClick.x >= buttonPosition.x
-                && Settings.MouseClick.x <= (buttonPosition.x + size.x) &&
-                Settings.MouseClick.y >= buttonPosition.y && Settings.MouseClick.y <= (buttonPosition.y + size.y / 2);
+        boolean topButtonClick = Settings.Instance.MouseClick.x >= buttonPosition.x
+                && Settings.Instance.MouseClick.x <= (buttonPosition.x + size.x) &&
+                Settings.Instance.MouseClick.y >= buttonPosition.y
+                && Settings.Instance.MouseClick.y <= (buttonPosition.y + size.y / 2);
 
         // Check if the mouse coordinates are within the bottom button bounds
-        boolean bottomButtonClick = Settings.MouseClick.x >= buttonPosition.x
-                && Settings.MouseClick.x <= (buttonPosition.x + size.x) &&
-                Settings.MouseClick.y >= buttonPosition.y + size.y / 2
-                && Settings.MouseClick.y <= (buttonPosition.y + size.y);
+        boolean bottomButtonClick = Settings.Instance.MouseClick.x >= buttonPosition.x
+                && Settings.Instance.MouseClick.x <= (buttonPosition.x + size.x) &&
+                Settings.Instance.MouseClick.y >= buttonPosition.y + size.y / 2
+                && Settings.Instance.MouseClick.y <= (buttonPosition.y + size.y);
 
         if (topButtonClick || bottomButtonClick) {
             Main.sound.PlayClick();
-            Settings.MouseClick = null;
+            Settings.Instance.MouseClick = null;
             return topButtonClick ? amount : -amount;
         }
 
@@ -221,17 +225,18 @@ public class UIUtilities {
                     size, value + "", 9);
         }
 
-        if (Settings.MouseClick == null)
+        if (Settings.Instance.MouseClick == null)
             return false;
 
         // Check if the mouse coordinates are within the button bounds
-        boolean buttonClick = Settings.MouseClick.x >= buttonPosition.x
-                && Settings.MouseClick.x <= (buttonPosition.x + size.x) &&
-                Settings.MouseClick.y >= buttonPosition.y && Settings.MouseClick.y <= (buttonPosition.y + size.y);
+        boolean buttonClick = Settings.Instance.MouseClick.x >= buttonPosition.x
+                && Settings.Instance.MouseClick.x <= (buttonPosition.x + size.x) &&
+                Settings.Instance.MouseClick.y >= buttonPosition.y
+                && Settings.Instance.MouseClick.y <= (buttonPosition.y + size.y);
 
         if (buttonClick == true) {
             Main.sound.PlayClick();
-            Settings.MouseClick = null;
+            Settings.Instance.MouseClick = null;
         }
 
         return buttonClick;

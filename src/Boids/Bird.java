@@ -59,19 +59,19 @@ public class Bird {
     public Bird() {
         Random rand = new Random();
 
-        if (Settings.RandomSpawn) {
-            this.X = rand.nextDouble() * Settings.Width;
-            this.Y = rand.nextDouble() * Settings.Height;
+        if (Settings.Instance.RandomSpawn) {
+            this.X = rand.nextDouble() * Settings.Instance.Width;
+            this.Y = rand.nextDouble() * Settings.Instance.Height;
         } else {
-            this.X = Settings.SpawnPosition().x;
-            this.Y = Settings.SpawnPosition().y;
+            this.X = Settings.Instance.SpawnPosition().x;
+            this.Y = Settings.Instance.SpawnPosition().y;
         }
-        if (Settings.RandomDirection) {
+        if (Settings.Instance.RandomDirection) {
             this.Xvel = rand.nextDouble() - 0.5;
             this.Yvel = rand.nextDouble() - 0.5;
         } else {
-            this.Xvel = Settings.SpawnDirection().x;
-            this.Yvel = Settings.SpawnDirection().y;
+            this.Xvel = Settings.Instance.SpawnDirection().x;
+            this.Yvel = Settings.Instance.SpawnDirection().y;
         }
     }
 

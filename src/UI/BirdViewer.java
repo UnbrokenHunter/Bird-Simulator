@@ -17,10 +17,10 @@ public class BirdViewer {
 
         public void DrawBirdViewer(Graphics g) {
 
-                if (Field.Birds.size() > Settings.BirdInViewIndex)
-                        birdInView = Field.Birds.get(Settings.BirdInViewIndex);
+                if (Field.Birds.size() > Settings.Instance.BirdInViewIndex)
+                        birdInView = Field.Birds.get(Settings.Instance.BirdInViewIndex);
 
-                if (Settings.Pause == false)
+                if (Settings.Instance.Pause == false)
                         return;
 
                 if (birdInView == null)
@@ -33,32 +33,33 @@ public class BirdViewer {
 
                 UIUtilities.StartGroup(g, new Vector2(5, 5), new Vector2(0, 60), size, 8);
 
-                Settings.BirdInViewIndex += UIUtilities.DrawSwitch(g, Vector2.zero, size, "Name: " + (birdInView.Name),
-                                Settings.BirdInViewIndex,
-                                1, true, Settings.cBlue);
+                Settings.Instance.BirdInViewIndex += UIUtilities.DrawSwitch(g, Vector2.zero, size,
+                                "Name: " + (birdInView.Name),
+                                Settings.Instance.BirdInViewIndex,
+                                1, true, Settings.Instance.cBlue);
                 birdInView.X -= UIUtilities.DrawSwitch(g, Vector2.zero, size, "X: " + ((int) birdInView.X),
-                                birdInView.X, 10d, false, Settings.cBlue);
+                                birdInView.X, 10d, false, Settings.Instance.cBlue);
                 birdInView.Y -= UIUtilities.DrawSwitch(g, Vector2.zero, size, "Y: " + ((int) birdInView.Y),
-                                birdInView.Y, 10d, false, Settings.cGreen);
+                                birdInView.Y, 10d, false, Settings.Instance.cGreen);
 
                 birdInView.isPredator = UIUtilities.DrawButton(g, Vector2.zero, size, "Predator", birdInView.isPredator,
-                                birdInView.isPredator, Settings.cPink);
+                                birdInView.isPredator, Settings.Instance.cPink);
 
                 UIUtilities.DrawText(g, Vector2.zero, size, "Birds in Radius: " + (birdInView.inRadius),
-                                Settings.cBlue);
+                                Settings.Instance.cBlue);
                 UIUtilities.DrawText(g, Vector2.zero, size,
                                 "Color: " + birdInView.color.getRed() + ", " +
                                                 birdInView.color.getGreen() + ", " +
                                                 birdInView.color.getBlue(),
-                                Settings.cBlue);
+                                Settings.Instance.cBlue);
 
                 UIUtilities.DrawText(g, Vector2.zero, size,
                                 "On Cooldown: " + birdInView.onCooldown,
-                                Settings.cBlue);
+                                Settings.Instance.cBlue);
 
                 UIUtilities.DrawText(g, Vector2.zero, size,
                                 "Tick: " + birdInView.Tick + " / " + birdInView.MaxTick,
-                                Settings.cBlue);
+                                Settings.Instance.cBlue);
 
                 UIUtilities.EndGroup();
         }
