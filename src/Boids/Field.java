@@ -36,7 +36,7 @@ public class Field {
 
     }
 
-    public int birdsInRadius(Bird bird, int radius) {
+    public static int birdsInRadius(Bird bird, int radius) {
         int count = 0;
 
         for (Bird otherBird : Birds) {
