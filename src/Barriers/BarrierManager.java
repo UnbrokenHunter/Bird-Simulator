@@ -71,12 +71,12 @@ public class BarrierManager {
                 ClickPosition = null;
                 DragPosition = null;
 
-                System.out.println("// Barriers");
-                for (Barrier b : Settings.Instance.Barriers) {
-                        System.out.println("Settings.Instance.ModeIndex = " + b.modeIndex + ";");
-                        System.out.println("Settings.Instance.ShapeIndex = " + b.shapeIndex + ";");
-                        System.out.println("BarrierManager.CreateBarrier(new Vector2(" + b.Start.x + "f, " + b.Start.y
-                                        + "f), new Vector2(" + b.End.x + "f, " + b.End.y + "f));\n");
+                // System.out.println("// Barriers");
+                // for (Barrier b : Settings.Instance.Barriers) {
+                //         System.out.println("Settings.Instance.ModeIndex = " + b.modeIndex + ";");
+                //         System.out.println("Settings.Instance.ShapeIndex = " + b.shapeIndex + ";");
+                //         System.out.println("BarrierManager.CreateBarrier(new Vector2(" + b.Start.x + "f, " + b.Start.y
+                //                         + "f), new Vector2(" + b.End.x + "f, " + b.End.y + "f));\n");
                 }
 
         }

@@ -19,7 +19,16 @@ public class Settings {
     }
 
     public static void ResetSettings() {
+        var Width = Settings.Instance.Width;
+        var Height = Settings.Instance.Height;
+
         new Settings();
+
+        Settings.Instance.Width = Width;
+        Settings.Instance.Height = Height;
+
+        Settings.Instance.SetBirdCount(Settings.Instance.BirdCount);
+        Settings.Instance.SetPredatorCount(Settings.Instance.PredatorCount);
     }
 
     // Settings
@@ -147,6 +156,12 @@ public class Settings {
         }
     }
 
+    public void SetBirdCount(int count) {
+        var difference = BirdCount - Field.Birds.size();
+
+        UpdateBirdCount(difference);
+    }
+
     public void UpdateBirdCount(int difference) {
         if (BirdCount + difference < 0)
             return;
@@ -162,6 +177,14 @@ public class Settings {
                 Field.Birds.removeLast();
             }
         }
+    }
+
+    public void SetPredatorCount(int count) {
+        for (Bird bird : Field.Birds) {
+            bird.isPredator = false;
+        }
+
+        UpdatePredatorCount(count);
     }
 
     public void UpdatePredatorCount(int difference) {
