@@ -115,7 +115,7 @@ public class Settings {
     public double KillVolume = 0.8d;
 
     // Other
-    public ArrayList<Barrier> Barriers = new ArrayList<Barrier>();
+    public ArrayList<Barrier> Barriers = new ArrayList<>();
     public boolean BecomePredator;
     public boolean Pause = false;
     public int BirdInViewIndex = 0;
@@ -150,7 +150,7 @@ public class Settings {
             BecomePredator = true;
             UpdatePredatorCount(1);
         } else {
-            Field.Birds.removeFirst();
+            Field.Birds.remove(0);
             BecomePredator = false;
             UpdatePredatorCount(-1);
         }
@@ -174,7 +174,7 @@ public class Settings {
                 bird.Name = "bird" + i + Field.Birds.size();
                 Field.Birds.add(bird);
             } else {
-                Field.Birds.removeLast();
+                Field.Birds.remove(Field.Birds.size() - 1);
             }
         }
     }
@@ -188,9 +188,7 @@ public class Settings {
     }
 
     public void UpdatePredatorCount(int difference) {
-        if (PredatorCount + difference < 0)
-            return;
-        if (difference == 0)
+        if ((PredatorCount + difference < 0) || (difference == 0))
             return;
 
         PredatorCount += difference;

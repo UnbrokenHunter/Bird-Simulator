@@ -185,7 +185,7 @@ public class UIUtilities {
 
         if (displayValue) {
             g.setColor(Color.black);
-            var number = (Utilities.round(((double) value), 4));
+            var number = (Utilities.round((value), 4));
             var text = (number == 0 ? (int) number : number) + "";
             DrawTextHelper(g, new Vector2(buttonPosition.x, buttonPosition.y + size.y / 3),
                     size, text, 9);
@@ -234,7 +234,7 @@ public class UIUtilities {
                 Settings.Instance.MouseClick.y >= buttonPosition.y
                 && Settings.Instance.MouseClick.y <= (buttonPosition.y + size.y);
 
-        if (buttonClick == true) {
+        if (buttonClick) {
             Main.sound.PlayClick();
             Settings.Instance.MouseClick = null;
         }

@@ -15,7 +15,7 @@ public class Barrier {
     public int shapeIndex;
     public int modeIndex;
     private Random random;
-    private ArrayList<Bird> birdsInBarrier = new ArrayList<Bird>();
+    private ArrayList<Bird> birdsInBarrier = new ArrayList<>();
 
     public Barrier(Vector2 start, Vector2 end, int shapeIndex, int modeIndex) {
         this.Start = start;
@@ -54,13 +54,13 @@ public class Barrier {
                 if (bird.Y > Start.y)
                     calculateTurn.y += Settings.Instance.BarrierPower;
 
-                if (random.nextDouble(0, 1) < Settings.Instance.BarrierSoundChance / Settings.Instance.BirdCount
-                        && birdsInBarrier.contains(bird) == false) {
+                if (random.nextDouble() < Settings.Instance.BarrierSoundChance / Settings.Instance.BirdCount
+                        && !birdsInBarrier.contains(bird)) {
                     if (modeIndex == 0)
                         Main.sound.PlayPush();
                 }
-                if (random.nextDouble(0, 1) < Settings.Instance.BarrierSoundChance / 100d
-                        && birdsInBarrier.contains(bird) == false) {
+                if (random.nextDouble() < Settings.Instance.BarrierSoundChance / 100d
+                        && !birdsInBarrier.contains(bird)) {
                     if (modeIndex == 1)
                         Main.sound.PlayBass();
                 }

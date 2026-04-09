@@ -61,12 +61,12 @@ public class Looper implements Runnable {
     /**
      * Creates A Runnable Loop that will call the given method a default of 60 times
      * per second.
-     * 
+     *
      * @param object An object of the class that contains the given method
      * @param method The String name of the method to be looped
      * @param PFS    A double of the desired Frames per Second for the loop to run
      *               at. If no FPS is given, FPS is set to 60.
-     * 
+     *
      */
     public Looper(Object object, String methods, int FPS) {
         this(object, methods);
@@ -76,10 +76,10 @@ public class Looper implements Runnable {
     /**
      * Creates a Runnable Loop that will call the given method a default of 60 times
      * per second.
-     * 
+     *
      * @param object An object of the class that contains the given method
      * @param method The String name of the method to be looped
-     * 
+     *
      */
     public Looper(Object object, String method) {
 

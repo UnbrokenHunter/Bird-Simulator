@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Represents a 2D vector with integer x and y coordinates.
- * 
+ *
  * <p>
  * This class encapsulates operations and properties of a 2-dimensional vector
  * that can be used in various mathematical or graphical scenarios.
@@ -15,10 +15,10 @@ import java.util.Objects;
  * are provided. It also provides a set of predefined vectors like {@link #zero}
  * and {@link #up} for convenience.
  * </p>
- * 
+ *
  * <p>
  * Example:
- * 
+ *
  * <pre>
 * {@code
  * Vector2 a = new Vector2(1, 2);
@@ -27,7 +27,7 @@ import java.util.Objects;
  * }
 * </pre>
  * </p>
- * 
+ *
  * @author Hunter
  * @since 1.0
  */
@@ -94,7 +94,7 @@ public class Vector2 {
      * The result is a new {@code Vector2} instance, without modifying the original
      * vectors.
      * </p>
-     * 
+     *
      * @param vector2 The vector to be added to this vector. Must not be
      *                {@code null}.
      * @return A new {@code Vector2} instance with the result of the addition.
@@ -109,7 +109,7 @@ public class Vector2 {
 
     /**
      * Subtracts the provided vector's coordinates from this vector's coordinates.
-     * 
+     *
      * @param vector2 The vector whose coordinates are to be subtracted from this
      *                vector. Must not be {@code null}.
      * @return A new {@code Vector2} instance with the result of the subtraction.
@@ -129,7 +129,7 @@ public class Vector2 {
      * length
      * but not its direction.
      * </p>
-     * 
+     *
      * @param scalar The scalar value by which this vector's coordinates are to be
      *               multiplied.
      * @return A new {@code Vector2} instance with the result of the multiplication.
@@ -140,7 +140,7 @@ public class Vector2 {
 
     /**
      * Multiplies this vector's coordinates by the provided value.
-     * 
+     *
      * @param vector2 The vector value by which this vector's coordinates are to be
      *                multiplied. (x1 * x2) and (y1 * y2)
      * @return A new {@code Vector2} instance with the result of the multiplication.
@@ -151,7 +151,7 @@ public class Vector2 {
 
     /**
      * Divides this vector's coordinates by the provided scalar value.
-     * 
+     *
      * @param scalar The scalar value by which this vector's coordinates are to be
      *               divided. Must not be zero.
      * @return A new {@code Vector2} instance with the result of the division.
@@ -166,7 +166,7 @@ public class Vector2 {
 
     /**
      * Divides this vector's coordinates by the provided value.
-     * 
+     *
      * @param vector2 The vector value by which this vector's coordinates are to be
      *                divided. (x1 / x2) and (y1 / y2)
      * @return A new {@code Vector2} instance with the result of the division.
@@ -187,7 +187,7 @@ public class Vector2 {
      * {@code Vector2}
      * instance with the resultant coordinates.
      * </p>
-     * 
+     *
      * @param vector1 The first vector. Must not be {@code null}.
      * @param vector2 The second vector. Must not be {@code null}.
      * @return A new {@code Vector2} instance that represents the sum of the two
@@ -205,7 +205,7 @@ public class Vector2 {
     /**
      * Subtracts the second vector from the first vector and returns the resulting
      * vector.
-     * 
+     *
      * @param vector1 The vector from which {@code vector2} is subtracted. Must not
      *                be {@code null}.
      * @param vector2 The vector to be subtracted. Must not be {@code null}.
@@ -223,7 +223,7 @@ public class Vector2 {
 
     /**
      * Multiplies a vector by a scalar value and returns the resulting vector.
-     * 
+     *
      * @param vector The vector to be multiplied. Must not be {@code null}.
      * @param scalar The scalar value by which the vector is multiplied.
      * @return A new {@code Vector2} instance that represents the product of the
@@ -239,7 +239,7 @@ public class Vector2 {
 
     /**
      * Multiplies a vector by a vector value and returns the resulting vector.
-     * 
+     *
      * @param vector  The vector to be multiplied. Must not be {@code null}.
      * @param vector2 The vector value by which the vector is multiplied.
      * @return A new {@code Vector2} instance that represents the product of the
@@ -255,7 +255,7 @@ public class Vector2 {
 
     /**
      * Divides a vector by a scalar value and returns the resulting vector.
-     * 
+     *
      * @param vector The vector to be divided. Must not be {@code null}.
      * @param scalar The scalar value by which the vector is divided. Must not be
      *               zero.
@@ -276,7 +276,7 @@ public class Vector2 {
 
     /**
      * Divides a vector by a vector value and returns the resulting vector.
-     * 
+     *
      * @param vector The vector to be divided. Must not be {@code null}.
      * @param scalar The vector value by which the vector is divided. Must not be
      *               zero.
@@ -297,7 +297,7 @@ public class Vector2 {
 
     /**
      * Computes the magnitude (length) of the vector.
-     * 
+     *
      * <p>
      * The magnitude is the Euclidean distance from this vector to the origin
      * (0, 0). It provides a measure of the "length" or "size" of the vector,
@@ -305,7 +305,7 @@ public class Vector2 {
      * gives the straight-line distance between the point represented by this vector
      * and the origin.
      * </p>
-     * 
+     *
      * <p>
      * This implementation leverages the {@link #distance(Vector2, Vector2)}
      * method by calculating the distance between the vector and the origin,
@@ -323,7 +323,7 @@ public class Vector2 {
      * {@code Vector2} objects.
      * The distance is computed using the formula:
      * distance = sqrt((end.x - start.x)^2 + (end.y - start.y)^2).
-     * 
+     *
      * @param start The starting point represented as a Vector2 object. Must not be
      *              null.
      * @param end   The ending point represented as a Vector2 object. Must not be
@@ -374,7 +374,7 @@ public class Vector2 {
      * - -1 if the component is negative
      * - 0 if the component is zero
      * </p>
-     * 
+     *
      * @return A new {@code Vector2} object where each component is set to its
      *         corresponding sign.
      *         If both components of the original vector are zero, the method
@@ -398,7 +398,7 @@ public class Vector2 {
      * @return A new Vector2 instance with truncated x and y coordinates.
      */
     public Vector2 truncate() {
-        return new Vector2((float) ((int) x), (float) ((int) y));
+        return new Vector2(((int) x), ((int) y));
     }
 
     /**

@@ -20,10 +20,7 @@ public class BirdViewer {
                 if (Field.Birds.size() > Settings.Instance.BirdInViewIndex)
                         birdInView = Field.Birds.get(Settings.Instance.BirdInViewIndex);
 
-                if (Settings.Instance.Pause == false)
-                        return;
-
-                if (birdInView == null)
+                if (!Settings.Instance.Pause || (birdInView == null))
                         return;
 
                 g.setColor(Color.white);

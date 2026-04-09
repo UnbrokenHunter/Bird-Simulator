@@ -8,6 +8,7 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 import Barriers.BarrierManager;
 import Boids.Field;
@@ -30,7 +31,8 @@ public class Main {
         sound.PlayClick();
 
         SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 main.createAndShowGUI();
             }
         });
@@ -104,7 +106,7 @@ public class Main {
                     BarrierManager.DragPosition = new Vector2(mouse.x, mouse.y);
 
                 if (Settings.Instance.BecomePredator && !Settings.Instance.Pause) {
-                    var bird = Field.Birds.getFirst();
+                    var bird = Field.Birds.get(0);
                     bird.Xvel = Utilities.Lerp(bird.Xvel, mouseX - bird.X, 0.1d);
                     bird.Yvel = Utilities.Lerp(bird.Yvel, mouseY - bird.Y, 0.1d);
                     bird.X = mouseX;
@@ -124,7 +126,7 @@ public class Main {
                     BarrierManager.ClickPosition = new Vector2((float) mouseX, (float) mouseY);
 
                 if (Settings.Instance.BecomePredator && !Settings.Instance.Pause) {
-                    var bird = Field.Birds.getFirst();
+                    var bird = Field.Birds.get(0);
                     bird.Xvel = Utilities.Lerp(bird.Xvel, mouseX - bird.X, 0.1d);
                     bird.Yvel = Utilities.Lerp(bird.Yvel, mouseY - bird.Y, 0.1d);
                     bird.X = mouseX;
@@ -133,7 +135,7 @@ public class Main {
             }
         });
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 }

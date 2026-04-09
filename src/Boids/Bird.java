@@ -147,55 +147,55 @@ public class Bird {
             // Left Wall
             if (Math.abs(second.x - first.x) > Math.abs(Settings.Instance.Width - second.x)
                     && Math.abs(second.x - first.x) > threshold) {
-                g2.drawLine((int) Settings.Instance.Width,
+                g2.drawLine(Settings.Instance.Width,
                         (int) first.y,
                         (int) second.x,
                         (int) second.y);
 
                 g2.drawLine((int) first.x,
                         (int) first.y,
-                        (int) 0,
+                        0,
                         (int) second.y);
 
             }
             // Right Wall
             else if (Math.abs(second.x - first.x) < Math.abs(0 - first.x)
                     && Math.abs(second.x - first.x) > threshold) {
-                g2.drawLine((int) 0,
+                g2.drawLine(0,
                         (int) first.y,
                         (int) second.x,
                         (int) second.y);
 
                 g2.drawLine((int) first.x,
                         (int) first.y,
-                        (int) Settings.Instance.Width,
+                        Settings.Instance.Width,
                         (int) second.y);
             }
             // Down Wall
             else if (Math.abs(second.y - first.y) > Math.abs(Settings.Instance.Height - second.y)
                     && Math.abs(second.y - first.y) > threshold) {
                 g2.drawLine((int) first.x,
-                        (int) Settings.Instance.Height,
+                        Settings.Instance.Height,
                         (int) second.x,
                         (int) second.y);
 
                 g2.drawLine((int) first.x,
                         (int) first.y,
                         (int) second.x,
-                        (int) 0);
+                        0);
             }
             // Up Wall
             else if (Math.abs(second.y - first.y) < Math.abs(0 - first.y)
                     && Math.abs(second.y - first.y) > threshold) {
                 g2.drawLine((int) first.x,
-                        (int) 0,
+                        0,
                         (int) second.x,
                         (int) second.y);
 
                 g2.drawLine((int) first.x,
                         (int) first.y,
                         (int) second.x,
-                        (int) Settings.Instance.Height);
+                        Settings.Instance.Height);
             }
 
             else {
@@ -247,9 +247,7 @@ public class Bird {
     }
 
     public double getAngle() {
-        if (Double.isNaN(this.Xvel) || Double.isNaN(this.Yvel))
-            return 0;
-        if (this.Xvel == 0 && this.Yvel == 0)
+        if (Double.isNaN(this.Xvel) || Double.isNaN(this.Yvel) || (this.Xvel == 0 && this.Yvel == 0))
             return 0;
 
         double angle = Math.atan2(this.Yvel, this.Xvel) * 180 / Math.PI;

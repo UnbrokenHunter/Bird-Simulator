@@ -1,5 +1,11 @@
 package Utilities;
 
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -9,17 +15,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GradientPaint;
 
 /**
  * A utility class dedicated to text manipulation and measurement within
  * Java Swing graphical contexts.
- * 
+ *
  * <p>
  * TextUtilities offers a comprehensive set of tools optimized for interacting
  * with text in Swing-based graphical interfaces. This encompasses
@@ -30,7 +30,7 @@ import java.awt.GradientPaint;
  * ensure
  * a precise fit within a predetermined zone.
  * </p>
- * 
+ *
  * <p>
  * <b>Note:</b> This utility integrates the Vector2 class, another creation of
  * mine.
@@ -49,23 +49,23 @@ import java.awt.GradientPaint;
  * resizing
  * or when adaptive text arrangements are necessary.
  * </p>
- * 
+ *
  * <p>
  * Usage Example:
- * 
+ *
  * <pre>
  * {@code
  * String sampleText = "Hello, World!";
  * Vector2 position = new Vector2(0, 0);
  * Vector2 size = new Vector2(100, 50);
  * Graphics graphics = ...; // An initialized Swing graphics context
- * 
+ *
  * int optimalFontSize = TextUtilities.calcFontSize(sampleText, position, size, graphics);
  * String adjustedText = TextUtilities.adjustTextToFit(sampleText, position, size, graphics);
  * }
  * </pre>
  * </p>
- * 
+ *
  * @author Hunter
  * @version 1.0
  * @since 1.0

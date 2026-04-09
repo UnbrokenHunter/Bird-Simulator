@@ -11,7 +11,7 @@ public class BarrierManager {
         public static Vector2 DragPosition;
 
         public static void PreviewBarrier(Graphics g) {
-                if (ClickPosition != null && DragPosition != null && Settings.Instance.BecomePredator == false) {
+                if (ClickPosition != null && DragPosition != null && !Settings.Instance.BecomePredator) {
 
                         Vector2 startPos = new Vector2(Math.min(ClickPosition.x, DragPosition.x),
                                         Math.min(ClickPosition.y, DragPosition.y));
@@ -50,7 +50,7 @@ public class BarrierManager {
                         DragPosition = new Vector2(ClickPosition.x + Settings.Instance.GridSize,
                                         ClickPosition.y + Settings.Instance.GridSize);
 
-                if (ClickPosition != null && DragPosition != null && Settings.Instance.BecomePredator == false) {
+                if (ClickPosition != null && DragPosition != null && !Settings.Instance.BecomePredator) {
 
                         Vector2 startPos = new Vector2(Math.min(ClickPosition.x, DragPosition.x),
                                         Math.min(ClickPosition.y, DragPosition.y));
