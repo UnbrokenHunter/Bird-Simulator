@@ -15,7 +15,11 @@ import Utilities.Looper;
 
 public class Panel extends JPanel {
 
-    private Field field;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Field field;
     private UI ui;
     private BirdViewer birdViewer;
 
