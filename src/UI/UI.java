@@ -298,7 +298,7 @@ public class UI {
 
                 // Barriers
                 if (UIUtilities.DrawButton(g, "Undo Barrier", false, Settings.Instance.cPurple))
-                        Settings.Instance.Barriers.removeLast();
+                        Settings.Instance.Barriers.remove(Settings.Instance.Barriers.size() - 1);
         }
 
         private void ReturnToMainUI(int UI) {

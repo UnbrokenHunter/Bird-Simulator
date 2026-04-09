@@ -11,8 +11,8 @@ import Main.Settings;
 
 public class Field {
     public final static List<Bird> Birds = new ArrayList<>();
-    private ArrayList<Integer> toRemove = new ArrayList<Integer>();
-    private ArrayList<Integer> toAdd = new ArrayList<Integer>();
+    private ArrayList<Integer> toRemove = new ArrayList<>();
+    private ArrayList<Integer> toAdd = new ArrayList<>();
     private Random random;
 
     public Field(int birdCount) {
@@ -69,7 +69,7 @@ public class Field {
 
         // Move all birds forward in time
         Birds.forEach(bird -> {
-            if (!(Settings.Instance.BecomePredator && Birds.getFirst().equals(bird))) {
+            if (!(Settings.Instance.BecomePredator && Birds.get(0).equals(bird))) {
                 bird.moveForward(Settings.Instance.MinSpeed, Settings.Instance.MaxSpeed);
 
                 bounceOffBarriers(bird);
@@ -89,7 +89,7 @@ public class Field {
                 Settings.Instance.BirdCount--;
                 Birds.remove(index);
 
-                if (random.nextDouble(0, 1) < Settings.Instance.BarrierSoundChance / 100d)
+                if (random.nextDouble() < Settings.Instance.BarrierSoundChance / 100d)
                     Main.sound.PlayDrums();
             }
         }

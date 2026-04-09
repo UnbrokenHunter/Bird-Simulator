@@ -30,7 +30,7 @@ public class Sound {
 
         var scale = Settings.Instance.MusicScale[Settings.Instance.MusicIndex];
 
-        int clip = random.nextInt(0, scale.length);
+        int clip = random.nextInt(scale.length);
 
         var index = scale[clip];
 
@@ -43,7 +43,7 @@ public class Sound {
 
         var scale = Settings.Instance.MusicScale[Settings.Instance.MusicIndex];
 
-        int clip = random.nextInt(0, scale.length);
+        int clip = random.nextInt(scale.length);
 
         var index = scale[clip];
 
@@ -54,7 +54,7 @@ public class Sound {
         if (!Settings.Instance.MusicEnabled)
             return;
 
-        int clip = random.nextInt(0, 3);
+        int clip = random.nextInt(3);
 
         switch (clip) {
             case 0:
@@ -73,9 +73,13 @@ public class Sound {
 
     public void setVolume(Clip clip, double volume) {
         if (volume < 0f || volume > 1f)
-            volume = Math.clamp(volume, 0, 1);
+            volume = clamp(volume, 0, 1);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(20f * (float) Math.log10(volume));
+    }
+
+    public static float clamp(double volume, float min, float max) {
+        return (float) Math.max(min, Math.min(max, volume));
     }
 
     private void PlaySound(String filepath, double volume) {
